@@ -9,3 +9,51 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+//@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+.full-width-field {
+    width: 100%;
+ }
+
+ .multi-line {
+    .mat-select-value-text {
+        white-space: pre-line !important;
+        overflow: hidden;
+        text-overflow: ellipsis;    
+    }
+    .mat-form-field-infix{
+        display: block;
+        position: relative;
+        flex: auto;
+        min-width: 180px;
+        width: inherit !important;
+    }
+    .mat-select-value {
+        display: table-cell;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: none !important;    
+    }
+  }
+
+  .mat-table {
+    display: block;
+  }
+  
+  .mat-row,
+  .mat-header-row {
+    display: flex;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 24px;
+  }
+  
+  .mat-cell,
+  .mat-header-cell {
+    flex: 1;
+    overflow: hidden;
+    word-wrap: break-word;
+  }

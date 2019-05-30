@@ -1,5 +1,7 @@
 {
-  "name": "athleticspointscalculator",
-  "integrations": {},
+  "name": "Athletics Ranking Points Calculator",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

@@ -1,3 +1,22 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane>
+      <ion-menu>
+          <ion-header>
+              <mat-toolbar color="primary">
+                  <span>Menu</span>
+              </mat-toolbar>
+          </ion-header>
+          <ion-content>
+              <ion-list>
+                  <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+                      <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="{{isActive(p)?'#f0f0f0':''}}">
+                          <mat-icon color="primary" slot="start" [svgIcon]="p.icon"></mat-icon>
+                          <mat-label color="primary">{{p.title}}</mat-label>
+                      </ion-item>
+                  </ion-menu-toggle>
+              </ion-list>
+          </ion-content>
+      </ion-menu>
+      <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
