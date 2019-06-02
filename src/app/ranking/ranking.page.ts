@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
 import { RankingService } from "./ranking.service";
 import { EventEntity } from "./entities/event.entity";
 import { Router, NavigationEnd } from "@angular/router";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "app-ranking",
@@ -12,16 +13,16 @@ export class RankingPage implements OnInit, OnDestroy {
   events: EventEntity[];
   selectedEvent: EventEntity;
   refresher;
-  navigationSubscription;
+  navigationSubscription: Subscription;
+  
 
   constructor(
     // … your declarations here
     private router: Router,
-    private rankingService: RankingService,
+    private rankingService: RankingService
   ) {
     // subscribe to the router events - storing the subscription so
     // we can unsubscribe later.
-
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {

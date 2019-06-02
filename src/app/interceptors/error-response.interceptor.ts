@@ -19,7 +19,7 @@ export class ErrorResponseInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
 
     return next.handle(req).pipe(
-      retry(3),
+      retry(2),
       catchError((error: HttpErrorResponse) => {
         if (error.status !== 401) {
           // 401 handled in auth.interceptor          

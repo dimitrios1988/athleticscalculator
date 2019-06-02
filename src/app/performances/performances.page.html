@@ -1,15 +1,19 @@
 <ion-header>
-  <mat-toolbar color="primary">
+  <mat-toolbar color="warn">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <span>Performance Finder</span>
   </mat-toolbar>
 </ion-header>
-
 <ion-content>
   <form [formGroup]="performanceForm">
     <ion-grid class="mat-app-background mat-typography">
+      <ion-row>
+        <ion-col [sizeXs]=12>
+          <h2 class="mat-h2">Find the required performance based on points</h2>
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col [sizeXs]=12 [sizeMd]=4 [sizeSm]=6>
           <mat-form-field appearance="fill" class="full-width-field">
@@ -30,18 +34,28 @@
       </ion-row>
       <ion-row>
         <ion-col [sizeXs]=12 [sizeMd]=5 [sizeSm]=6>
-          <mat-form-field class="full-width-field">
-            <mat-label>Please type in your desired points</mat-label>
-            <input matInput type="text" autocomplete="off" formControlName="pointsInput" required>
-            <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('required')">
-              This field cannot be empty</mat-error>
-            <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('pattern')">
-              Invalid points</mat-error>
-            <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('min')">
-              Points must be more than 0</mat-error>
-            <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('max')">
-              Maximum points are 1400</mat-error>
-          </mat-form-field>
+          <div style="display: flex">
+            <mat-form-field class="full-width-field">
+              <mat-label>Please type in your desired points</mat-label>
+              <input matInput type="text" autocomplete="off" formControlName="pointsInput" 
+                (keyup.enter)="(!this.performanceForm.invalid && !performancesAreCalculated)?onGetPerformances():null"
+                required>
+              <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('required')">
+                This field cannot be empty</mat-error>
+              <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('pattern')">
+                Invalid points</mat-error>
+              <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('min')">
+                Points must be more than 0</mat-error>
+              <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('max')">
+                Maximum points are 1400</mat-error>
+            </mat-form-field>
+            <button mat-icon-button (click)="pointsTltp.toggle()">
+              <mat-icon #pointsTltp="matTooltip" color="primary"
+                matTooltip="If there are not any points assigned by the IAAF, then it is shown the least required performance to achieve the requested points.">
+                info
+              </mat-icon>
+            </button>
+          </div>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -54,47 +68,23 @@
       </ion-row>
       <ion-row>
         <ion-col [sizeXs]=12 [sizeMd]=5 [sizeSm]=6>
-            <div class="mat-elevation-z8 mat-table" *ngIf="tableIsEmpty()">
-                <div class="mat-header-row"><div class="mat-header-cell">Men</div><div class="mat-header-cell">Event</div><div class="mat-header-cell">Women</div></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['60'] != null || this.performancesDic.w['60'] != null"><td class="mat-cell">{{performancesDic.m['60']}}</td><td class="mat-cell">{{'60'|eventName}}</td><td class="mat-cell">{{performancesDic.w['60']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['60h'] != null || this.performancesDic.w['60h'] != null"><td class="mat-cell">{{performancesDic.m['60h']}}</td><td class="mat-cell">{{'60h'|eventName}}</td><td class="mat-cell">{{performancesDic.w['60h']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['100'] != null || this.performancesDic.w['100'] != null"><td class="mat-cell">{{performancesDic.m['100']}}</td><td class="mat-cell">{{'100'|eventName}}</td><td class="mat-cell">{{performancesDic.w['100']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['110h'] != null || this.performancesDic.w['110h'] != null"><td class="mat-cell">{{performancesDic.m['110h']}}</td><td class="mat-cell">{{'110h'|eventName}}</td><td class="mat-cell">{{performancesDic.w['110h']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['100h'] != null || this.performancesDic.w['100h'] != null"><td class="mat-cell">{{performancesDic.m['100h']}}</td><td class="mat-cell">{{'100h'|eventName}}</td><td class="mat-cell">{{performancesDic.w['100h']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['200'] != null || this.performancesDic.w['200'] != null"><td class="mat-cell">{{performancesDic.m['200']}}</td><td class="mat-cell">{{'200'|eventName}}</td><td class="mat-cell">{{performancesDic.w['200']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['300'] != null || this.performancesDic.w['300'] != null"><td class="mat-cell">{{performancesDic.m['300']}}</td><td class="mat-cell">{{'300'|eventName}}</td><td class="mat-cell">{{performancesDic.w['300']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['400'] != null || this.performancesDic.w['400'] != null"><td class="mat-cell">{{performancesDic.m['400']}}</td><td class="mat-cell">{{'400'|eventName}}</td><td class="mat-cell">{{performancesDic.w['400']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['400h'] != null || this.performancesDic.w['400h'] != null"><td class="mat-cell">{{performancesDic.m['400h']}}</td><td class="mat-cell">{{'400h'|eventName}}</td><td class="mat-cell">{{performancesDic.w['400h']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['600'] != null || this.performancesDic.w['600'] != null"><td class="mat-cell">{{performancesDic.m['600']}}</td><td class="mat-cell">{{'600'|eventName}}</td><td class="mat-cell">{{performancesDic.w['600']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['800'] != null || this.performancesDic.w['800'] != null"><td class="mat-cell">{{performancesDic.m['800']}}</td><td class="mat-cell">{{'800'|eventName}}</td><td class="mat-cell">{{performancesDic.w['800']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['1000'] != null || this.performancesDic.w['1000'] != null"><td class="mat-cell">{{performancesDic.m['1000']}}</td><td class="mat-cell">{{'1000'|eventName}}</td><td class="mat-cell">{{performancesDic.w['1000']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['1500'] != null || this.performancesDic.w['1500'] != null"><td class="mat-cell">{{performancesDic.m['1500']}}</td><td class="mat-cell">{{'1500'|eventName}}</td><td class="mat-cell">{{performancesDic.w['1500']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['1mile'] != null || this.performancesDic.w['1mile'] != null"><td class="mat-cell">{{performancesDic.m['1mile']}}</td><td class="mat-cell">{{'1mile'|eventName}}</td><td class="mat-cell">{{performancesDic.w['1mile']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['2000'] != null || this.performancesDic.w['2000'] != null"><td class="mat-cell">{{performancesDic.m['2000']}}</td><td class="mat-cell">{{'2000'|eventName}}</td><td class="mat-cell">{{performancesDic.w['2000']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['3000'] != null || this.performancesDic.w['3000'] != null"><td class="mat-cell">{{performancesDic.m['3000']}}</td><td class="mat-cell">{{'3000'|eventName}}</td><td class="mat-cell">{{performancesDic.w['3000']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['3000sc'] != null || this.performancesDic.w['3000sc'] != null"><td class="mat-cell">{{performancesDic.m['3000sc']}}</td><td class="mat-cell">{{'3000sc'|eventName}}</td><td class="mat-cell">{{performancesDic.w['3000sc']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['2miles'] != null || this.performancesDic.w['2miles'] != null"><td class="mat-cell">{{performancesDic.m['2miles']}}</td><td class="mat-cell">{{'2miles'|eventName}}</td><td class="mat-cell">{{performancesDic.w['2miles']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['5000'] != null || this.performancesDic.w['5000'] != null"><td class="mat-cell">{{performancesDic.m['5000']}}</td><td class="mat-cell">{{'5000'|eventName}}</td><td class="mat-cell">{{performancesDic.w['5000']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['10000'] != null || this.performancesDic.w['10000'] != null"><td class="mat-cell">{{performancesDic.m['10000']}}</td><td class="mat-cell">{{'10000'|eventName}}</td><td class="mat-cell">{{performancesDic.w['10000']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['hj'] != null || this.performancesDic.w['hj'] != null"><td class="mat-cell">{{performancesDic.m['hj']}}</td><td class="mat-cell">{{'hj'|eventName}}</td><td class="mat-cell">{{performancesDic.w['hj']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['pv'] != null || this.performancesDic.w['pv'] != null"><td class="mat-cell">{{performancesDic.m['pv']}}</td><td class="mat-cell">{{'pv'|eventName}}</td><td class="mat-cell">{{performancesDic.w['pv']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['lj'] != null || this.performancesDic.w['lj'] != null"><td class="mat-cell">{{performancesDic.m['lj']}}</td><td class="mat-cell">{{'lj'|eventName}}</td><td class="mat-cell">{{performancesDic.w['lj']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['tj'] != null || this.performancesDic.w['tj'] != null"><td class="mat-cell">{{performancesDic.m['tj']}}</td><td class="mat-cell">{{'tj'|eventName}}</td><td class="mat-cell">{{performancesDic.w['tj']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['sp'] != null || this.performancesDic.w['sp'] != null"><td class="mat-cell">{{performancesDic.m['sp']}}</td><td class="mat-cell">{{'sp'|eventName}}</td><td class="mat-cell">{{performancesDic.w['sp']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['dt'] != null || this.performancesDic.w['dt'] != null"><td class="mat-cell">{{performancesDic.m['dt']}}</td><td class="mat-cell">{{'dt'|eventName}}</td><td class="mat-cell">{{performancesDic.w['dt']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['ht'] != null || this.performancesDic.w['ht'] != null"><td class="mat-cell">{{performancesDic.m['ht']}}</td><td class="mat-cell">{{'ht'|eventName}}</td><td class="mat-cell">{{performancesDic.w['ht']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['jt'] != null || this.performancesDic.w['jt'] != null"><td class="mat-cell">{{performancesDic.m['jt']}}</td><td class="mat-cell">{{'jt'|eventName}}</td><td class="mat-cell">{{performancesDic.w['jt']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['heptathlon'] != null || this.performancesDic.w['heptathlon'] != null"><td class="mat-cell">{{performancesDic.m['heptathlon']}}</td><td class="mat-cell">{{'heptathlon'|eventName}}</td><td class="mat-cell">{{performancesDic.w['heptathlon']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['pentathlon'] != null || this.performancesDic.w['pentathlon'] != null"><td class="mat-cell">{{performancesDic.m['pentathlon']}}</td><td class="mat-cell">{{'pentathlon'|eventName}}</td><td class="mat-cell">{{performancesDic.w['pentathlon']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['decathlon'] != null || this.performancesDic.w['decathlon'] != null"><td class="mat-cell">{{performancesDic.m['decathlon']}}</td><td class="mat-cell">{{'decathlon'|eventName}}</td><td class="mat-cell">{{performancesDic.w['decathlon']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['4x100'] != null || this.performancesDic.w['4x100'] != null"><td class="mat-cell">{{performancesDic.m['4x100']}}</td><td class="mat-cell">{{'4x100'|eventName}}</td><td class="mat-cell">{{performancesDic.w['4x100']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['4x200'] != null || this.performancesDic.w['4x200'] != null"><td class="mat-cell">{{performancesDic.m['4x200']}}</td><td class="mat-cell">{{'4x200'|eventName}}</td><td class="mat-cell">{{performancesDic.w['4x200']}}</td></div>
-                <div class="mat-row" *ngIf="this.performancesDic.m['4x400'] != null || this.performancesDic.w['4x400'] != null"><td class="mat-cell">{{performancesDic.m['4x400']}}</td><td class="mat-cell">{{'4x400'|eventName}}</td><td class="mat-cell">{{performancesDic.w['4x400']}}</td></div>
-            </div>          
+          <div class="mat-elevation-z8 mat-table" *ngIf="tableIsEmpty()">
+            <div class="mat-header-row">
+              <div class="mat-header-cell">Men</div>
+              <div class="mat-header-cell">Event</div>
+              <div class="mat-header-cell">Women</div>
+            </div>
+            <div *ngFor="let event of eventTableRows">
+              <div class="mat-row"
+                *ngIf="this.performancesDic.m[event] != null || this.performancesDic.w[event] != null">
+                <td class="mat-cell">{{performancesDic.m[event]}}</td>
+                <td class="mat-cell">{{event|eventName}}</td>
+                <td class="mat-cell">{{performancesDic.w[event]}}</td>
+              </div>
+            </div>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
   </form>
-  
-
 </ion-content>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, NgZone } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PerformancesService } from "./performances.service";
 import { GetPerformancesCmd } from "./cmd/get-performances.cmd";
@@ -6,30 +6,72 @@ import { GetPerformancesDto } from "./dto/get-performances.dto";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-performances',
-  templateUrl: './performances.page.html',
-  styleUrls: ['./performances.page.scss']
+  selector: "app-performances",
+  templateUrl: "./performances.page.html",
+  styleUrls: ["./performances.page.scss"]
 })
 export class PerformancesPage implements OnInit, OnDestroy {
-  ngOnDestroy(): void {
-    this.serviceSubscription.unsubscribe();
-  }
-
   public performanceForm: FormGroup;
   public performancesAreCalculated: boolean;
   private serviceSubscription: Subscription;
-  public performancesDic = {
-    m: {},
-    w: {}
-  };
+  public performancesDic;
+  public eventTableRows = [
+    "60",
+    "60h",
+    "100",
+    "110h",
+    "100h",
+    "200",
+    "300",
+    "400",
+    "400h",
+    "600",
+    "800",
+    "1000",
+    "1500",
+    "1mile",
+    "2000",
+    "3000",
+    "3000sc",
+    "2miles",
+    "5000",
+    "10000",
+    "hj",
+    "pv",
+    "lj",
+    "tj",
+    "sp",
+    "dt",
+    "ht",
+    "jt",
+    "heptathlon",
+    "pentathlon",
+    "decathlon",
+    "4x100",
+    "4x200",
+    "4x400",
+    "5km",
+    "10km",
+    "20km",
+    "halfmarathon",
+    "marathon",
+    "10km_rw",
+    "20km_rw",
+    "50km_rw"
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
-    private performancesService: PerformancesService
-  ) { }
+    private performancesService: PerformancesService,
+    private _ngZone: NgZone
+  ) {}
 
   ngOnInit() {
     this.serviceSubscription = new Subscription();
+    this.performancesDic = {
+      m: {},
+      w: {}
+    };
     this.performancesAreCalculated = false;
     this.performanceForm = this.formBuilder.group({
       pointsInput: [
@@ -46,7 +88,14 @@ export class PerformancesPage implements OnInit, OnDestroy {
     this.performanceForm.controls["typeSelect"].setValue("i");
   }
 
+  ngOnDestroy(): void {
+    if (this.serviceSubscription) {
+      this.serviceSubscription.unsubscribe();
+    }
+  }
+
   onGetPerformances() {
+    this.performancesDic = { m: {}, w: {} };
     let getPerformancesCmd = new GetPerformancesCmd({
       Points: Number(this.performanceForm.controls["pointsInput"].value),
       Type: this.performanceForm.controls["typeSelect"].value
@@ -63,12 +112,16 @@ export class PerformancesPage implements OnInit, OnDestroy {
         });
       })
       .add(() => {
-        this.performancesAreCalculated = false;
+        this.performancesAreCalculated = false;        
       });
     this.serviceSubscription.add(getPerformancesSubscription);
   }
 
   tableIsEmpty() {
-    return Object.entries(this.performancesDic.m).length + Object.entries(this.performancesDic.w).length > 0
+    return (
+      Object.entries(this.performancesDic.m).length +
+        Object.entries(this.performancesDic.w).length >
+      0
+    );
   }
 }

@@ -3,13 +3,15 @@ import {
   OnInit,
   Input,
   OnChanges,
-  AfterContentChecked
+  AfterContentChecked,
+  OnDestroy
 } from "@angular/core";
 import { EventEntity } from "../entities/event.entity";
 import { RankingService } from "../ranking.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { GetPointsCmd } from "../cmd/get-points.cmd";
 import { GetPointsDto } from "../dto/get-points.dto";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-event-details",
@@ -17,7 +19,8 @@ import { GetPointsDto } from "../dto/get-points.dto";
   styleUrls: ["./event-details.component.scss"]
 })
 export class EventDetailsComponent
-  implements OnChanges, OnInit, AfterContentChecked {
+  implements OnChanges, OnInit, AfterContentChecked, OnDestroy {
+  
   @Input()
   selectedEvent: EventEntity;
 
@@ -25,6 +28,7 @@ export class EventDetailsComponent
   public meetingCategories: string[];
   public totalPoints: number;
   public pointsAreCalculated: boolean;
+  private serviceSubscription: Subscription;
 
   constructor(
     private rankingService: RankingService,
@@ -38,6 +42,7 @@ export class EventDetailsComponent
   }
 
   ngOnInit() {
+    this.serviceSubscription = new Subscription();
     this.eventForm = this.formBuilder.group({
       performanceInput: [""],
       windInput: ["", Validators.pattern("^([-]|[+])?\\d+([.][0-9])?$")],
@@ -51,6 +56,12 @@ export class EventDetailsComponent
       placePoints: [{ value: "", disabled: true }],
       progressedToFinalCombo: [""]
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.serviceSubscription) {
+      this.serviceSubscription.unsubscribe();
+    }
   }
 
   ngAfterContentChecked() {
@@ -73,13 +84,14 @@ export class EventDetailsComponent
         Validators.pattern(this.selectedEvent.PerformanceValidation.Pattern)
       ])
     );
-    if(this.selectedEvent.SupportsWind){
-      this.eventForm.controls["windmeasuredSelect"].setValidators(Validators.required);
-    }
-    else {
+    if (this.selectedEvent.SupportsWind) {
+      this.eventForm.controls["windmeasuredSelect"].setValidators(
+        Validators.required
+      );
+    } else {
       this.eventForm.controls["windmeasuredSelect"].clearValidators();
     }
-    if (this.eventForm.controls["windmeasuredSelect"].value == 'true') {
+    if (this.eventForm.controls["windmeasuredSelect"].value == "true") {
       this.eventForm.controls["windInput"].enable();
     } else {
       this.eventForm.controls["windInput"].setValue("");
@@ -131,7 +143,7 @@ export class EventDetailsComponent
     ].value;
     if (this.selectedEvent.SupportsWind) {
       getPointsCmd.wind = { wasMeasured: false, value: null };
-      if (this.eventForm.controls["windmeasuredSelect"].value == 'true') {
+      if (this.eventForm.controls["windmeasuredSelect"].value == "true") {
         getPointsCmd.wind.wasMeasured = true;
         if (this.eventForm.controls["windInput"].value) {
           getPointsCmd.wind.value = Number(
@@ -156,8 +168,8 @@ export class EventDetailsComponent
         : null;
     }
 
-    this.pointsAreCalculated = true;    
-    this.rankingService
+    this.pointsAreCalculated = true;
+    let getPointsSubscription = this.rankingService
       .getPoints(getPointsCmd)
       .subscribe((res: GetPointsDto) => {
         this.eventForm.controls["performancePoints"].setValue(
@@ -179,6 +191,7 @@ export class EventDetailsComponent
       .add(() => {
         this.pointsAreCalculated = false;
       });
+      this.serviceSubscription.add(getPointsSubscription)
   }
 
   clearForm() {

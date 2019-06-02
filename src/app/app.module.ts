@@ -18,6 +18,7 @@ import {
   MatFormFieldModule,
   MatIconRegistry
 } from "@angular/material";
+import { RateMeNagModule } from './rate-me-nag/rate-me-nag.module';
 
 @NgModule({
   declarations: [
@@ -33,14 +34,16 @@ import {
     MatToolbarModule,
     MatIconModule,
     MatFormFieldModule,
-    HttpClientModule
+    HttpClientModule,
+    RateMeNagModule  
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [AppComponent]
 })
 export class AppModule {
   constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {

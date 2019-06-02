@@ -27,6 +27,8 @@ import {
 
 import { ErrorResponseInterceptor } from "../interceptors/error-response.interceptor";
 import { PipesModule } from '../pipes/pipes.module';
+import { RateMeNagModule } from '../rate-me-nag/rate-me-nag.module';
+import { RateMeNagComponent } from '../rate-me-nag/rate-me-nag.component';
 
 const routes: Routes = [
   {
@@ -55,12 +57,14 @@ const routes: Routes = [
     MatTooltipModule,
     MatProgressSpinnerModule,
     PipesModule,
+    RateMeNagModule
   ],
   declarations: [
     RankingPage,
     EventFiltersComponent,
     EventDetailsComponent,
   ],
+  entryComponents: [RateMeNagComponent],
   providers: [
     RankingService,
     {

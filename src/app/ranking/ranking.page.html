@@ -1,5 +1,5 @@
 <ion-header>
-  <mat-toolbar color="primary">
+  <mat-toolbar color="warn">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -12,6 +12,13 @@
       refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
+  <ion-grid class="mat-app-background mat-typography">
+    <ion-row>
+      <ion-col [sizeXs]=12>
+        <h2 class="mat-h2">Calculate points based on performance and results</h2>
+      </ion-col>
+    </ion-row>
+  </ion-grid> 
   <app-event-filters (onEventSelection)="selectEvent($event)" [Events]="events"></app-event-filters>
   <app-event-details *ngIf="selectedEvent" [selectedEvent]="selectedEvent"></app-event-details>
 </ion-content>

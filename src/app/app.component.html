@@ -2,11 +2,11 @@
   <ion-split-pane>
       <ion-menu>
           <ion-header>
-              <mat-toolbar color="primary">
+              <mat-toolbar color="warn">
                   <span>Menu</span>
               </mat-toolbar>
           </ion-header>
-          <ion-content>
+          <ion-content>           
               <ion-list>
                   <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
                       <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="{{isActive(p)?'#f0f0f0':''}}">

@@ -1,0 +1,55 @@
+<ion-header>
+  <mat-toolbar color="warn">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <span>Info</span>
+  </mat-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="mat-app-background mat-typography">
+    <ion-row>
+      <ion-col [sizeXs]="12">
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon color="primary" svgIcon="comment-question"></mat-icon>
+            </div>
+            <mat-card-title>How do you calculate the points?</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              The points are calculated based on the latest Scoring tables of 2017 and the latest Ranking tables of 2019
+              that,
+              the international athletics federation has published.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col [sizeXs]="12">
+          <mat-card>
+            <mat-card-header>
+              <div mat-card-avatar>
+                <mat-icon color="primary" svgIcon="comment-question"></mat-icon>
+              </div>
+              <mat-card-title>Can I calculate the points without the app?</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                Sure! You can read about and use the Scoring and Ranking tables that you will find below.
+              </p>              
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" matRipple
+                (click)="onScoringTables()"><span class="mat-h3">Scoring Tables</span></button>
+                <button mat-raised-button color="primary" matRipple
+                  (click)="onRankingTables()"><span class="mat-h3">Ranking Tables</span></button>
+              </mat-card-actions>
+          </mat-card>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
