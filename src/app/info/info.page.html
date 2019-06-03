@@ -16,6 +16,24 @@
             <div mat-card-avatar>
               <mat-icon color="primary" svgIcon="comment-question"></mat-icon>
             </div>
+            <mat-card-title>In what format do I type in the performance?</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              There is always an example in the info button <mat-icon color="primary">info</mat-icon> next to the
+              "Performance" field.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col [sizeXs]="12">
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon color="primary" svgIcon="comment-question"></mat-icon>
+            </div>
             <mat-card-title>How do you calculate the points?</mat-card-title>
           </mat-card-header>
           <mat-card-content>
@@ -29,27 +47,27 @@
       </ion-col>
     </ion-row>
     <ion-row>
-        <ion-col [sizeXs]="12">
-          <mat-card>
-            <mat-card-header>
-              <div mat-card-avatar>
-                <mat-icon color="primary" svgIcon="comment-question"></mat-icon>
-              </div>
-              <mat-card-title>Can I calculate the points without the app?</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p>
-                Sure! You can read about and use the Scoring and Ranking tables that you will find below.
-              </p>              
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button color="primary" matRipple
-                (click)="onScoringTables()"><span class="mat-h3">Scoring Tables</span></button>
-                <button mat-raised-button color="primary" matRipple
-                  (click)="onRankingTables()"><span class="mat-h3">Ranking Tables</span></button>
-              </mat-card-actions>
-          </mat-card>
-        </ion-col>
-      </ion-row>
+      <ion-col [sizeXs]="12">
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon color="primary" svgIcon="comment-question"></mat-icon>
+            </div>
+            <mat-card-title>Can I calculate the points without the app?</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Sure! You can read about and use the Scoring and Ranking tables that you will find below.
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" matRipple (click)="onScoringTables()"><span class="mat-h3">Scoring
+                Tables</span></button>
+            <button mat-raised-button color="primary" matRipple (click)="onRankingTables()"><span class="mat-h3">Ranking
+                Tables</span></button>
+          </mat-card-actions>
+        </mat-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
