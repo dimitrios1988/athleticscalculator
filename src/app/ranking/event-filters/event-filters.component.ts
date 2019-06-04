@@ -1,4 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, ElementRef, Input, OnChanges } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ElementRef,
+  Input,
+  OnChanges
+} from "@angular/core";
 import { RankingService } from "../ranking.service";
 import { EventEntity } from "../entities/event.entity";
 
@@ -8,8 +16,6 @@ import { EventEntity } from "../entities/event.entity";
   styleUrls: ["./event-filters.component.scss"]
 })
 export class EventFiltersComponent implements OnInit, OnChanges {
-  
-  
   constructor(private rankingService: RankingService) {}
 
   //private events: EventEntity[];
@@ -22,13 +28,13 @@ export class EventFiltersComponent implements OnInit, OnChanges {
   @Input() Events: EventEntity[];
 
   ngOnChanges(): void {
-    if(this.Events){
+    if (this.Events) {
       this.genders = Array.from(new Set(this.Events.map(r => r.Gender)));
       this.eventTypes = Array.from(new Set(this.Events.map(r => r.Type)));
       this.filters.gender = this.genders[0];
       this.filters.type = this.eventTypes[0];
       this.filterEvents();
-    }    
+    }
   }
 
   ngOnInit() {}
@@ -39,11 +45,30 @@ export class EventFiltersComponent implements OnInit, OnChanges {
     });
   }
 
-  eventSelected(event: { value: any; }) {
+  eventSelected(event: { value: any }): void {
     if (event != undefined && event != null) {
-      this.onEventSelection.emit(event.value);
+      if (event instanceof CustomEvent) {
+        this.onEventSelection.next(event.detail);
+      } else this.onEventSelection.next(event.value);
     } else {
-      this.onEventSelection.emit(null);
+      this.onEventSelection.next(null);
     }
   }
+
+  compareFn = function(o1, o2) {
+    if (o1 && o2) {
+      if (o1.Name == o2.Name) {
+        let e = new CustomEvent("selectionChange", {
+          detail: o1
+        });
+        this._elementRef.nativeElement.dispatchEvent(e);
+        return true;
+      }
+    }
+    let e = new CustomEvent("selectionChange", {
+      detail: null
+    });
+    this._elementRef.nativeElement.dispatchEvent(e);
+    return false;
+  };
 }

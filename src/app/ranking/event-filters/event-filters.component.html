@@ -23,8 +23,8 @@
         <ion-col [sizeXs]=12 [sizeMd]=4 [sizeSm]=6>
             <mat-form-field appearance="fill" class="full-width-field">
                 <mat-label>Event</mat-label>
-                <mat-select (selectionChange)="eventSelected($event)">
-                    <mat-option *ngFor="let event of filteredEvents" [value]="event">
+                <mat-select (selectionChange)="eventSelected($event)" [compareWith]="compareFn">
+                    <mat-option *ngFor="let event of filteredEvents" [value]="event" >
                         {{event.Name | eventName}}
                     </mat-option>
                 </mat-select>
