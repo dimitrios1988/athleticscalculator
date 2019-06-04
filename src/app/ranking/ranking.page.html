@@ -1,9 +1,11 @@
 <ion-header>
   <mat-toolbar color="warn">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <span>Scoring & Ranking Points Calculator</span>
+    <mat-toolbar-row>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <span style="font-size: 1.05rem">Scoring & Ranking Points Calculator</span>
+    </mat-toolbar-row>
   </mat-toolbar>
 </ion-header>
 <ion-content>
@@ -18,7 +20,7 @@
         <h2 class="mat-h2">Calculate points based on performance and results</h2>
       </ion-col>
     </ion-row>
-  </ion-grid> 
+  </ion-grid>
   <app-event-filters (onEventSelection)="selectEvent($event)" [Events]="events"></app-event-filters>
   <app-event-details *ngIf="selectedEvent" [selectedEvent]="selectedEvent"></app-event-details>
 </ion-content>
