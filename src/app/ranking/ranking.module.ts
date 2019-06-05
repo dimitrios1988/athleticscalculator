@@ -23,12 +23,16 @@ import {
   MatDividerModule,
   MatTooltipModule,
   MatProgressSpinnerModule,
+  MatGridListModule,
+  MatDialogModule,
+  MatListModule,
 } from "@angular/material";
 
 import { ErrorResponseInterceptor } from "../interceptors/error-response.interceptor";
 import { PipesModule } from '../pipes/pipes.module';
 import { RateMeNagModule } from '../rate-me-nag/rate-me-nag.module';
 import { RateMeNagComponent } from '../rate-me-nag/rate-me-nag.component';
+import { MeetingSearchComponent } from './meeting-search/meeting-search.component';
 
 const routes: Routes = [
   {
@@ -57,14 +61,17 @@ const routes: Routes = [
     MatTooltipModule,
     MatProgressSpinnerModule,
     PipesModule,
-    RateMeNagModule
+    RateMeNagModule,
+    MatDialogModule,
+    MatListModule,
   ],
   declarations: [
     RankingPage,
     EventFiltersComponent,
     EventDetailsComponent,
+    MeetingSearchComponent
   ],
-  entryComponents: [RateMeNagComponent],
+  entryComponents: [RateMeNagComponent, MeetingSearchComponent],
   providers: [
     RankingService,
     {

@@ -4,7 +4,7 @@ import {
   Input,
   OnChanges,
   AfterContentChecked,
-  OnDestroy
+  OnDestroy,
 } from "@angular/core";
 import { EventEntity } from "../entities/event.entity";
 import { RankingService } from "../ranking.service";
@@ -12,6 +12,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { GetPointsCmd } from "../cmd/get-points.cmd";
 import { GetPointsDto } from "../dto/get-points.dto";
 import { Subscription } from "rxjs";
+import { MatDialog } from '@angular/material';
+import { MeetingSearchComponent } from '../meeting-search/meeting-search.component';
 
 @Component({
   selector: "app-event-details",
@@ -32,7 +34,8 @@ export class EventDetailsComponent
 
   constructor(
     private rankingService: RankingService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog,
   ) {}
 
   ngOnChanges() {
@@ -209,5 +212,15 @@ export class EventDetailsComponent
       this.eventForm.controls["progressedToFinalCombo"].setValue("");
     }
     this.totalPoints = null;
+  }
+
+  onSearchMeetings() {
+    const dialogRef = this.dialog.open(MeetingSearchComponent, {
+      width: "100%",
+      data: {meetingCategories: this.meetingCategories}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.eventForm.controls["meetingCategorySelect"].setValue(result);
+    });
   }
 }

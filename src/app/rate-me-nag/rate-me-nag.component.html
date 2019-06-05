@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>Hi! Did you like the app?</h1>
-<div mat-dialog-content>
+<mat-dialog-content class="mat-typography">
   <h2>Please rate it!</h2>
   <p>
     <star-rating size="large" [starType]="'svg'" [rating]="rating"></star-rating>
   </p>
-</div>
-<div mat-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
   <button mat-raised-button color="accent" (click)="onNoClick()">No Thanks</button>
   <button mat-raised-button color="primary" [mat-dialog-close]="rating" cdkFocusInitial (click)="onYesClick()">Yeah Sure!</button>
-</div>
+</mat-dialog-actions>

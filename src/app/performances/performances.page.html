@@ -33,13 +33,18 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col [sizeXs]=12 [sizeMd]=5 [sizeSm]=6>
-          <div style="display: flex">
+        <ion-col [sizeXs]=12 [sizeMd]=5 [sizeSm]=6>          
             <mat-form-field class="full-width-field">
               <mat-label>Please type in your desired points</mat-label>
               <input matInput type="text" autocomplete="off" formControlName="pointsInput" 
                 (keyup.enter)="(!this.performanceForm.invalid && !performancesAreCalculated)?onGetPerformances():null"
                 required>
+                <button mat-icon-button matSuffix (click)="pointsTltp.toggle()">
+                    <mat-icon #pointsTltp="matTooltip" color="primary"
+                      matTooltip="If there aren't any points assigned by the IAAF, then the least required performance to achieve the requested points is displayed.">
+                      info
+                    </mat-icon>
+                  </button>
               <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('required')">
                 This field cannot be empty</mat-error>
               <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('pattern')">
@@ -48,14 +53,7 @@
                 Points must be more than 0</mat-error>
               <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('max')">
                 Maximum points are 1400</mat-error>
-            </mat-form-field>
-            <button mat-icon-button (click)="pointsTltp.toggle()">
-              <mat-icon #pointsTltp="matTooltip" color="primary"
-                matTooltip="If there aren't any points assigned by the IAAF, then the least required performance to achieve the requested points is displayed.">
-                info
-              </mat-icon>
-            </button>
-          </div>
+            </mat-form-field>            
         </ion-col>
       </ion-row>
       <ion-row>
