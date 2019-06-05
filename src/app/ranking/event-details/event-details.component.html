@@ -83,7 +83,7 @@
                                         from Place</mat-checkbox>
                                     <button mat-icon-button (click)="calculatePlacePointsTltp.toggle()">
                                         <mat-icon #calculatePlacePointsTltp="matTooltip" color="primary"
-                                            matTooltip="This does not apply to you, in case you competed out of competition or as foreigner in national championships.">
+                                            matTooltip="This does not apply to you, in case you as compete as a foreigner in national championships, or out of competition.">
                                             info
                                         </mat-icon>
                                     </button>
@@ -91,7 +91,7 @@
                             </ion-row>
                             <div *ngIf="eventForm.controls['calculatePlacePointsCheckbox'].value">
                                 <ion-row>
-                                    <ion-col [sizeXs]="6" class="multi-line">
+                                    <ion-col [sizeXs]="12" [sizeSm]="6" class="multi-line">
                                         <mat-form-field class="full-width-field">
                                             <mat-label>Type of Competition</mat-label>
                                             <mat-select formControlName="competitionTypeSelect"
@@ -118,8 +118,8 @@
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
-                                    <ion-col [sizeXs]="12" [sizeSm]="6" class="multi-line">
-                                        <mat-form-field>
+                                    <ion-col [sizeXs]="12" [sizeSm]="6" class="multi-line" style="display: flex;">
+                                        <mat-form-field class="full-width-field">
                                             <mat-label>Meeting Category Type</mat-label>
                                             <mat-select formControlName="meetingCategorySelect" required
                                                 [disabled]="meetingCategories.length==0">
@@ -133,7 +133,7 @@
                                         </mat-form-field>
                                         <button mat-icon-button (click)="categoryTypeTltp.toggle()">
                                             <mat-icon #categoryTypeTltp="matTooltip" color="primary"
-                                                matTooltip="Be sure that if your event is not in the official meeting's disciplines, then other meeting category may apply.">
+                                                matTooltip="Beware: If your event is not in the official meeting's disciplines, then another meeting category may apply.">
                                                 info
                                             </mat-icon>
                                         </button>
