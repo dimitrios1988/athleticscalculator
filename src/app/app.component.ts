@@ -9,7 +9,7 @@ import { Plugins } from "@capacitor/core";
 const { AdMob } = Plugins;
 const bannerOptions: AdOptions = {
   adId: "ca-app-pub-9835906624473980/6495318174",
-  adSize: AdSize.SMART_BANNER,
+  adSize: AdSize.BANNER,
   position: AdPosition.BOTTOM_CENTER
 };
 
@@ -44,23 +44,22 @@ export class AppComponent {
     private statusBar: StatusBar,
     private router: Router
   ) {
-    this.initializeApp();
-    if (this.platform.is["hybrid"]) {
+    if(this.platform.is('hybrid')){
       AdMob.initialize("ca-app-pub-9835906624473980~5760519689");
     }
+    this.initializeApp();
   }
 
   async initializeApp() {
     this.platform
       .ready()
-      .then(() => {
+      .then(() => {        
         this.statusBar.styleDefault();
-
         this.splashScreen.hide();
       })
       .then(async () => {
-        if (this.platform.is["hybrid"]) {
-          await AdMob.showBanner(bannerOptions);                            
+        if(this.platform.is('hybrid')) {
+          await AdMob.showBanner(bannerOptions);
         }
       });
   }

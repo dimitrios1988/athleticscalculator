@@ -41,9 +41,9 @@ export class MeetingSearchComponent implements OnInit {
 
   filterMeetings(searchInput) {
   this.FilteredMeetings = this.Meetings.filter(m => {
-     return m.Name.includes(searchInput.value) || 
-      m.City.includes(searchInput.value) ||
-      m.Country.includes(searchInput.value);
+     return m.Name.toLowerCase().includes(searchInput.value.toLowerCase()) || 
+      m.City.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+      m.Country.toLowerCase().includes(searchInput.value.toLowerCase());
     })
   }
 
