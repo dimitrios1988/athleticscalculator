@@ -45,7 +45,7 @@ export class AppComponent {
     private router: Router
   ) {
     if(this.platform.is('hybrid')){
-      AdMob.initialize("ca-app-pub-9835906624473980~5760519689");
+      //AdMob.initialize("ca-app-pub-9835906624473980~5760519689");
     }
     this.initializeApp();
   }
@@ -59,7 +59,7 @@ export class AppComponent {
       })
       .then(async () => {
         if(this.platform.is('hybrid')) {
-          await AdMob.showBanner(bannerOptions);
+          //await AdMob.showBanner(bannerOptions);
         }
       });
   }
