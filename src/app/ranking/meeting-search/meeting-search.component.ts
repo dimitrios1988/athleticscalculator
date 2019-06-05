@@ -40,10 +40,13 @@ export class MeetingSearchComponent implements OnInit {
   }
 
   filterMeetings(searchInput) {
+    let searchTerms = searchInput.value.toLowerCase().split(" ").filter(s=>s!="");
   this.FilteredMeetings = this.Meetings.filter(m => {
-     return m.Name.toLowerCase().includes(searchInput.value.toLowerCase()) || 
-      m.City.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-      m.Country.toLowerCase().includes(searchInput.value.toLowerCase());
+    let meetingFound = true;
+    searchTerms.forEach(searchTerm => {
+      meetingFound = meetingFound && (m.Name.toLowerCase() + " " + m.City.toLowerCase() + m.Country.toLowerCase()).includes(searchTerm);
+    });
+     return meetingFound;
     })
   }
 
