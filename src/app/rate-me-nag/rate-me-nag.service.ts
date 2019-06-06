@@ -35,7 +35,6 @@ export class RateMeNagService {
 
   showDialog() {
     const dialogRef = this.dialog.open(RateMeNagComponent, {
-      width: "100%"
     });
     dialogRef
       .afterClosed()
