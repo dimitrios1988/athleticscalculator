@@ -13,6 +13,7 @@ import { PerformancesService } from './performances.service';
 import { PipesModule } from '../pipes/pipes.module';
 import { RateMeNagModule } from '../rate-me-nag/rate-me-nag.module';
 import { RateMeNagComponent } from '../rate-me-nag/rate-me-nag.component';
+import { AdInterceptor } from '../interceptors/ad.interceptor';
 
 const routes: Routes = [
   {
@@ -49,6 +50,11 @@ const routes: Routes = [
     {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorResponseInterceptor,
+    multi: true
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AdInterceptor,
     multi: true
   },
 ],
