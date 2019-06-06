@@ -216,7 +216,6 @@ export class EventDetailsComponent
 
   onSearchMeetings() {
     const dialogRef = this.dialog.open(MeetingSearchComponent, {
-      width: "100%",    
       data: {meetingCategories: this.meetingCategories}
     });
     dialogRef.afterClosed().subscribe(result => {
