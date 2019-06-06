@@ -1,33 +1,44 @@
+<h1 mat-dialog-title>Please choose a meeting</h1>
+<ion-grid class="mat-app-background mat-typography">
+  <ion-row>
+    <ion-col size="auto">
+      <mat-form-field>
+        <mat-label>Search by name of meeting, city or country</mat-label>
+        <input matInput #searchInput type="search" (keyup)=filterMeetings(searchInput)>
+        <mat-icon matSuffix color="primary">search</mat-icon>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="auto">
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <mat-select #year [value]='getCurrentYear()' (selectionChange)="getMeetings(year.value)">
+          <mat-option *ngFor="let year of Years" [value]="year">
+            {{year}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
-  <h1 mat-dialog-title>Please choose a meeting</h1>
-  <mat-form-field class="full-width-field">
-    <mat-label>Search by name of meeting, city or country</mat-label>
-    <input matInput #searchInput type="search" (keyup)=filterMeetings(searchInput)>
-    <mat-icon matSuffix color="primary">search</mat-icon>
-    <mat-label>Year</mat-label>
-    <mat-select #year [value]='getCurrentYear()' (selectionChange)="getMeetings(year.value)">
-      <mat-option *ngFor="let year of Years" [value]="year">
-        {{year}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-dialog-content style="max-height: 45vh;" class="mat-typography">
-    <mat-selection-list #meetings>
-      <mat-list-option *ngFor="let meeting of FilteredMeetings" [value]="meeting">
-        <p mat-line><span class="mat-h2">{{meeting.Name}}</span></p>
-        <p mat-line><strong>Date:</strong> {{meeting.Date | date :'mediumDate'}}</p>
-        <p mat-line><strong>Category:</strong> {{meeting.MeetingCategory | uppercase}}</p>
-        <p mat-line>{{meeting.City}}, {{meeting.Country}}</p>
-
-        <mat-divider></mat-divider>
-      </mat-list-option>
-    </mat-selection-list>
-  </mat-dialog-content>
-  <p><small>Please note: The meeting category refers only to the official meetings' events</small></p>
-  <p *ngIf="Meetings.length>0">
-    <strong>Meeting selected:</strong>
-    {{meetings.selectedOptions.selected.length>0?meetings.selectedOptions.selected[0].value.Name:''}}
-  </p>
+<mat-dialog-content style="max-height: 40vh;" class="mat-typography">
+  <mat-selection-list #meetings>
+    <mat-list-option *ngFor="let meeting of FilteredMeetings" [value]="meeting">
+      <h3 mat-line><strong>{{meeting.Name}}</strong></h3>
+      <p mat-line><strong>Date:</strong> {{meeting.Date | date :'mediumDate'}}</p>
+      <p mat-line><strong>Category:</strong> {{meeting.MeetingCategory | uppercase}}</p>
+      <p mat-line>{{meeting.City}}, {{meeting.Country}}</p>
+      <mat-divider></mat-divider>
+    </mat-list-option>
+  </mat-selection-list>
+</mat-dialog-content>
+<p><small>Please note: The meeting category refers only to the official meetings' events</small></p>
+<p *ngIf="Meetings.length>0">
+  <strong>Meeting selected:</strong>
+  {{meetings.selectedOptions.selected.length>0?meetings.selectedOptions.selected[0].value.Name:''}}
+</p>
 <mat-dialog-actions align="end">
   <button mat-raised-button color="warn" mat-dialog-close (click)="onNoClick()">Cancel</button>
   <button mat-raised-button color="primary" [disabled]="meetings.selectedOptions.selected.length==0"
