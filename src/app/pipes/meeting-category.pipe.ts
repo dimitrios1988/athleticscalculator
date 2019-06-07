@@ -11,7 +11,7 @@ export class MeetingCategoryPipe implements PipeTransform {
     "gw": "GW",
     "gl": "GL",
     "a": "A",
-    "b": "B",
+    "b": "B (e.g. Outdoor Nationals)",
     "c": "C",
     "d": "D",
     "e": "E",

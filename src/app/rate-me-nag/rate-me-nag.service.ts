@@ -28,7 +28,7 @@ export class RateMeNagService {
       Date.now() - this.previousNag > 86400000 / 2 &&
       localStorage.getItem("hasRated") != "true"
     ) {
-      setTimeout(() => this.showDialog(), 3000);
+      setTimeout(() => this.showDialog(), 2500);
     }
     
   }
