@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject, ViewChild } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSelectionList, MatListOption } from "@angular/material";
-import { RankingService } from '../ranking.service';
-import { GetMeetingsDto } from '../dto/get-meetings.dto';
-import { MeetingEntity } from '../entities/meeting.entity';
+import { GetMeetingsDto } from '../../meetings/dto/get-meetings.dto';
+import { MeetingEntity } from '../../meetings/entities/meeting.entity';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MeetingsService } from '../../meetings/meetings.service';
 
 @Component({
   selector: "app-meeting-search",
@@ -21,7 +21,7 @@ export class MeetingSearchComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<MeetingSearchComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    private rankingService: RankingService
+    private meetingsService: MeetingsService
   ) {}
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class MeetingSearchComponent implements OnInit {
   }
 
   getMeetings(year) {
-    this.rankingService.getMeetings(year, this.data.meetingCategories).subscribe((res: GetMeetingsDto[])=>{
+    this.meetingsService.getMeetings(year, this.data.meetingCategories).subscribe((res: GetMeetingsDto[])=>{
       this.Meetings = res.map(m => new MeetingEntity(m));
       this.FilteredMeetings = [...this.Meetings];
     });

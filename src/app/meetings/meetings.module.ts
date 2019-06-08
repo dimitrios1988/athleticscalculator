@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { MeetingsPage } from './meetings.page';
 import { MatToolbarModule, MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { MeetingFiltersComponent } from './meeting-filters/meeting-filters.component';
+import { MeetingsService } from './meetings.service';
 
 const routes: Routes = [
   {
@@ -26,6 +27,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatSelectModule
   ],
-  declarations: [MeetingsPage, MeetingFiltersComponent]
+  declarations: [MeetingsPage, MeetingFiltersComponent],
+  providers: [MeetingsService],
+  //exports: [MeetingsService]
 })
 export class MeetingsPageModule {}

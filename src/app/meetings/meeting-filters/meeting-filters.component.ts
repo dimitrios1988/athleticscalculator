@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MeetingsService } from '../meetings.service';
 
 @Component({
   selector: 'app-meeting-filters',
@@ -9,8 +10,9 @@ export class MeetingFiltersComponent implements OnInit {
 
   Filters: {Years: string[]; Name: string; Countries: string[];}
 
-  constructor() { 
+  constructor(meetingsService: MeetingsService) { 
     let currentYear = new Date().getFullYear();
+    this.Filters = {Years:[],Name:'',Countries:[]}
     
   }
 

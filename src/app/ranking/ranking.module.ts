@@ -33,6 +33,8 @@ import { RateMeNagModule } from '../rate-me-nag/rate-me-nag.module';
 import { RateMeNagComponent } from '../rate-me-nag/rate-me-nag.component';
 import { MeetingSearchComponent } from './meeting-search/meeting-search.component';
 import { AdInterceptor } from '../interceptors/ad.interceptor';
+import { MeetingsPageModule } from '../meetings/meetings.module';
+//import { MeetingsPageModule } from '../meetings/meetings.module';
 
 const routes: Routes = [
   {
