@@ -194,7 +194,7 @@ export class EventDetailsComponent
       .add(() => {
         this.pointsAreCalculated = false;
       });
-      this.serviceSubscription.add(getPointsSubscription)
+      this.serviceSubscription.add(getPointsSubscription);
   }
 
   clearForm() {

@@ -11,9 +11,11 @@ import { Subscription } from "rxjs";
   styleUrls: ["./performances.page.scss"]
 })
 export class PerformancesPage implements OnInit, OnDestroy {
-  public performanceForm: FormGroup;
-  public performancesAreCalculated: boolean;
+  
   private serviceSubscription: Subscription;
+  
+  public performanceForm: FormGroup;
+  public performancesAreCalculated: boolean;  
   public performancesDic;
   public eventTableRows = [
     "60",

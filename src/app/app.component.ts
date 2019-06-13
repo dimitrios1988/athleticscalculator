@@ -24,10 +24,15 @@ export class AppComponent {
       icon: "chart-line-variant"
     },
     {
+      title: "Meetings",
+      url: "/meetings",
+      icon: "calendar-search"
+    },
+    {
       title: "Info",
       url: "/info",
       icon: "sign-text"
-    }
+    },    
   ];
 
   @ViewChild(IonRouterOutlet) nav: IonRouterOutlet;

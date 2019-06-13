@@ -1,16 +1,20 @@
-import { Component, OnInit, Inject, ViewChild } from "@angular/core";
+import { Component, OnInit, Inject, ViewChild, OnDestroy } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSelectionList, MatListOption } from "@angular/material";
-import { RankingService } from '../ranking.service';
-import { GetMeetingsDto } from '../dto/get-meetings.dto';
-import { MeetingEntity } from '../entities/meeting.entity';
+import { GetMeetingsDto } from '../../meetings/dto/get-meetings.dto';
+import { MeetingEntity } from '../../meetings/entities/meeting.entity';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MeetingsService } from '../../meetings/meetings.service';
+import { GetMeetingsDateRangeDto } from 'src/app/meetings/dto/getmeetingsdaterange.dto';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "app-meeting-search",
   templateUrl: "./meeting-search.component.html",
   styleUrls: ["./meeting-search.component.scss"]
 })
-export class MeetingSearchComponent implements OnInit {
+export class MeetingSearchComponent implements OnInit, OnDestroy {
+
+  private serviceSubscription: Subscription;
   
   @ViewChild(MatSelectionList) meetings: MatSelectionList;
   selectedMeeting = {};
@@ -21,22 +25,36 @@ export class MeetingSearchComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<MeetingSearchComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    private rankingService: RankingService
+    private meetingsService: MeetingsService
   ) {}
 
   ngOnInit() {
-    for(let i=2018; i<=this.getCurrentYear();i++){
-      this.Years.push(i);
-    }
+    this.serviceSubscription = new Subscription();
+    let getMeetingsDateRangeSubscription = this.meetingsService.getMeetingsDateRange().subscribe((res: GetMeetingsDateRangeDto) => {
+      let yearFrom = new Date(res.MinDate * 1000).getUTCFullYear();    
+      let yearTo = new Date(res.MaxDate * 1000).getUTCFullYear();
+      for(let i=yearFrom; i<=yearTo; i++){
+        this.Years.push(i);
+      }
+    });
+    this.serviceSubscription.add(getMeetingsDateRangeSubscription);
+    
     this.meetings.selectedOptions = new SelectionModel<MatListOption>(false);
     this.getMeetings(this.getCurrentYear());
   }
 
+  ngOnDestroy(): void {
+    if (this.serviceSubscription) {
+      this.serviceSubscription.unsubscribe();
+    }
+  }
+
   getMeetings(year) {
-    this.rankingService.getMeetings(year, this.data.meetingCategories).subscribe((res: GetMeetingsDto[])=>{
+    let getMeetingsSubscription = this.meetingsService.getMeetings(year, this.data.meetingCategories).subscribe((res: GetMeetingsDto[])=>{
       this.Meetings = res.map(m => new MeetingEntity(m));
       this.FilteredMeetings = [...this.Meetings];
     });
+    this.serviceSubscription.add(getMeetingsSubscription);
   }
 
   filterMeetings(searchInput) {
