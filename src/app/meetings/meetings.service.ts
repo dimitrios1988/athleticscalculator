@@ -1,20 +1,43 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { GetMeetingsDto } from './dto/get-meetings.dto';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { GetMeetingsDto } from "./dto/get-meetings.dto";
+import { GetMeetingsDateRangeDto } from "./dto/getmeetingsdaterange.dto";
+import { environment } from "../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MeetingsService {
-
-  private baseUrl = "http://127.0.0.1:3000/meetings";
+  private baseUrl = "/meetings";
   constructor(private httpClient: HttpClient) {}
 
-  public getMeetings(year: number, meetingCategories: string[]): Observable<GetMeetingsDto[]> {
+  public getMeetings(
+    year: number,
+    meetingCategories: string[]
+  ): Observable<GetMeetingsDto[]> {
     let params = new HttpParams();
-    params = params.append('year', year.toString());
-    params = params.append('categories', JSON.stringify(meetingCategories));
-    return this.httpClient.get<GetMeetingsDto[]>(this.baseUrl, {params: params});
+    if (year != undefined) {
+      params = params.append("year", year.toString());
+    }
+    params = params.append("categories", JSON.stringify(meetingCategories));
+    return this.httpClient.get<GetMeetingsDto[]>(
+      environment.apiUrl + this.baseUrl,
+      {
+        params: params
+      }
+    );
+  }
+
+  public getMeetingsDateRange(): Observable<GetMeetingsDateRangeDto> {
+    return this.httpClient.get<GetMeetingsDateRangeDto>(
+      environment.apiUrl + this.baseUrl + "/years"
+    );
+  }
+
+  public getCountries(): Observable<string[]> {
+    return this.httpClient.get<string[]> (
+      environment.apiUrl + this.baseUrl + "/countries"
+    );
   }
 }

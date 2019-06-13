@@ -7,5 +7,11 @@
   </mat-toolbar>
 </ion-header>
 <ion-content>
-<app-meeting-filters></app-meeting-filters>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="crescent"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+<app-meeting-filters (onFiltersChanged)="applyFilters($event)" [Countries]="Countries" [Years]="Years"></app-meeting-filters>
+<app-meeting-details [selectedFilters]="selectedFilters"></app-meeting-details>
 </ion-content>

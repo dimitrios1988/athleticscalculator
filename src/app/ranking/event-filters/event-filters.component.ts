@@ -18,7 +18,6 @@ import { EventEntity } from "../entities/event.entity";
 export class EventFiltersComponent implements OnInit, OnChanges {
   constructor(private rankingService: RankingService) {}
 
-  //private events: EventEntity[];
   filteredEvents: EventEntity[];
   genders: string[];
   eventTypes: string[];
