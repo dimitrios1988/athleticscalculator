@@ -1,0 +1,17 @@
+<ion-header>
+  <mat-toolbar color="warn">
+    <ion-buttons slot="start">
+      <ion-menu-button mode="md"></ion-menu-button>
+    </ion-buttons>
+    <span>Meetings</span>
+  </mat-toolbar>
+</ion-header>
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="crescent"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+<app-meeting-filters (onFiltersChanged)="applyFilters($event)" [Countries]="Countries" [Years]="Years"></app-meeting-filters>
+<app-meeting-details [selectedFilters]="selectedFilters"></app-meeting-details>
+</ion-content>

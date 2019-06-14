@@ -2,9 +2,12 @@
     <ion-row>
         <ion-col [sizeMd]="8" [sizeXs]="12">
             <mat-card>
-                <mat-card-title>{{this.selectedEvent.Name | eventName }}</mat-card-title>
-                <mat-card-subtitle>{{this.selectedEvent.Gender | gender | titlecase}} -
-                    {{this.selectedEvent.Type | eventType | titlecase}}</mat-card-subtitle>
+                <mat-card-header>
+                        <img mat-card-avatar [src]="'assets/images/'+this.selectedEvent.Icon">
+                    <mat-card-title>{{this.selectedEvent.Name | eventName }}</mat-card-title>
+                    <mat-card-subtitle>{{this.selectedEvent.Gender | gender | titlecase}} -
+                        {{this.selectedEvent.Type | eventType | titlecase}}</mat-card-subtitle>
+                </mat-card-header>                
                 <mat-card-content>
                     <form [formGroup]="eventForm">
                         <ion-grid class="mat-app-background mat-typography">
@@ -26,8 +29,8 @@
                                         </mat-form-field>
                                         <button mat-icon-button (click)="performanceTltp.toggle()">
                                             <mat-icon #performanceTltp="matTooltip" color="primary"
-                                                matTooltip="{{selectedEvent.PerformanceValidation.Message}}">info
-                                            </mat-icon>
+                                                svgIcon="information"
+                                                matTooltip="{{selectedEvent.PerformanceValidation.Message}}"></mat-icon>
                                         </button>
                                     </div>
                                 </ion-col>
@@ -83,8 +86,8 @@
                                         from Place</mat-checkbox>
                                     <button mat-icon-button (click)="calculatePlacePointsTltp.toggle()">
                                         <mat-icon #calculatePlacePointsTltp="matTooltip" color="primary"
+                                            svgIcon="information"
                                             matTooltip="This does not apply to you, in case you as compete as a foreigner in national championships, or out of competition.">
-                                            info
                                         </mat-icon>
                                     </button>
                                 </ion-col>
@@ -133,15 +136,15 @@
                                         </mat-form-field>
                                         <button mat-icon-button (click)="categoryTypeTltp.toggle()">
                                             <mat-icon #categoryTypeTltp="matTooltip" color="primary"
+                                                svgIcon="information"
                                                 matTooltip="Beware: If your event is not in the official meeting's disciplines, then another meeting category may apply.">
-                                                info
                                             </mat-icon>
                                         </button>
                                     </ion-col>
                                     <ion-col [sizeXs]="12" [sizeSm]="6">
                                         <button mat-raised-button color="accent"
                                             [disabled]="meetingCategories.length==0" (click)="onSearchMeetings()">
-                                            <mat-icon>search</mat-icon>Search
+                                            <mat-icon svgIcon="magnify"></mat-icon>Search
                                         </button>
                                     </ion-col>
                                 </ion-row>
@@ -156,9 +159,8 @@
                                         </mat-form-field>
                                         <button mat-icon-button (click)="placeTltp.toggle()"
                                             *ngIf="this.eventForm.controls['competitionTypeSelect'].value.HasProgressToFinal">
-                                            <mat-icon #placeTltp="matTooltip" color="primary"
+                                            <mat-icon #placeTltp="matTooltip" color="primary" svgIcon="information"
                                                 matTooltip="Write the place that you took at final standings of the event">
-                                                info
                                             </mat-icon>
                                         </button>
                                     </ion-col>

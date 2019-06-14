@@ -7,6 +7,7 @@ export class EventEntity {
   public Groups: { Id: number; Name: string; IsExtra: boolean; HasProgressToFinal: boolean }[];
   public PerformanceValidation: { Pattern: string; Message: string };
   public SupportsWind: boolean;
+  public Icon: string;
 
   constructor(data: {
     Id: number;
@@ -17,5 +18,6 @@ export class EventEntity {
     Groups: { Id: number; Name: string; IsExtra: boolean; HasProgressToFinal: boolean }[];
     PerformanceValidation: { Pattern: string; Message: string };
     SupportsWind: boolean;
+    Icon: string;
   }) {}
 }

@@ -194,7 +194,7 @@ export class EventDetailsComponent
       .add(() => {
         this.pointsAreCalculated = false;
       });
-      this.serviceSubscription.add(getPointsSubscription)
+      this.serviceSubscription.add(getPointsSubscription);
   }
 
   clearForm() {
@@ -217,6 +217,7 @@ export class EventDetailsComponent
   onSearchMeetings() {
     const dialogRef = this.dialog.open(MeetingSearchComponent, {
       width: "100%",
+      maxWidth: "95%",      
       data: {meetingCategories: this.meetingCategories}
     });
     dialogRef.afterClosed().subscribe(result => {

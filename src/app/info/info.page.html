@@ -20,7 +20,7 @@
           </mat-card-header>
           <mat-card-content>
             <p>
-              Performances are typed using the official format of the IAAF. But don't worry! There is always an example in the info button <mat-icon color="primary">info</mat-icon> next to the
+              Performances are typed using the official format of the IAAF. But don't worry! There is always an example in the info button <mat-icon svgIcon="information" color="primary"></mat-icon> next to the
               "Performance" field.
             </p>
           </mat-card-content>
@@ -66,6 +66,23 @@
             <button mat-raised-button color="primary" matRipple (click)="onRankingTables()"><span class="mat-h3">Ranking
                 Tables</span></button>
           </mat-card-actions>
+        </mat-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col [sizeXs]="12">
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon color="primary" svgIcon="comment-question"></mat-icon>
+            </div>
+            <mat-card-title>Where did you find the meetings?</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              The meetings along with their respective categories, are taken from the IAAF's official site. However, feel free to contact us to add any meeting missing.
+            </p>
+          </mat-card-content>
         </mat-card>
       </ion-col>
     </ion-row>

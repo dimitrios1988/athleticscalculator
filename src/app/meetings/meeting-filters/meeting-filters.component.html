@@ -1,0 +1,65 @@
+<form [formGroup]="MeetingFiltersForm">
+  <ion-grid class="mat-app-background mat-typography">
+    <ion-row>
+      <ion-col [sizeXs]="6" [sizeSm]="3">
+        <mat-form-field class="full-width-field">
+          <mat-label>Month</mat-label>
+          <mat-select placeholder="All" formControlName="monthSelect" (selectionChange)="emitFilters()">
+              <mat-option>All</mat-option>
+            <mat-option *ngFor="let month of objectKeys(Months)" [value]="number(month)">
+              {{ Months[month] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ion-col>
+      <ion-col [sizeXs]="6" [sizeSm]="3">
+        <mat-form-field class="full-width-field">
+          <mat-label>Year</mat-label>
+          <mat-select formControlName="yearSelect" (selectionChange)="emitFilters()">
+              <mat-option>All Years</mat-option>
+            <mat-option *ngFor="let year of Years" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ion-col>
+      
+    </ion-row>
+    <ion-row>
+      <ion-col [sizeXs]="6" [sizeSm]="3">
+        <mat-form-field class="full-width-field">
+          <mat-label>Meeting Category</mat-label>
+          <mat-select formControlName="meetingCategorySelect" (selectionChange)="emitFilters()">
+              <mat-option>All Categories</mat-option>
+            <mat-option *ngFor="let meetingCategory of MeetingCategories" [value]="meetingCategory">
+              {{meetingCategory | meetingCategory}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ion-col>
+      <ion-col [sizeXs]="6" [sizeSm]="3">
+        <mat-form-field class="full-width-field">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="countrySelect" (selectionChange)="emitFilters()">
+                <mat-option>All Countries</mat-option>
+              <mat-option *ngFor="let country of Countries" [value]="country">
+                {{country}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col [sizeXs]="12" [sizeSm]="6">
+        <mat-form-field class="full-width-field">
+          <mat-label>Search by name of meeting, city or country</mat-label>
+          <input matInput formControlName="searchInput" type="search" (keydown)="$event.keyCode==13?$event.preventDefault():emitFilters();">
+          <mat-icon matSuffix color="primary" svgIcon="magnify"></mat-icon>
+        </mat-form-field>
+      </ion-col>
+      <ion-col [sizeXs]="12" [sizeSm]="6">
+        <button mat-raised-button color="primary" matRipple (click)="onClearFilters(); emitFilters()">Clear Filters</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>

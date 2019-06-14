@@ -3,6 +3,7 @@ import { AppComponent } from "../app.component";
 import { MatDialog } from "@angular/material";
 import { RateMeNagComponent } from "./rate-me-nag.component";
 import { HttpClient } from "@angular/common/http";
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class RateMeNagService {
   private previousNag: number;
-  private baseUrl = "https://athleticsranking.dimitrios1988.now.sh/rating";
+  private baseUrl = "/rating";
   
 
   constructor(
@@ -28,7 +29,7 @@ export class RateMeNagService {
       Date.now() - this.previousNag > 86400000 / 2 &&
       localStorage.getItem("hasRated") != "true"
     ) {
-      setTimeout(() => this.showDialog(), 3000);
+      setTimeout(() => this.showDialog(), 2500);
     }
     
   }
@@ -42,7 +43,7 @@ export class RateMeNagService {
         localStorage.setItem("lastNagged", JSON.stringify(Date.now()));
         if (result) {
           Promise.resolve(
-            this.httpClient.put(this.baseUrl, { Value: result }).toPromise()
+            this.httpClient.put(environment.apiUrl + this.baseUrl, { Value: result }).toPromise()
           );
           localStorage.setItem("hasRated", "true");
         }
