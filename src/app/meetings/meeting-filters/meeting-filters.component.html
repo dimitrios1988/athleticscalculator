@@ -54,7 +54,7 @@
         <mat-form-field class="full-width-field">
           <mat-label>Search by name of meeting, city or country</mat-label>
           <input matInput formControlName="searchInput" type="search" (keydown)="$event.keyCode==13?$event.preventDefault():emitFilters();">
-          <mat-icon matSuffix color="primary">search</mat-icon>
+          <mat-icon matSuffix color="primary" svgIcon="magnify"></mat-icon>
         </mat-form-field>
       </ion-col>
       <ion-col [sizeXs]="12" [sizeSm]="6">
