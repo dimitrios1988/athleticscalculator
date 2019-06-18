@@ -73,6 +73,7 @@ export class MeetingDetailsComponent implements OnInit, OnChanges, OnDestroy {
           this.dataSource.sort = this.sort;
       });
     } else {
+      console.log(this.selectedFilters);
       this.filterMeetings();
       this.dataSource = new MatTableDataSource(this.filteredMeetings);
       this.dataSource.sort = this.sort;
@@ -109,7 +110,7 @@ export class MeetingDetailsComponent implements OnInit, OnChanges, OnDestroy {
           meetingFound &&
           m.Country == this.selectedFilters.Country;
       }
-      if (this.selectedFilters.Month) {
+      if (this.selectedFilters.Month != undefined) {
         meetingFound =
         meetingFound &&
         m.Date.getUTCMonth() == this.selectedFilters.Month;
