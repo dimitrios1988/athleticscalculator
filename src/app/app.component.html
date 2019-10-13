@@ -9,6 +9,8 @@
         <mat-icon>menu</mat-icon>
       </button>
       <span class="toolbar-header">Athletics Calculator</span>
+      <span style="flex: 1 1 auto;"></span>
+      <mat-icon matTooltip="You are offline" style="float: right;" *ngIf="!isOnline">wifi_off</mat-icon>
     </mat-toolbar>
     <div fxFlex>
     <router-outlet></router-outlet>

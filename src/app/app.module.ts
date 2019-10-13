@@ -20,6 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { PwaModule } from './pwa/pwa.module';
 
 @NgModule({
@@ -41,6 +42,7 @@ import { PwaModule } from './pwa/pwa.module';
     MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
+    MatTooltipModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     MatBottomSheetModule,
     PwaModule,

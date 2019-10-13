@@ -16,5 +16,5 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   providers: [PwaService]
 })
 export class PwaModule {
-  constructor(pwaService: PwaService) {}
+  constructor(pwaService: PwaService) { }
 }
