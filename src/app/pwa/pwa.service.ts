@@ -17,7 +17,7 @@ export class PwaService {
 
   private openSnackBar() {
     return this.snackBar.openFromComponent(AppUpdateComponent, {
-      duration: 3 * 1000,
+      duration: 4 * 1000,
     });
   }
 }
