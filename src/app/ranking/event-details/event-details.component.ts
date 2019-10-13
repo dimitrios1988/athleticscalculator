@@ -167,7 +167,7 @@ export class EventDetailsComponent
       getPointsCmd.progressToFinal = this.eventForm.controls[
         "competitionTypeSelect"
       ].value.HasProgressToFinal
-        ? Boolean(this.eventForm.controls["progressedToFinalCombo"].value)
+        ? this.eventForm.controls["progressedToFinalCombo"].value=="true"
         : null;
     }
 

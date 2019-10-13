@@ -9,7 +9,7 @@
           <ion-content>           
               <ion-list>
                   <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-                      <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="{{isActive(p)?'#f0f0f0':''}}">
+                      <ion-item routerDirection="forward" [routerLink]="[p.url]" color="{{isActive(p)?'#f0f0f0':''}}">
                           <mat-icon color="primary" slot="start" [svgIcon]="p.icon"></mat-icon>
                           <mat-label color="primary">{{p.title}}</mat-label>
                       </ion-item>

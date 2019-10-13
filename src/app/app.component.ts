@@ -4,8 +4,6 @@ import { Platform, IonRouterOutlet } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { Router } from "@angular/router";
-import { Plugins } from "@capacitor/core";
-const { AdMob } = Plugins;
 
 @Component({
   selector: "app-root",
@@ -43,9 +41,6 @@ export class AppComponent {
     private statusBar: StatusBar,
     private router: Router
   ) {
-    if(this.platform.is('hybrid')){
-      AdMob.initialize("ca-app-pub-9835906624473980~5760519689");
-    }
     this.initializeApp();
   }
 
