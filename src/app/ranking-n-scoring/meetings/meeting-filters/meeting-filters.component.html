@@ -1,0 +1,58 @@
+<mat-card>
+  <mat-card-content fxLayout="row wrap" fxLayoutGap="1vw">
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+      <mat-label>Month</mat-label>
+      <mat-select placeholder="All" #month
+        (selectionChange)="onApplyFilters(month.value, year.value, meetingCategory.value, country.value, search.value)"
+        [value]="currentDate.Month">
+        <mat-option>All Months</mat-option>
+        <mat-option *ngFor="let month of objectKeys(Months)" [value]="number(month)">
+          {{ Months[month] }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+      <mat-label>Year</mat-label>
+      <mat-select #year
+        (selectionChange)="onApplyFilters(month.value, year.value, meetingCategory.value, country.value, search.value)"
+        [value]="currentDate.Year">
+        <mat-option>All Years</mat-option>
+        <mat-option *ngFor="let year of Years" [value]="year">
+          {{year}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+      <mat-label>Meeting Category</mat-label>
+      <mat-select #meetingCategory
+        (selectionChange)="onApplyFilters(month.value, year.value, meetingCategory.value, country.value, search.value)">
+        <mat-option>All Categories</mat-option>
+        <mat-option *ngFor="let meetingCategory of MeetingCategories" [value]="meetingCategory">
+          {{meetingCategory | meetingCategory}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+      <mat-label>Country</mat-label>
+      <mat-select #country
+        (selectionChange)="onApplyFilters(month.value, year.value, meetingCategory.value, country.value, search.value)">
+        <mat-option>All Countries</mat-option>
+        <mat-option *ngFor="let country of countries$ | async" [value]="country">
+          {{country}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="1vw" fxFlex="100%">
+      <mat-form-field appearance="fill" fxFlex.lt-sm="100%" fxFlex.sm="50%" fxFlex.gt-sm="50%">
+        <mat-label>Search by name of meeting, city or country</mat-label>
+        <input matInput type="search" #search
+          (keyup)="$event.keyCode==13?$event.preventDefault():onApplyFilters(month.value, year.value, meetingCategory.value, country.value, search.value);">
+        <mat-icon matSuffix color="primary">search</mat-icon>
+      </mat-form-field>
+      <div style="padding-bottom: 1.34375em;">
+        <button mat-flat-button color="accent" (click)="clearFilters(month, year, meetingCategory, country, search)">Clear Filters</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

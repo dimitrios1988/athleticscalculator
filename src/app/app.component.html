@@ -1,28 +1,18 @@
-<ion-app>
-  <ion-split-pane>
-      <ion-menu>
-          <ion-header>
-              <mat-toolbar color="warn">
-                  <span>Menu</span>
-              </mat-toolbar>
-          </ion-header>
-          <ion-content>           
-              <ion-list>
-                  <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-                      <ion-item routerDirection="forward" [routerLink]="[p.url]" color="{{isActive(p)?'#f0f0f0':''}}">
-                          <mat-icon color="primary" slot="start" [svgIcon]="p.icon"></mat-icon>
-                          <mat-label color="primary">{{p.title}}</mat-label>
-                      </ion-item>
-                  </ion-menu-toggle>
-                  <ion-menu-toggle auto-hide="false">
-                    <ion-item href="mailto:dimi.chondrokoukis@gmail.com?Subject=Athletics%20Ranking%20Points%20Calculator">
-                        <mat-icon color="primary" slot="start" svgIcon="email"></mat-icon>
-                        <mat-label color="primary">Contact</mat-label>
-                    </ion-item>
-                </ion-menu-toggle>
-              </ion-list>
-          </ion-content>
-      </ion-menu>
-      <ion-router-outlet main></ion-router-outlet>
-  </ion-split-pane>
-</ion-app>
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #drawer mode="over">
+    <app-menu (onItemSelected)="drawer.close()" fxLayout="column" fxFlexFill></app-menu>
+  </mat-sidenav>
+
+  <mat-sidenav-content fxLayout="column">
+    <mat-toolbar color="warn">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="toolbar-header">Athletics Calculator</span>
+    </mat-toolbar>
+    <div fxFlex>
+    <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

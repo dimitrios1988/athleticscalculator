@@ -1,0 +1,172 @@
+<mat-card>
+  <mat-card-header>
+    <img mat-card-avatar [src]="'assets/images/'+this.selectedEvent.Icon" style="background: white;">
+    <mat-card-title>{{this.selectedEvent.Name | eventName }}</mat-card-title>
+    <mat-card-subtitle>{{this.selectedEvent.Gender | gender | titlecase}} -
+      {{this.selectedEvent.Type | eventType | titlecase}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-divider [inset]="false"></mat-divider>
+    <form [formGroup]="eventForm" fxLayout="column" fxLayoutGap="1vh" style="padding: 2vh 0px 2vh 0px">
+      <div fxLayout="row wrap" fxLayoutGap="5vw">
+        <div fxLayout="row" fxLayoutGap="1vw" fxFlex="50%" fxFlex.lt-sm="100%">
+          <mat-form-field fxFlex="100%">
+            <mat-label>Performance</mat-label>
+            <input matInput type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
+              formControlName="performanceInput" required
+              (keyup.enter)="(!eventForm.invalid && !pointsAreCalculated)?onCalculate():null">
+            <mat-error *ngIf="this.eventForm.controls['performanceInput'].hasError('required')">
+              This field cannot be empty</mat-error>
+            <mat-error *ngIf="this.eventForm.controls['performanceInput'].hasError('pattern')">
+              Invalid performance</mat-error>
+          </mat-form-field>
+          <button mat-icon-button matSuffix (click)="performanceTltp.toggle()">
+            <mat-icon #performanceTltp="matTooltip" color="primary"
+              matTooltip="{{selectedEvent.PerformanceValidation.Message}}">info
+            </mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field appearance="fill" fxFlex.lt-sm="100%" fxFlex="calc(50% - 5vw)">
+          <mat-label>Performance Points</mat-label>
+          <input matInput type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
+            placeholder="Performance Points" formControlName="performancePoints" style="color: green">
+        </mat-form-field>
+      </div>
+      <div *ngIf="selectedEvent.SupportsWind" fxLayoutGap="5vw">
+        <mat-form-field fxFlex.lt-sm="100%" fxFlex="50%">
+          <mat-label>Was the wind measured during the race?</mat-label>
+          <mat-select formControlName="windmeasuredSelect" required>
+            <mat-option value="true">
+              Yes
+            </mat-option>
+            <mat-option value="false">
+              No
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.eventForm.controls['windmeasuredSelect'].hasError('required')">
+            Please select an answer</mat-error>
+        </mat-form-field>
+      </div>
+      <div *ngIf="selectedEvent.SupportsWind" fxLayout="row wrap" fxLayoutGap="5vw">
+        <mat-form-field *ngIf="this.eventForm.controls['windmeasuredSelect'].value=='true'" fxFlex.lt-sm="100%"
+          fxFlex="50%">
+          <input matInput type="text" autocomplete="off" formControlName="windInput"
+            placeholder="Please type in the wind, if known{{this.eventForm.controls['windmeasuredSelect'].value=='true'?'':' (disabled)'}}">
+          <span matSuffix>m/s</span>
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex="calc(50% - 5vw)"
+          [fxFlexOffset.gt-xs]="this.eventForm.controls['windmeasuredSelect'].value!='true'?'calc(50% + 5vw)':null">
+          <mat-label>Wind Points</mat-label>
+          <input matInput type="text" autocomplete="off" formControlName="windPoints" placeholder="Wind Points"
+            [ngStyle]="{color: eventForm.controls['windPoints'].value>0?'green':eventForm.controls['windPoints'].value<0?'red':'inherit'}">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+        <mat-checkbox formControlName="calculatePlacePointsCheckbox" labelPosition="before"
+          (change)="updateFormValidation()">Calculate Points
+          from Place</mat-checkbox>
+        <button mat-icon-button (click)="calculatePlacePointsTltp.toggle()">
+          <mat-icon #calculatePlacePointsTltp="matTooltip" color="primary"
+            matTooltip="This does not apply to you, in case you as compete as a foreigner in national championships, or out of competition.">
+            info
+          </mat-icon>
+        </button>
+      </div>
+      <div *ngIf="eventForm.controls['calculatePlacePointsCheckbox'].value" fxLayout="column" fxLayoutGap="1vh">
+        <div fxLayout="row">
+          <mat-form-field fxFlex.lt-sm="100%" fxFlex="50%">
+            <mat-label>Type of Competition</mat-label>
+            <mat-select formControlName="competitionTypeSelect" (selectionChange)="getMeetingCategories($event)"
+              required>
+              <mat-option style="height:auto; white-space: pre-line; text-overflow: ellipsis;"
+                *ngFor="let group of selectedEvent.Groups" [value]="group">
+                {{group.Name | competitionType}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field *ngIf="this.eventForm.controls['competitionTypeSelect'].value.HasProgressToFinal">
+            <mat-label>Did you qualify?</mat-label>
+            <mat-select required formControlName="progressedToFinalCombo">
+              <mat-option value="true">Yes</mat-option>
+              <mat-option value="false">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="5vw">
+          <div fxLayout="row" fxLayoutGap="1vw" fxFlex="50%" fxFlex.lt-sm="100%">
+            <mat-form-field fxFlex="100%">
+              <mat-label>Meeting Category Type</mat-label>
+              <mat-select formControlName="meetingCategorySelect" required [disabled]="!meetingCategories">
+                <mat-option style="height:auto; white-space: pre-line; text-overflow: ellipsis;"
+                  *ngFor="let meetingCategory of meetingCategories" [value]="meetingCategory">
+                  {{meetingCategory | meetingCategory}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-icon-button matSuffix (click)="categoryTypeTltp.toggle()">
+              <mat-icon #categoryTypeTltp="matTooltip" color="primary"
+                matTooltip="Beware: If your event is not in the official meeting's disciplines, then another meeting category may apply.">
+                info
+              </mat-icon>
+            </button>
+          </div>
+
+          <button fxHide fxShow.gt-xs mat-flat-button color="accent" style="height: min-content"
+            [disabled]="!meetingCategories" (click)="onSearchMeetings()">
+            <mat-icon>search</mat-icon>Search
+          </button>
+        </div>
+        <div fxLayout="row" fxHide fxShow.lt-sm>
+          <button mat-flat-button color="accent" [disabled]="!meetingCategories" (click)="onSearchMeetings()">
+            <mat-icon>search</mat-icon>Search
+          </button>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="5vw">
+          <div fxFlex="50%">
+            <mat-form-field>
+              <mat-label>Place</mat-label>
+              <input matInput formControlName="placeInput" autocomplete="off" autocorrect="off" autocapitalize="off"
+                type="numeric" (keyup.enter)="(!eventForm.invalid && !pointsAreCalculated)?onCalculate():null" required>
+              <mat-error *ngIf="this.eventForm.controls['placeInput'].hasError('required')">
+                This field cannot be empty</mat-error>
+              <button matSuffix mat-icon-button (click)="placeTltp.toggle()"
+                *ngIf="this.eventForm.controls['competitionTypeSelect'].value.HasProgressToFinal">
+                <mat-icon #placeTltp="matTooltip" color="primary"
+                  matTooltip="Write the place that you took at final standings of the event">info
+                </mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="fill" fxFlex="calc(50% - 5vw)" fxFlex.lt-sm="100%">
+            <mat-label>Place Points</mat-label>
+            <input matInput formControlName="placePoints" placeholder="Place Points" type="text" autocomplete="off"
+              autocorrect="off" autocapitalize="off" style="color: green">
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+    <mat-divider [inset]="true"></mat-divider>
+    <div style="padding: 2vh 0px 0px 0px">
+      <span class="mat-h1">Total Points: </span><span class="mat-h1"
+        style="color: green">{{totalPoints?totalPoints:''}}</span>
+    </div>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1vw">
+    <button mat-raised-button color="primary" (click)="onCalculate()"
+      [disabled]="eventForm.invalid || pointsAreCalculated">
+      <app-loading-spinner *ngIf="pointsAreCalculated"></app-loading-spinner>
+      <span>Calculate</span>
+    </button>
+    <button mat-flat-button color="accent" (click)="comparePerformances()"
+      [disabled]="eventForm.controls['performancePoints'].value == '' || eventForm.controls['calculatePlacePointsCheckbox'].value">
+      <span>Compare Performances</span>
+    </button>
+    <button mat-flat-button color="accent" (click)="clearForm()">
+      <span>Clear</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

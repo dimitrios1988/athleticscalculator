@@ -1,0 +1,29 @@
+<mat-card>
+    <mat-card-content fxLayout="row wrap" fxLayoutGap="1vw">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+            <mat-label>Gender</mat-label>
+            <mat-select #gender (selectionChange)="filterEvents(gender.value, eventType.value)">
+                <mat-option *ngFor="let gender of genders" [value]="gender">
+                    {{gender | gender | titlecase}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+            <mat-label>Type</mat-label>
+            <mat-select #eventType (selectionChange)="filterEvents(gender.value, eventType.value)">
+                <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">
+                    {{eventType | eventType | titlecase}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+            <mat-label>Event</mat-label>
+            <mat-select #selectedEvent (valueChange)="onEventSelection(selectedEvent.value)" [disabled]="(!gender.value || !eventType.value) && !isLoading">
+                <mat-option *ngFor="let event of filteredEvents" [value]="event">
+                    {{event.Name | eventName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-card-content>
+</mat-card>

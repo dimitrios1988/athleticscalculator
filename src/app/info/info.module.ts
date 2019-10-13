@@ -1,32 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
-
-import { InfoPage } from './info.page';
-import { MatToolbarModule, MatCardModule, MatIconModule, MatButtonModule, MatRippleModule } from '@angular/material';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: InfoPage
-  }
-];
+import { InfoRoutingModule } from './info-routing.module';
+import { InfoComponent } from './info.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
+  declarations: [InfoComponent],
   imports: [
     CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes),
+    InfoRoutingModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatCardModule,
     MatIconModule,
-    MatButtonModule,
-    MatRippleModule,
-  ],
-  declarations: [InfoPage]
+    MatButtonModule
+  ]
 })
-export class InfoPageModule {}
+export class InfoModule { }

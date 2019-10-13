@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Athletics Ranking Points Calculator</string>
-    <string name="title_activity_main">Athletics Ranking Points Calculator</string>
-    <string name="package_name">dchondrokoukis.athleticspointscalculator</string>
-    <string name="fileprovider_authority">dchondrokoukis.athleticspointscalculator.fileprovider</string>
-    <string name="custom_url_scheme">dchondrokoukis.athleticspointscalculator</string>
-</resources>

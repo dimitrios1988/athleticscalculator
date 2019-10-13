@@ -1,0 +1,70 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="1vh">
+  <mat-toolbar>
+    <span>Info</span>
+  </mat-toolbar>
+
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon color="primary">question_answer</mat-icon>
+      </div>
+      <mat-card-title>In what format do I type in the performance?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Performances are typed using the official format of the IAAF. But don't worry! There is always an example in the
+        info button <mat-icon color="primary">info</mat-icon> next to the
+        "Performance" field.
+      </p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon color="primary">question_answer</mat-icon>
+      </div>
+      <mat-card-title>How do you calculate the points?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        The points are calculated based on the latest Scoring tables of 2017 and the latest Ranking tables of 2019
+        that,
+        the international athletics federation has published.
+      </p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon color="primary">question_answer</mat-icon>
+      </div>
+      <mat-card-title>Can I calculate the points without the app?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Sure! You can read about and use the Scoring and Ranking tables that you will find below.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onScoringTables()"><span>Scoring
+          Tables</span></button>
+      <button mat-raised-button color="primary" (click)="onRankingTables()"><span>Ranking
+          Tables</span></button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon color="primary">question_answer</mat-icon>
+      </div>
+      <mat-card-title>Where did you find the meetings?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        The meetings along with their respective categories, are taken from the IAAF's official site. However, feel free
+        to
+        contact us to add any meeting missing.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
