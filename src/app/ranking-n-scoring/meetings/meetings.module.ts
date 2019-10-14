@@ -11,12 +11,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { MatIconModule, MatInputModule, MatToolbarModule, MatRippleModule } from '@angular/material';
+import { MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 import { MeetingDetailsComponent } from './meeting-details/meeting-details.component';
 import { LoadingSpinnerModule } from '../../shared/components/loading-spinner/loading-spinner.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatButtonModule,
     MatToolbarModule,
     MatSortModule,
-    MatRippleModule
+    MatExpansionModule
   ],
   providers: [MeetingsService]
 })

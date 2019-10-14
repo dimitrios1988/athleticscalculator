@@ -1,6 +1,6 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav #drawer mode="over">
-    <app-menu (onItemSelected)="drawer.close()" fxLayout="column" fxFlexFill></app-menu>
+    <app-menu (itemSelected)="drawer.close()" fxLayout="column" fxFlexFill></app-menu>
   </mat-sidenav>
 
   <mat-sidenav-content fxLayout="column">

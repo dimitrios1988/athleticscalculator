@@ -1,33 +1,42 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5vh">
-  <mat-card>
-    <mat-card-content fxLayout="row wrap" fxLayoutGap="1vw">
-      <mat-form-field appearance="fill" fxFlex="100%">
-        <mat-label>Search by name of meeting, city or country</mat-label>
-        <input matInput type="search" #search autocomplete="off" autocorrect="off" autocapitalize="off"
-          (keyup)="$event.keyCode==13?$event.preventDefault():filterMeetings(month.value, search.value);">
-        <mat-icon matSuffix color="primary">search</mat-icon>
-      </mat-form-field>
-      <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
-        <mat-label>Month</mat-label>
-        <mat-select #month (selectionChange)="filterMeetings(month.value, search.value)" [value]="currentDate.month">
-          <mat-option>All Months</mat-option>
-          <mat-option *ngFor="let month of objectKeys(Months)" [value]="number(month)">
-            {{ Months[month] }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
-        <mat-label>Year</mat-label>
-        <mat-select #year (selectionChange)="getMeetings(year.value, month.value, search.value)"
-          [value]="currentDate.year">
-          <mat-option>All Years</mat-option>
-          <mat-option *ngFor="let year of years" [value]="year">
-            {{year}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
+  <mat-accordion>
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Meeting Filters
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div fxLayout="row wrap" fxLayoutGap="1vw">
+        <mat-form-field appearance="fill" fxFlex="100%">
+          <mat-label>Search by name of meeting, city or country</mat-label>
+          <input matInput type="search" #search autocomplete="off" autocorrect="off" autocapitalize="off"
+            (keyup)="$event.keyCode==13?$event.preventDefault():filterMeetings(month.value, search.value);">
+          <mat-icon matSuffix color="primary">search</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+          <mat-label>Month</mat-label>
+          <mat-select #month (selectionChange)="filterMeetings(month.value, search.value)" [value]="currentDate.month">
+            <mat-option>All Months</mat-option>
+            <mat-option *ngFor="let month of objectKeys(Months)" [value]="number(month)">
+              {{ Months[month] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex.lt-sm="100%">
+          <mat-label>Year</mat-label>
+          <mat-select #year (selectionChange)="getMeetings(year.value, month.value, search.value)"
+            [value]="currentDate.year">
+            <mat-option>All Years</mat-option>
+            <mat-option *ngFor="let year of years" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
   <mat-card>
     <mat-card-content fxLayout="row wrap" fxLayoutGap="1vw">
       <div mat-dialog-content fxFlex="100%">

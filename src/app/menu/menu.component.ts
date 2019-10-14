@@ -8,14 +8,16 @@ import { MenuItem } from './menu-item';
 })
 export class MenuComponent {
 
-  @Output('onItemSelected') itemSelected: EventEmitter<void>;
+  @Output()
+  private itemSelected: EventEmitter<void>;
+
   public menuItems: MenuItem[];
 
   constructor() {
     this.itemSelected = new EventEmitter<void>();
     this.menuItems = [
       {
-        title: 'Ranking & Scoring',
+        title: 'Ranking & Scoring Points',
         path: '/rns',
         icon: 'dialpad'
       },

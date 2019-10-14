@@ -27,6 +27,7 @@ import { LoadingSpinnerModule } from '../../shared/components/loading-spinner/lo
 import { MeetingSearchComponent } from './meeting-search/meeting-search.component';
 import { MeetingsService } from '../meetings/meetings.service';
 import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { MatListModule } from '@angular/material/list';
     PipesModule,
     LoadingSpinnerModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatExpansionModule
   ],
   providers: [RankingService, MeetingsService],
 })
