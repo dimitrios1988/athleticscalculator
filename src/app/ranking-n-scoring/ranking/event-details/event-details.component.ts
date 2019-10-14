@@ -223,4 +223,8 @@ export class EventDetailsComponent
       this.eventForm.controls.meetingCategorySelect.setValue(result);
     });
   }
+
+  onSaveResults() {
+
+  }
 }

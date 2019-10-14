@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { EventEntity } from '../entities/event.entity';
 import { MatSelect } from '@angular/material/select';
-import { isNullOrUndefined, isNumber } from 'util';
-import { nextTick } from 'q';
+import { isNullOrUndefined } from 'util';
 import { Option } from '../entities/option.entity';
+import { RankingService } from '../ranking.service';
 
 @Component({
   selector: 'app-event-filters',
@@ -34,12 +33,12 @@ export class EventFiltersComponent implements OnInit, OnChanges {
   private eventEmitter: EventEmitter<EventEntity>;
 
   private events: EventEntity[];
-  private savedOptions: Option;
+  public savedOptions: Option;
 
-  constructor() {
+  constructor(private rankingService: RankingService) {
     this.isLoading = false;
     this.eventEmitter = new EventEmitter<EventEntity>();
-    this.loadOptions();
+    this.savedOptions = this.loadOptions();
   }
 
   ngOnInit() { }
@@ -97,15 +96,17 @@ export class EventFiltersComponent implements OnInit, OnChanges {
     this.eventEmitter.emit(event);
   }
 
-  private saveOptions() {
-    localStorage.setItem('rankingOptions', JSON.stringify(this.savedOptions));
+  savePanelState(isExpanded: boolean) {
+    this.savedOptions.filtersPanelExpanded = isExpanded;
+    this.saveOptions();
   }
 
-  private loadOptions() {
-    this.savedOptions = JSON.parse(localStorage.getItem('rankingOptions'));
-    if (isNullOrUndefined(this.savedOptions)) {
-      this.savedOptions = { selectedEvent: null };
-    }
+  private saveOptions() {
+    this.rankingService.saveOptions(this.savedOptions);
+  }
+
+  private loadOptions(): Option {
+    return this.rankingService.loadOptions();
   }
 
 }

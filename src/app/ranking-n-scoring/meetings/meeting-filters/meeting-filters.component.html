@@ -1,5 +1,5 @@
 <mat-accordion>
-  <mat-expansion-panel expanded>
+  <mat-expansion-panel [expanded]="savedOptions.filtersPanelExpanded" (afterCollapse)="savePanelState(false)" (afterExpand)="savePanelState(true)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Meeting Filters

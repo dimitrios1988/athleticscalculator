@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { GetMeetingsDateRangeDto } from '../dto/getmeetingsdaterange.dto';
 import { MeetingFilterEntity } from '../entities/meeting-filter.entity';
 import { MatStep, MatSelect, MatInput } from '@angular/material';
+import { MeetingsService } from '../meetings.service';
+import { Option } from '../entities/option.entity';
 
 @Component({
   selector: 'app-meeting-filters',
@@ -20,6 +22,7 @@ export class MeetingFiltersComponent implements OnInit, OnChanges {
   @Output()
   public filtersChanged: EventEmitter<MeetingFilterEntity>;
 
+  public savedOptions: Option;
   public objectKeys = Object.keys;
   public number = Number;
   public Months = {
@@ -58,7 +61,7 @@ export class MeetingFiltersComponent implements OnInit, OnChanges {
 
   public isLoading: boolean;
 
-  constructor() {
+  constructor(private meetingsService: MeetingsService) {
     this.filtersChanged = new EventEmitter<MeetingFilterEntity>();
     this.isLoading = false;
     const currentDate = new Date();
@@ -67,6 +70,7 @@ export class MeetingFiltersComponent implements OnInit, OnChanges {
       Year: currentDate.getFullYear()
     };
     this.Years = [this.currentDate.Year];
+    this.savedOptions = this.loadOptions();
   }
 
   ngOnInit() {
@@ -106,6 +110,15 @@ export class MeetingFiltersComponent implements OnInit, OnChanges {
     country.value = null;
     search.value = '';
     this.onApplyFilters(null, null, null, null, '');
+  }
+
+  private loadOptions(): Option {
+    return this.meetingsService.loadOptions();
+  }
+
+  public savePanelState(isExpanded: boolean): void {
+    this.savedOptions.filtersPanelExpanded = isExpanded;
+    this.meetingsService.saveOptions(this.savedOptions);
   }
 
 }
