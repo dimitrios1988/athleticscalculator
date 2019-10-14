@@ -23,7 +23,7 @@ export class RankingService {
   public getMeetingCategories(groupId: number): Observable<string[]> {
     let params = new HttpParams();
     params = params.append('groupId', groupId.toString());
-    return this.httpClient.get<string[]>(environment.apiUrl + this.baseUrl + '/meetingcategories', { params: params });
+    return this.httpClient.get<string[]>(environment.apiUrl + this.baseUrl + '/meetingcategories', { params });
   }
 
   public getPoints(data: GetPointsCmd): Observable<GetPointsDto> {

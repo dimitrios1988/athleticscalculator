@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { GetMeetingsDto } from "./dto/get-meetings.dto";
-import { GetMeetingsDateRangeDto } from "./dto/getmeetingsdaterange.dto";
-import { environment } from "../../../environments/environment";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { GetMeetingsDto } from './dto/get-meetings.dto';
+import { GetMeetingsDateRangeDto } from './dto/getmeetingsdaterange.dto';
+import { environment } from '../../../environments/environment';
 import { Option } from './entities/option.entity';
 import { isNullOrUndefined } from 'util';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class MeetingsService {
   private baseUrl = '/meetings';
@@ -26,7 +26,7 @@ export class MeetingsService {
     return this.httpClient.get<GetMeetingsDto[]>(
       environment.apiUrl + this.baseUrl,
       {
-        params: params
+        params
       }
     );
   }
