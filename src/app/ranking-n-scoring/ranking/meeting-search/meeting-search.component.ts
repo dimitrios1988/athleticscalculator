@@ -97,7 +97,7 @@ export class MeetingSearchComponent implements OnInit {
 
   returnSelectedMeeting(meetingList) {
     if (meetingList.selectedOptions.selected.length > 0) {
-      return meetingList.selectedOptions.selected[0].value.MeetingCategory;
+      return meetingList.selectedOptions.selected[0].value;
     }
     return null;
   }
