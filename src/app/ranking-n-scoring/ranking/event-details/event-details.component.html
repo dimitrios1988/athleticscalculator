@@ -150,19 +150,26 @@
       </div>
     </form>
     <mat-divider [inset]="true"></mat-divider>
-    <div style="padding: 2vh 0px 0px 0px">
-      <span class="mat-h1">Total Points: </span><span class="mat-h1"
-        style="color: green">{{totalPoints?totalPoints:''}}</span>
+    <div fxLayout="row" fxLayoutAlign="start center" style="padding: 2vh 0px 0px 0px">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+        <span style="font-size: 24px; font-weight: 400;">Total Points:</span>
+        <span style="font-size: 24px; font-weight: 400; color: green;">{{totalPoints?totalPoints:''}}</span>
+      </div>
+      <button [disabled]="!canSave()" (click)="onSaveResults()" mat-mini-fab color="primary" fxFlexOffset="auto" fxHide fxShow.lt-sm>
+        <mat-icon>save</mat-icon>
+      </button>
+      <button [disabled]="!canSave()" (click)="onSaveResults()"  mat-fab color="primary" fxHide fxShow.gt-xs style="position: fixed; bottom: 15vh; right: 10vw;"><mat-icon>save</mat-icon></button>
+      <span fxFlexOffset="10"></span>
     </div>
   </mat-card-content>
   <mat-card-actions fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1vw">
-    <button mat-raised-button color="primary" (click)="onCalculate()"
+    <button mat-raised-button color="primary" (click)="onCalculate();"
       [disabled]="eventForm.invalid || pointsAreCalculated">
       <app-loading-spinner *ngIf="pointsAreCalculated"></app-loading-spinner>
       <span>Calculate</span>
     </button>
     <button mat-flat-button color="accent" (click)="comparePerformances()"
-      [disabled]="eventForm.controls['performancePoints'].value == '' || eventForm.controls['calculatePlacePointsCheckbox'].value">
+      [disabled]="eventForm.controls['performancePoints'].value == ''">
       <span>Compare Performances</span>
     </button>
     <button mat-flat-button color="accent" (click)="clearForm()">

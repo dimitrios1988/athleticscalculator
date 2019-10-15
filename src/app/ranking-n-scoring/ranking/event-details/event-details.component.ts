@@ -15,6 +15,9 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { MeetingSearchComponent } from '../meeting-search/meeting-search.component';
 import { Router } from '@angular/router';
+import { BookmarksService } from '../../bookmarks/bookmarks.service';
+import { MeetingEntity } from '../../meetings/entities/meeting.entity';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-event-details',
@@ -31,12 +34,14 @@ export class EventDetailsComponent
   public totalPoints: number;
   public pointsAreCalculated: boolean;
   private serviceSubscription: Subscription;
+  private selectedMeeting: MeetingEntity;
 
   constructor(
     private rankingService: RankingService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private bookmarksService: BookmarksService
   ) {
     this.serviceSubscription = new Subscription();
     this.eventForm = this.formBuilder.group({
@@ -181,6 +186,7 @@ export class EventDetailsComponent
           : 0;
         this.totalPoints += res.windPoints ? res.windPoints : 0;
         this.totalPoints += res.performancePoints ? res.performancePoints : 0;
+        this.eventForm.markAsPristine();
       })
       .add(() => {
         this.pointsAreCalculated = false;
@@ -209,22 +215,33 @@ export class EventDetailsComponent
     this.router.navigateByUrl('/rns/performances', {
       state: {
         points: this.eventForm.controls.performancePoints.value,
-        type: this.selectedEvent.Type}
-      });
+        type: this.selectedEvent.Type
+      }
+    });
   }
 
   onSearchMeetings() {
     const dialogRef = this.dialog.open(MeetingSearchComponent, {
-      width: '100%',
-      maxWidth: '95%',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
       data: { meetingCategories: this.meetingCategories },
     });
-    dialogRef.afterClosed().subscribe(result => {
-      this.eventForm.controls.meetingCategorySelect.setValue(result);
+    dialogRef.afterClosed().subscribe((result: MeetingEntity) => {
+      this.selectedMeeting = result;
+      if(!isNullOrUndefined(this.selectedMeeting)) {
+        this.eventForm.controls.meetingCategorySelect.setValue(this.selectedMeeting.MeetingCategory);
+      }
     });
   }
 
-  onSaveResults() {
+  public canSave(): boolean {
+    return this.eventForm.valid === true
+    && this.eventForm.pristine
+      && this.eventForm.controls.performancePoints.value !== ''
+      && this.eventForm.controls.placePoints.value !== '';
+  }
 
+  public onSaveResults() {
+    this.bookmarksService.saveBookmark(this.selectedEvent, this.eventForm);
   }
 }

@@ -1,5 +1,7 @@
 <mat-toolbar color="warn">
-  <span class="toolbar-header">Menu</span>
+  <mat-toolbar-row>
+    <span class="toolbar-header">Menu</span>
+  </mat-toolbar-row>
 </mat-toolbar>
 <mat-nav-list>
   <mat-list-item *ngFor="let menuItem of menuItems" [routerLink]="menuItem.path" (click)="onItemSelected()">
@@ -13,4 +15,10 @@
     </mat-list-item>
   </a>
 </mat-nav-list>
-<p fxFlexOffset="auto" class="mat-small accent-color" style="text-align: center;">Version v2.0</p>
+<mat-nav-list fxFlexOffset="auto">
+  <mat-list-item (click)="onItemSelected()" routerLink="/rns/bookmarks">
+    <mat-icon mat-list-icon color="primary">bookmarks</mat-icon>
+    <span>Saved Competitions (Beta)</span>
+  </mat-list-item>
+</mat-nav-list>
+<p class="mat-small accent-color" style="text-align: center;">Version v2.0beta</p>

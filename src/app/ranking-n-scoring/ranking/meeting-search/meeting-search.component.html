@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5vh">
+<div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="1vh">
   <mat-accordion>
     <mat-expansion-panel expanded>
       <mat-expansion-panel-header>
@@ -37,25 +37,21 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-card>
-    <mat-card-content fxLayout="row wrap" fxLayoutGap="1vw">
-      <div mat-dialog-content fxFlex="100%">
-        <mat-selection-list #meetingsList>
-          <mat-list-option *ngFor="let meeting of filteredMeetings" [value]="meeting">
-            <h3 mat-line><strong>{{meeting.Name}}</strong></h3>
-            <p mat-line><strong>Date:</strong> {{meeting.Date | date :'mediumDate'}}</p>
-            <p mat-line><strong>Category:</strong> {{meeting.MeetingCategory | uppercase}}</p>
-            <p mat-line>{{meeting.City}}, {{meeting.Country}}</p>
-            <mat-divider></mat-divider>
-          </mat-list-option>
-        </mat-selection-list>
-        <p *ngIf="filteredMeetings.length == 0">No Meetings Found</p>
-      </div>
-    </mat-card-content>
-    <mat-dialog-actions align="end">
-      <button matRipple mat-flat-button color="warn" (click)="onNoClick()">Cancel</button>
-      <button matRipple mat-raised-button color="primary" [disabled]="meetingsList.selectedOptions.selected.length==0"
-        [mat-dialog-close]="returnSelectedMeeting(meetingsList)">Select</button>
-    </mat-dialog-actions>
-  </mat-card>
+  <mat-dialog-content>
+  <mat-selection-list #meetingsList>
+    <mat-list-option *ngFor="let meeting of filteredMeetings" [value]="meeting">
+      <h3 mat-line><strong>{{meeting.Name}}</strong></h3>
+      <p mat-line><strong>Date:</strong> {{meeting.Date | date :'mediumDate'}}</p>
+      <p mat-line><strong>Category:</strong> {{meeting.MeetingCategory | uppercase}}</p>
+      <p mat-line>{{meeting.City}}, {{meeting.Country}}</p>
+      <mat-divider></mat-divider>
+    </mat-list-option>
+  </mat-selection-list>
+  <p *ngIf="filteredMeetings.length == 0">No Meetings Found</p>
+  </mat-dialog-content>
+  <div fxLayout="row" fxLayoutGap="1vw">
+    <button fxFlexOffset="auto"  matRipple mat-flat-button color="warn" (click)="onNoClick()">Cancel</button>
+    <button matRipple mat-raised-button color="primary" [disabled]="meetingsList.selectedOptions.selected.length==0"
+      [mat-dialog-close]="returnSelectedMeeting(meetingsList)">Select</button>
+  </div>
 </div>

@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RankingModule } from './ranking/ranking.module';
 import { MeetingsModule } from './meetings/meetings.module';
 import { PerformancesModule } from './performances/performances.module';
+import { BookmarksModule } from './bookmarks/bookmarks.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PerformancesModule } from './performances/performances.module';
     FlexLayoutModule,
     RankingModule,
     MeetingsModule,
-    PerformancesModule
+    PerformancesModule,
+    BookmarksModule
   ]
 })
 export class RankingNScoringModule { }

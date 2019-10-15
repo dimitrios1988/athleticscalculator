@@ -7,6 +7,7 @@ import { MeetingsComponent } from './meetings/meetings.component';
 import { PerformancesComponent } from './performances/performances.component';
 
 const routes: Routes = [
+  { path: 'bookmarks', loadChildren: () => import('./bookmarks/bookmarks.module').then(m => m.BookmarksModule) },
   {
     path: '',
     component: RankingNScoringComponent,
