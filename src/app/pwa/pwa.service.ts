@@ -12,7 +12,6 @@ export class PwaService {
     swUpdate.available.subscribe(event => {
       this.openSnackBar().afterDismissed().subscribe(() => window.location.reload());
     });
-
   }
 
   private openSnackBar() {
