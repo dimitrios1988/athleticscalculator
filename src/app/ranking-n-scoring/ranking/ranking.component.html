@@ -1,7 +1,10 @@
 <mat-toolbar>
-  <span class="toolbar-header">Calculate points based on performance and results</span>
+  <mat-toolbar-row>
+    <span class="toolbar-header">Calculate points based on performance and results</span>
+  </mat-toolbar-row>
 </mat-toolbar>
 <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5vh">
-    <app-event-filters [events]="events$" (onEventSelected)="setEvent($event)"></app-event-filters>
-    <app-event-details *ngIf="selectedEvent" [selectedEvent]="selectedEvent" ngStyle.xs="width: 100vw;" style="width: 95vw;"></app-event-details>
+  <app-event-filters [events]="events$" (onEventSelected)="setEvent($event)"></app-event-filters>
+  <app-event-details *ngIf="selectedEvent" [selectedEvent]="selectedEvent" ngStyle.xs="width: 100vw;"
+    style="width: 95vw;"></app-event-details>
 </div>
