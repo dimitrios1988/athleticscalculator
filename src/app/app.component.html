@@ -1,19 +1,21 @@
-<mat-sidenav-container fullscreen>
+<mat-sidenav-container fullscreen autosize>
   <mat-sidenav #drawer mode="over">
     <app-menu (itemSelected)="drawer.close()" fxLayout="column" fxFlexFill></app-menu>
   </mat-sidenav>
 
   <mat-sidenav-content fxLayout="column">
     <mat-toolbar color="warn">
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span class="toolbar-header">Athletics Calculator</span>
-      <span style="flex: 1 1 auto;"></span>
-      <mat-icon matTooltip="You are offline" style="float: right;" *ngIf="!isOnline">wifi_off</mat-icon>
+      <mat-toolbar-row>
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="toolbar-header">Athletics Calculator</span>
+        <span style="flex: 1 1 auto;"></span>
+        <mat-icon matTooltip="You are offline" style="float: right;" *ngIf="!isOnline">wifi_off</mat-icon>
+      </mat-toolbar-row>
     </mat-toolbar>
     <div fxFlex>
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 
