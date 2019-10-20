@@ -8,7 +8,6 @@ import { MatSnackBar } from '@angular/material';
 export class PwaService {
 
   constructor(swUpdate: SwUpdate, private snackBar: MatSnackBar) {
-    this.openSnackBar().afterDismissed().subscribe(() => window.location.reload());
     swUpdate.available.subscribe(event => {
       this.openSnackBar().afterDismissed().subscribe(() => window.location.reload());
     });
