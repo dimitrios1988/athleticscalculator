@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Save info</h1>
+<form mat-dialog-content [formGroup]="infoForm">
+  <mat-form-field>
+    <input matInput formControlName="nameInput" placeholder="Name" autocomplete="off" required>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions fxLayout="row" fxLayoutGap="1vw">
+  <button fxFlexOffset="auto" mat-flat-button color="warn" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="!infoForm.valid" [mat-dialog-close]="returnInfo()">Save</button>
+</div>
