@@ -19,6 +19,7 @@ import { BookmarksService } from '../../bookmarks/bookmarks.service';
 import { MeetingEntity } from '../../meetings/entities/meeting.entity';
 import { isNullOrUndefined } from 'util';
 import { SaveInfoComponent } from '../save-info/save-info.component';
+import { timeout } from 'q';
 
 @Component({
   selector: 'app-event-details',
@@ -35,6 +36,7 @@ export class EventDetailsComponent
   public totalPointsBeforeDeduction: number;
   public totalPoints: number;
   public pointsAreCalculated: boolean;
+  public saveCompleted: number;
   private serviceSubscription: Subscription;
   private selectedMeeting: MeetingEntity;
 
@@ -190,9 +192,13 @@ export class EventDetailsComponent
         res.windPoints != null
           ? this.eventForm.controls.windPoints.setValue(res.windPoints)
           : this.eventForm.controls.windPoints.setValue('');
-        this.eventForm.controls.placePoints.setValue(
-          res.categoryPlacePoints
-        );
+        if (this.eventForm.controls.calculatePlacePointsCheckbox.value) {
+          this.eventForm.controls.placePoints.setValue(
+            res.categoryPlacePoints
+          );
+        } else {
+          this.eventForm.controls.placePoints.setValue('');
+        }
         this.totalPointsBeforeDeduction = 0;
         this.totalPointsBeforeDeduction += res.categoryPlacePoints
           ? res.categoryPlacePoints
@@ -295,12 +301,13 @@ export class EventDetailsComponent
     return this.eventForm.valid === true
       && this.eventForm.pristine
       && this.eventForm.controls.performancePoints.value !== ''
-      && this.eventForm.controls.placePoints.value !== '';
+      || (this.eventForm.controls.performancePoints.value !== '' && this.eventForm.controls.placePoints.value !== '');
   }
 
   public onSaveResults() {
     const dialogRef = this.dialog.open(SaveInfoComponent, {
       maxWidth: '100vw',
+      minWidth: '50vw',
       maxHeight: '100vh',
       data: {
         meetingName: this.selectedMeeting ? this.selectedMeeting.Name : '',
@@ -308,7 +315,18 @@ export class EventDetailsComponent
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (!isNullOrUndefined(result)) {
-        this.bookmarksService.saveBookmark(result.name, this.selectedEvent, this.eventForm);
+        try {
+          this.bookmarksService.saveBookmark(
+            result.name,
+            this.selectedEvent,
+            this.eventForm,
+            { totalPoints: this.totalPoints, totalPointsBeforeDeduction: this.totalPointsBeforeDeduction }
+          );
+          this.saveCompleted = 1;
+        } catch (e) {
+          this.saveCompleted = 0;
+        }
+        setTimeout(() => { this.saveCompleted = null; }, 3500);
       }
     });
   }

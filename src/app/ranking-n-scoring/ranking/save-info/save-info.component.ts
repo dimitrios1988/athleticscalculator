@@ -26,9 +26,9 @@ export class SaveInfoComponent implements OnInit {
   }
 
   returnInfo() {
-    return {
+    this.dialogRef.close({
       name: this.infoForm.controls.nameInput.value,
-    };
+    });
   }
 
   onCancel() {

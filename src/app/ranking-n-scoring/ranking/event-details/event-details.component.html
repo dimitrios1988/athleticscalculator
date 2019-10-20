@@ -175,13 +175,26 @@
         <span
           style="font-size: 24px; font-weight: 400; color: green;">{{totalPoints!=null?totalPoints:''}}</span>
       </div>
-      <button [disabled]="!canSave()" *ngIf="false" (click)="onSaveResults()" mat-mini-fab color="primary" fxFlexOffset="auto" fxHide
+      <button *ngIf="saveCompleted == null" [disabled]="!canSave()" (click)="onSaveResults()" mat-mini-fab color="primary" fxFlexOffset="auto" fxHide
         fxShow.lt-sm>
         <mat-icon>save</mat-icon>
       </button>
-      <button *ngIf="false" [disabled]="!canSave()" (click)="onSaveResults()" mat-fab color="primary" fxHide fxShow.gt-xs
+      <button *ngIf="saveCompleted == 1" mat-icon-button fxFlexOffset="auto" fxHide fxShow.lt-sm style="color: green;">
+        <mat-icon>check_circle</mat-icon>
+      </button>
+      <button *ngIf="saveCompleted == 0" mat-icon-button fxFlexOffset="auto" fxHide fxShow.lt-sm color="warn">
+        <mat-icon>error</mat-icon>
+      </button>
+      <button *ngIf="saveCompleted == null" [disabled]="!canSave()" (click)="onSaveResults()" mat-fab color="primary" fxHide fxShow.gt-xs
         style="position: fixed; bottom: 12%; right: 10%;">
         <mat-icon>save</mat-icon>
+      </button>
+      <button *ngIf="saveCompleted == 1" mat-icon-button fxHide fxShow.gt-xs style="color: green; position: fixed; bottom: 13%; right: 11%;">
+        <mat-icon>check_circle</mat-icon>
+      </button>
+      <button *ngIf="saveCompleted == 0" mat-icon-button color="warn" fxHide fxShow.gt-xs
+        style="position: fixed; bottom: 13%; right: 11%;">
+        <mat-icon>error</mat-icon>
       </button>
       <span fxFlexOffset="10"></span>
     </div>
