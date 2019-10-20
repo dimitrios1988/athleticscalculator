@@ -3,13 +3,22 @@ import { CommonModule } from '@angular/common';
 
 import { BookmarksRoutingModule } from './bookmarks-routing.module';
 import { BookmarksComponent } from './bookmarks.component';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+import { MatIconModule } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [BookmarksComponent],
   imports: [
     CommonModule,
-    BookmarksRoutingModule
+    BookmarksRoutingModule,
+    MatToolbarModule,
+    MatIconModule,
+    PipesModule,
+    FlexLayoutModule,
+    MatTableModule
   ],
 })
 export class BookmarksModule { }
