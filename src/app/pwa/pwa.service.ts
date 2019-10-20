@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { AppUpdateComponent } from './app-update/app-update.component';
 import { MatSnackBar } from '@angular/material';
 
 @Injectable({
@@ -9,14 +8,15 @@ import { MatSnackBar } from '@angular/material';
 export class PwaService {
 
   constructor(swUpdate: SwUpdate, private snackBar: MatSnackBar) {
+    this.openSnackBar().afterDismissed().subscribe(() => window.location.reload());
     swUpdate.available.subscribe(event => {
       this.openSnackBar().afterDismissed().subscribe(() => window.location.reload());
     });
   }
 
   private openSnackBar() {
-    return this.snackBar.openFromComponent(AppUpdateComponent, {
-      duration: 4 * 1000,
+    return this.snackBar.open('App updated successfully! Restarting...', 'close', {
+      duration: 3500,
     });
   }
 }
