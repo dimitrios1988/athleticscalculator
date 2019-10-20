@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { BookmarksService } from '../../bookmarks/bookmarks.service';
 import { MeetingEntity } from '../../meetings/entities/meeting.entity';
 import { isNullOrUndefined } from 'util';
+import { SaveInfoComponent } from '../save-info/save-info.component';
 
 @Component({
   selector: 'app-event-details',
@@ -31,6 +32,7 @@ export class EventDetailsComponent
 
   public eventForm: FormGroup;
   public meetingCategories: string[];
+  public totalPointsBeforeDeduction: number;
   public totalPoints: number;
   public pointsAreCalculated: boolean;
   private serviceSubscription: Subscription;
@@ -55,7 +57,9 @@ export class EventDetailsComponent
       meetingCategorySelect: [''],
       calculatePlacePointsCheckbox: [''],
       placePoints: [{ value: '', disabled: true }],
-      progressedToFinalCombo: ['']
+      progressedToFinalCombo: [''],
+      datePicker: [''],
+      datePoints: [{ value: '', disabled: true }],
     });
   }
 
@@ -165,6 +169,15 @@ export class EventDetailsComponent
       getPointsCmd.progressToFinal = this.eventForm.controls.competitionTypeSelect.value.HasProgressToFinal
         ? this.eventForm.controls.progressedToFinalCombo.value == 'true'
         : null;
+    } else {
+      this.eventForm.controls.placeInput.setValue('');
+      this.eventForm.controls.placePoints.setValue('');
+      this.eventForm.controls.competitionTypeSelect.setValue('');
+      this.eventForm.controls.meetingCategorySelect.setValue('');
+      this.eventForm.controls.placePoints.setValue('');
+      this.eventForm.controls.progressedToFinalCombo.setValue('');
+      this.eventForm.controls.datePoints.setValue('');
+      this.eventForm.controls.datePicker.setValue('');
     }
 
     this.pointsAreCalculated = true;
@@ -180,16 +193,27 @@ export class EventDetailsComponent
         this.eventForm.controls.placePoints.setValue(
           res.categoryPlacePoints
         );
-        this.totalPoints = 0;
-        this.totalPoints += res.categoryPlacePoints
+        this.totalPointsBeforeDeduction = 0;
+        this.totalPointsBeforeDeduction += res.categoryPlacePoints
           ? res.categoryPlacePoints
           : 0;
-        this.totalPoints += res.windPoints ? res.windPoints : 0;
-        this.totalPoints += res.performancePoints ? res.performancePoints : 0;
+        this.totalPointsBeforeDeduction += res.windPoints ? res.windPoints : 0;
+        this.totalPointsBeforeDeduction += res.performancePoints ? res.performancePoints : 0;
         this.eventForm.markAsPristine();
       })
       .add(() => {
         this.pointsAreCalculated = false;
+      }).add(() => {
+        if (this.eventForm.controls.datePicker.value) {
+          this.calculateDeductionPoints();
+          if (this.eventForm.controls.datePoints.value == 'All points') {
+            this.totalPoints = 0;
+          } else {
+            this.totalPoints = this.totalPointsBeforeDeduction + Number(this.eventForm.controls.datePoints.value);
+          }
+        } else {
+          this.totalPoints = this.totalPointsBeforeDeduction;
+        }
       });
     this.serviceSubscription.add(getPointsSubscription);
   }
@@ -207,8 +231,39 @@ export class EventDetailsComponent
       this.eventForm.controls.meetingCategorySelect.setValue('');
       this.eventForm.controls.placePoints.setValue('');
       this.eventForm.controls.progressedToFinalCombo.setValue('');
+      this.eventForm.controls.datePoints.setValue('');
+      this.eventForm.controls.datePicker.setValue('');
     }
+    this.totalPointsBeforeDeduction = null;
     this.totalPoints = null;
+  }
+
+  private calculateDeductionPoints() {
+    const diff = this.monthDiff(this.eventForm.controls.datePicker.value, new Date());
+    if (this.selectedEvent.PointsDeductionStrategy.Max < diff) {
+      this.eventForm.controls.datePoints.setValue('All points');
+    } else {
+      if (!isNullOrUndefined(this.selectedEvent.PointsDeductionStrategy.MonthPoints)) {
+        if (!isNullOrUndefined(this.selectedEvent.PointsDeductionStrategy.MonthPoints[diff])) {
+          this.eventForm.controls.datePoints.setValue(this.selectedEvent.PointsDeductionStrategy.MonthPoints[diff]);
+        } else {
+          this.eventForm.controls.datePoints.setValue('0');
+        }
+      } else {
+        this.eventForm.controls.datePoints.setValue('0');
+      }
+    }
+  }
+
+  private monthDiff(d1: Date, d2: Date) {
+    let months: number;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth() + 1;
+    if (d2.getDate() < d1.getDate()) {
+      months -= 1;
+    }
+    return months <= 0 ? 0 : months;
   }
 
   comparePerformances() {
@@ -221,6 +276,7 @@ export class EventDetailsComponent
   }
 
   onSearchMeetings() {
+    this.eventForm.markAsDirty();
     const dialogRef = this.dialog.open(MeetingSearchComponent, {
       maxWidth: '100vw',
       maxHeight: '100vh',
@@ -228,20 +284,32 @@ export class EventDetailsComponent
     });
     dialogRef.afterClosed().subscribe((result: MeetingEntity) => {
       this.selectedMeeting = result;
-      if(!isNullOrUndefined(this.selectedMeeting)) {
+      if (!isNullOrUndefined(this.selectedMeeting)) {
         this.eventForm.controls.meetingCategorySelect.setValue(this.selectedMeeting.MeetingCategory);
+        this.eventForm.controls.datePicker.setValue(this.selectedMeeting.Date);
       }
     });
   }
 
   public canSave(): boolean {
     return this.eventForm.valid === true
-    && this.eventForm.pristine
+      && this.eventForm.pristine
       && this.eventForm.controls.performancePoints.value !== ''
       && this.eventForm.controls.placePoints.value !== '';
   }
 
   public onSaveResults() {
-    this.bookmarksService.saveBookmark(this.selectedEvent, this.eventForm);
+    const dialogRef = this.dialog.open(SaveInfoComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      data: {
+        meetingName: this.selectedMeeting ? this.selectedMeeting.Name : '',
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!isNullOrUndefined(result)) {
+        this.bookmarksService.saveBookmark(result.name, this.selectedEvent, this.eventForm);
+      }
+    });
   }
 }

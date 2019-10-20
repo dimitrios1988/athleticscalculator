@@ -114,7 +114,6 @@
               </mat-icon>
             </button>
           </div>
-
           <button fxHide fxShow.gt-xs mat-flat-button color="accent" style="height: min-content"
             [disabled]="!meetingCategories" (click)="onSearchMeetings()">
             <mat-icon>search</mat-icon>Search
@@ -124,6 +123,21 @@
           <button mat-flat-button color="accent" [disabled]="!meetingCategories" (click)="onSearchMeetings()">
             <mat-icon>search</mat-icon>Search
           </button>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="5vw">
+          <div fxFlex="50%" fxFlex.lt-sm="100%">
+            <mat-form-field style="width: 100%;">
+              <input matInput [matDatepicker]="picker" placeholder="Date of competition, if known" formControlName="datePicker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker fxHide fxShow.lt-sm></mat-datepicker>
+              <mat-datepicker #picker fxHide fxShow.gt-xs></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="fill" fxFlex="calc(50% - 5vw)" fxFlex.lt-sm="100%">
+            <mat-label>Points removed from date</mat-label>
+            <input matInput formControlName="datePoints" placeholder="Points removed from date" type="text" autocomplete="off"
+              autocorrect="off" autocapitalize="off" [ngStyle]="{color: eventForm.controls['datePoints'].value=='0' ? 'inherit' : 'red'}">
+          </mat-form-field>
         </div>
         <div fxLayout="row wrap" fxLayoutGap="5vw">
           <div fxFlex="50%">
@@ -150,15 +164,25 @@
       </div>
     </form>
     <mat-divider [inset]="true"></mat-divider>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw" style="padding: 2vh 0px 0px 0px"
+      *ngIf="this.eventForm.controls['datePoints'].value != '0' && this.eventForm.controls['datePoints'].value != ''">
+      <span style="font-size: 20px; font-weight: 300;">Total Points without date:</span>
+      <span style="font-size: 20px; font-weight: 300;">{{totalPointsBeforeDeduction?totalPointsBeforeDeduction:''}}</span>
+    </div>
     <div fxLayout="row" fxLayoutAlign="start center" style="padding: 2vh 0px 0px 0px">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
         <span style="font-size: 24px; font-weight: 400;">Total Points:</span>
-        <span style="font-size: 24px; font-weight: 400; color: green;">{{totalPoints?totalPoints:''}}</span>
+        <span
+          style="font-size: 24px; font-weight: 400; color: green;">{{totalPoints!=null?totalPoints:''}}</span>
       </div>
-      <button [disabled]="!canSave()" (click)="onSaveResults()" mat-mini-fab color="primary" fxFlexOffset="auto" fxHide fxShow.lt-sm>
+      <button [disabled]="!canSave()" (click)="onSaveResults()" mat-mini-fab color="primary" fxFlexOffset="auto" fxHide
+        fxShow.lt-sm>
         <mat-icon>save</mat-icon>
       </button>
-      <button [disabled]="!canSave()" (click)="onSaveResults()"  mat-fab color="primary" fxHide fxShow.gt-xs style="position: fixed; bottom: 15vh; right: 10vw;"><mat-icon>save</mat-icon></button>
+      <button [disabled]="!canSave()" (click)="onSaveResults()" mat-fab color="primary" fxHide fxShow.gt-xs
+        style="position: fixed; bottom: 12%; right: 10%;">
+        <mat-icon>save</mat-icon>
+      </button>
       <span fxFlexOffset="10"></span>
     </div>
   </mat-card-content>
