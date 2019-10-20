@@ -1,7 +1,0 @@
-{
-  "appId": "dchondrokoukis.athleticspointscalculator",
-  "appName": "Athletics Ranking Points Calculator",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www"
-}

@@ -1,54 +1,52 @@
-import { NgModule } from "@angular/core";
-import { BrowserModule, DomSanitizer } from "@angular/platform-browser";
-import { RouteReuseStrategy } from "@angular/router";
-import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
-import { SplashScreen } from "@ionic-native/splash-screen/ngx";
-import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AppComponent } from "./app.component";
-import { AppRoutingModule } from "./app-routing.module";
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
-import {
-  MatSnackBarModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatFormFieldModule,
-  MatIconRegistry
-} from "@angular/material";
-import { RateMeNagModule } from './rate-me-nag/rate-me-nag.module';
+import { MenuModule } from './menu/menu.module';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { PwaModule } from './pwa/pwa.module';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
-  entryComponents: [],
   imports: [
-    BrowserAnimationsModule,
     BrowserModule,
-    IonicModule.forRoot(),
     AppRoutingModule,
-    MatSnackBarModule,
-    MatToolbarModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    MatSidenavModule,
+    MatButtonModule,
     MatIconModule,
-    MatFormFieldModule,
-    HttpClientModule,
-    RateMeNagModule  
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    MatToolbarModule,
+    MenuModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatTooltipModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
+    MatBottomSheetModule,
+    PwaModule
   ],
   bootstrap: [AppComponent],
-  exports: [AppComponent]
 })
-export class AppModule {
-  constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
-    matIconRegistry.addSvgIconSet(
-      domSanitizer.bypassSecurityTrustResourceUrl("./assets/mdi.svg")
-    );
-  }
-}
+export class AppModule { }

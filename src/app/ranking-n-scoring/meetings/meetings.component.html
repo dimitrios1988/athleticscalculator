@@ -1,0 +1,10 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span class="toolbar-header">Seach for meetings</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5vh">
+  <app-meeting-filters [yearRange$]="years$" [countries$]="countries$" (filtersChanged)="onApplyFilters($event)">
+  </app-meeting-filters>
+  <app-meeting-details *ngIf="meetingFilters" [filters]="meetingFilters" [meetings$]="meetings$"></app-meeting-details>
+</div>

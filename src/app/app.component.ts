@@ -1,62 +1,38 @@
-import { Component, ViewChild } from "@angular/core";
-
-import { Platform, IonRouterOutlet } from "@ionic/angular";
-import { SplashScreen } from "@ionic-native/splash-screen/ngx";
-import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { Router } from "@angular/router";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { PwaService } from './pwa/pwa.service';
+import { fromEvent, Subscription, Observable } from 'rxjs';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "app.component.html"
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  public appPages = [
-    {
-      title: "Scoring & Ranking Points Calculator",
-      url: "/ranking",
-      icon: "calculator"
-    },
-    {
-      title: "Performance Finder",
-      url: "/performances",
-      icon: "chart-line-variant"
-    },
-    {
-      title: "Meetings",
-      url: "/meetings",
-      icon: "calendar-search"
-    },
-    {
-      title: "Info",
-      url: "/info",
-      icon: "sign-text"
-    },    
-  ];
+export class AppComponent implements OnInit, OnDestroy {
 
-  @ViewChild(IonRouterOutlet) nav: IonRouterOutlet;
+  private subscriptions: Subscription[] = [];
+  public isOnline: boolean;
+  private onlineEvent: Observable<Event>;
+  private offlineEvent: Observable<Event>;
 
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private router: Router
-  ) {
-    this.initializeApp();
+  constructor() {
+    this.isOnline = window.navigator.onLine;
   }
 
-  async initializeApp() {
-    this.platform
-      .ready()
-      .then(() => {        
-        this.statusBar.styleDefault();
-        this.splashScreen.hide();
-      });      
+  ngOnInit(): void {
+
+    this.onlineEvent = fromEvent(window, 'online');
+    this.offlineEvent = fromEvent(window, 'offline');
+
+    this.subscriptions.push(this.onlineEvent.subscribe(e => {
+      this.isOnline = true;
+    }));
+
+    this.subscriptions.push(this.offlineEvent.subscribe(e => {
+      this.isOnline = false;
+    }));
   }
 
-  isActive(page) {
-    // Again the Tabs Navigation
-    if (this.nav.isActivated) {
-      return this.router.url === page.url;
-    }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }
