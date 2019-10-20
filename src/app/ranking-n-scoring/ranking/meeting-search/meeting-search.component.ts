@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatListOption, MatSelectionList } from '@angular/material';
 import { MeetingsService } from 'src/app/ranking-n-scoring/meetings/meetings.service';
 import { GetMeetingsDateRangeDto } from 'src/app/ranking-n-scoring/meetings/dto/getmeetingsdaterange.dto';
 import { GetMeetingsDto } from 'src/app/ranking-n-scoring/meetings/dto/get-meetings.dto';
 import { MeetingEntity } from 'src/app/ranking-n-scoring/meetings/entities/meeting.entity';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-meeting-search',
@@ -12,6 +13,8 @@ import { MeetingEntity } from 'src/app/ranking-n-scoring/meetings/entities/meeti
 })
 export class MeetingSearchComponent implements OnInit {
 
+  @ViewChild('meetingsList', {static: true})
+  private meetingsList: MatSelectionList;
   public currentDate: {month: number, year: number};
   public years: number[];
   public filteredMeetings: MeetingEntity[];
@@ -36,7 +39,7 @@ export class MeetingSearchComponent implements OnInit {
   private meetings: MeetingEntity[];
 
   constructor(
-    public dialogRef: MatDialogRef<MeetingSearchComponent>,
+    private dialogRef: MatDialogRef<MeetingSearchComponent>,
     @Inject(MAT_DIALOG_DATA) private data,
     private meetingsService: MeetingsService
   ) {
@@ -50,6 +53,7 @@ export class MeetingSearchComponent implements OnInit {
   ngOnInit(): void {
     this.getDateRange();
     this.getMeetings(this.currentDate.year, this.currentDate.month, '');
+    this.meetingsList.selectedOptions = new SelectionModel<MatListOption>(false);
   }
 
   private getDateRange() {
@@ -91,7 +95,7 @@ export class MeetingSearchComponent implements OnInit {
     });
   }
 
-  onNoClick(): void {
+  onCancel(): void {
     this.dialogRef.close();
   }
 
