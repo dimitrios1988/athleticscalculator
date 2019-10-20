@@ -15,7 +15,7 @@ export class CompetitionTypePipe implements PipeTransform {
     "10000_event": "10.000m Event",
     "5000_sim_to_10000": "5.000m Event similar to 10.000m",
     "world_xc_senior": "World Cross Country",
-    "world_xc_u20": "World Cross Country",
+    "world_xc_u20": "World Cross Country U20",
     "combined": "Combined",
     "marathon": "Marathon",
     "half_sim_to_marathon_25_30": "Half Marathon",
