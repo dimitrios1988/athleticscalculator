@@ -3,11 +3,11 @@
     <span class="toolbar-header">Saved Competitions</span>
   </mat-toolbar-row>
 </mat-toolbar>
-<h4>***This is an experimental feature***</h4>
-<p>This section is under development, so you may lose your saved competitions. Use it on your own risk</p>
 <div fxLayout="row" >
   <div fxLayout="column" fxFlexOffset.gt-xs="1vw" fxFlex="90%" fxFlex.lt-sm="100%">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z4" fxFlexFill>
+    <h4>***This is an experimental feature***</h4>
+    <p>This section is under development, so you may lose your saved competitions. Use it on your own risk</p>
+    <table *ngIf="dataSource.data" mat-table [dataSource]="dataSource" class="mat-elevation-z4" fxFlexFill>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       <ng-container matColumnDef="Icon">
@@ -33,5 +33,6 @@
         </td>
       </ng-container>
     </table>
+    <p *ngIf="!dataSource.data">There are no saved competitions yet</p>
   </div>
 </div>
