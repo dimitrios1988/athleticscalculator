@@ -326,7 +326,10 @@ export class EventDetailsComponent
         } catch (e) {
           this.saveCompleted = 0;
         }
-        setTimeout(() => { this.saveCompleted = null; }, 3500);
+        setTimeout(() => {
+          this.saveCompleted = null;
+          this.eventForm.markAsDirty();
+        }, 2500);
       }
     });
   }

@@ -58,19 +58,21 @@
   </mat-card-content>
 
 </mat-card>
-<mat-card style="padding: 0">
-  <div class="mat-elevation-z4 mat-table" style="width: 100%" *ngIf="!tableIsEmpty()">
-    <div class="mat-header-row">
-      <div class="mat-header-cell">Men</div>
-      <div class="mat-header-cell">Event</div>
-      <div class="mat-header-cell">Women</div>
-    </div>
-    <div *ngFor="let event of eventTableRows">
-      <div class="mat-row" *ngIf="this.performancesDic.m[event] != null || this.performancesDic.w[event] != null">
-        <td class="mat-cell">{{performancesDic.m[event]}}</td>
-        <td class="mat-cell">{{event|eventName}}</td>
-        <td class="mat-cell">{{performancesDic.w[event]}}</td>
+<div fxLayout="column">
+  <div fxLayout="row">
+    <div class="mat-elevation-z4 mat-table" *ngIf="!tableIsEmpty()" fxFlexFill>
+      <div class="mat-header-row">
+        <div class="mat-header-cell table-header">Men</div>
+        <div class="mat-header-cell table-header">Event</div>
+        <div class="mat-header-cell table-header">Women</div>
+      </div>
+      <div *ngFor="let event of eventTableRows">
+        <div class="mat-row" *ngIf="this.performancesDic.m[event] != null || this.performancesDic.w[event] != null">
+          <td class="mat-cell">{{performancesDic.m[event]}}</td>
+          <td class="mat-cell">{{event|eventName}}</td>
+          <td class="mat-cell">{{performancesDic.w[event]}}</td>
+        </div>
       </div>
     </div>
   </div>
-</mat-card>
+</div>

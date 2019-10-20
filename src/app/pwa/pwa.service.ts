@@ -14,8 +14,8 @@ export class PwaService {
   }
 
   private openSnackBar() {
-    return this.snackBar.open('App updated successfully! Restarting...', 'close', {
-      duration: 3500,
+    return this.snackBar.open('App updated successfully! Restarting...', '', {
+      duration: 2500,
     });
   }
 }
