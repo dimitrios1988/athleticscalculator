@@ -175,11 +175,11 @@
         <span
           style="font-size: 24px; font-weight: 400; color: green;">{{totalPoints!=null?totalPoints:''}}</span>
       </div>
-      <button [disabled]="!canSave()" (click)="onSaveResults()" mat-mini-fab color="primary" fxFlexOffset="auto" fxHide
+      <button [disabled]="!canSave()" *ngIf="false" (click)="onSaveResults()" mat-mini-fab color="primary" fxFlexOffset="auto" fxHide
         fxShow.lt-sm>
         <mat-icon>save</mat-icon>
       </button>
-      <button [disabled]="!canSave()" (click)="onSaveResults()" mat-fab color="primary" fxHide fxShow.gt-xs
+      <button *ngIf="false" [disabled]="!canSave()" (click)="onSaveResults()" mat-fab color="primary" fxHide fxShow.gt-xs
         style="position: fixed; bottom: 12%; right: 10%;">
         <mat-icon>save</mat-icon>
       </button>
