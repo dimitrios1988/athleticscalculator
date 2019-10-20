@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="1vh">
+<div mat-dialog-content>
   <mat-accordion>
     <mat-expansion-panel expanded>
       <mat-expansion-panel-header>
@@ -37,7 +37,6 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-dialog-content>
   <mat-selection-list #meetingsList>
     <mat-list-option *ngFor="let meeting of filteredMeetings" [value]="meeting">
       <h3 mat-line><strong>{{meeting.Name}}</strong></h3>
@@ -48,10 +47,9 @@
     </mat-list-option>
   </mat-selection-list>
   <p *ngIf="filteredMeetings.length == 0">No Meetings Found</p>
-  </mat-dialog-content>
-  <div fxLayout="row" fxLayoutGap="1vw">
-    <button fxFlexOffset="auto"  matRipple mat-flat-button color="warn" (click)="onNoClick()">Cancel</button>
-    <button matRipple mat-raised-button color="primary" [disabled]="meetingsList.selectedOptions.selected.length==0"
-      [mat-dialog-close]="returnSelectedMeeting(meetingsList)">Select</button>
-  </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutGap="1vw">
+  <button fxFlexOffset="auto" mat-flat-button color="warn" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="meetingsList.selectedOptions.selected.length==0"
+    [mat-dialog-close]="returnSelectedMeeting(meetingsList)">Select</button>
 </div>
