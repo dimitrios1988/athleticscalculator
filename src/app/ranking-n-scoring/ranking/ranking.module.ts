@@ -19,7 +19,7 @@ import { MatInputModule, MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatRippleModule } from '@angular/material/core';
+import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PipesModule } from '../../shared/pipes/pipes.module';
@@ -28,15 +28,18 @@ import { MeetingSearchComponent } from './meeting-search/meeting-search.componen
 import { MeetingsService } from '../meetings/meetings.service';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SaveInfoComponent } from './save-info/save-info.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
     RankingComponent,
     EventFiltersComponent,
     EventDetailsComponent,
-    MeetingSearchComponent
+    MeetingSearchComponent,
+    SaveInfoComponent
   ],
-  entryComponents: [MeetingSearchComponent],
+  entryComponents: [MeetingSearchComponent, SaveInfoComponent],
   imports: [
     CommonModule,
     RankingRoutingModule,
@@ -60,7 +63,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     LoadingSpinnerModule,
     MatListModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [RankingService, MeetingsService],
 })
