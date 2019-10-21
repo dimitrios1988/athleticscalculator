@@ -63,6 +63,23 @@
             [ngStyle]="{color: eventForm.controls['windPoints'].value>0?'green':eventForm.controls['windPoints'].value<0?'red':'inherit'}">
         </mat-form-field>
       </div>
+      <div fxLayout="row wrap" fxLayoutGap="5vw">
+        <div fxFlex="50%" fxFlex.lt-sm="100%">
+          <mat-form-field style="width: 100%;">
+            <input matInput [matDatepicker]="picker" placeholder="Date of competition, if known"
+              formControlName="datePicker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker fxHide fxShow.lt-sm></mat-datepicker>
+            <mat-datepicker #picker fxHide fxShow.gt-xs></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <mat-form-field appearance="fill" fxFlex="calc(50% - 5vw)" fxFlex.lt-sm="100%">
+          <mat-label>Points removed from date</mat-label>
+          <input matInput formControlName="datePoints" placeholder="Points removed from date" type="text"
+            autocomplete="off" autocorrect="off" autocapitalize="off"
+            [ngStyle]="{color: eventForm.controls['datePoints'].value=='0' ? 'inherit' : 'red'}">
+        </mat-form-field>
+      </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
         <mat-checkbox formControlName="calculatePlacePointsCheckbox" labelPosition="before"
           (change)="updateFormValidation()">Calculate Points
@@ -125,21 +142,6 @@
           </button>
         </div>
         <div fxLayout="row wrap" fxLayoutGap="5vw">
-          <div fxFlex="50%" fxFlex.lt-sm="100%">
-            <mat-form-field style="width: 100%;">
-              <input matInput [matDatepicker]="picker" placeholder="Date of competition, if known" formControlName="datePicker">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker touchUi #picker fxHide fxShow.lt-sm></mat-datepicker>
-              <mat-datepicker #picker fxHide fxShow.gt-xs></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <mat-form-field appearance="fill" fxFlex="calc(50% - 5vw)" fxFlex.lt-sm="100%">
-            <mat-label>Points removed from date</mat-label>
-            <input matInput formControlName="datePoints" placeholder="Points removed from date" type="text" autocomplete="off"
-              autocorrect="off" autocapitalize="off" [ngStyle]="{color: eventForm.controls['datePoints'].value=='0' ? 'inherit' : 'red'}">
-          </mat-form-field>
-        </div>
-        <div fxLayout="row wrap" fxLayoutGap="5vw">
           <div fxFlex="50%">
             <mat-form-field>
               <mat-label>Place</mat-label>
@@ -167,16 +169,16 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw" style="padding: 2vh 0px 0px 0px"
       *ngIf="this.eventForm.controls['datePoints'].value != '0' && this.eventForm.controls['datePoints'].value != ''">
       <span style="font-size: 20px; font-weight: 300;">Total Points without date:</span>
-      <span style="font-size: 20px; font-weight: 300;">{{totalPointsBeforeDeduction?totalPointsBeforeDeduction:''}}</span>
+      <span
+        style="font-size: 20px; font-weight: 300;">{{totalPointsBeforeDeduction?totalPointsBeforeDeduction:''}}</span>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" style="padding: 2vh 0px 0px 0px">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
         <span style="font-size: 24px; font-weight: 400;">Total Points:</span>
-        <span
-          style="font-size: 24px; font-weight: 400; color: green;">{{totalPoints!=null?totalPoints:''}}</span>
+        <span style="font-size: 24px; font-weight: 400; color: green;">{{totalPoints!=null?totalPoints:''}}</span>
       </div>
-      <button *ngIf="saveCompleted == null" [disabled]="!canSave()" (click)="onSaveResults()" mat-mini-fab color="primary" fxFlexOffset="auto" fxHide
-        fxShow.lt-sm>
+      <button *ngIf="saveCompleted == null" [disabled]="!canSave()" (click)="onSaveResults()" mat-mini-fab
+        color="primary" fxFlexOffset="auto" fxHide fxShow.lt-sm>
         <mat-icon>save</mat-icon>
       </button>
       <button *ngIf="saveCompleted == 1" mat-icon-button fxFlexOffset="auto" fxHide fxShow.lt-sm style="color: green;">
@@ -185,11 +187,12 @@
       <button *ngIf="saveCompleted == 0" mat-icon-button fxFlexOffset="auto" fxHide fxShow.lt-sm color="warn">
         <mat-icon>error</mat-icon>
       </button>
-      <button *ngIf="saveCompleted == null" [disabled]="!canSave()" (click)="onSaveResults()" mat-fab color="primary" fxHide fxShow.gt-xs
-        style="position: fixed; bottom: 12%; right: 10%;">
+      <button *ngIf="saveCompleted == null" [disabled]="!canSave()" (click)="onSaveResults()" mat-fab color="primary"
+        fxHide fxShow.gt-xs style="position: fixed; bottom: 12%; right: 10%;">
         <mat-icon>save</mat-icon>
       </button>
-      <button *ngIf="saveCompleted == 1" mat-icon-button fxHide fxShow.gt-xs style="color: green; position: fixed; bottom: 13%; right: 11%;">
+      <button *ngIf="saveCompleted == 1" mat-icon-button fxHide fxShow.gt-xs
+        style="color: green; position: fixed; bottom: 13%; right: 11%;">
         <mat-icon>check_circle</mat-icon>
       </button>
       <button *ngIf="saveCompleted == 0" mat-icon-button color="warn" fxHide fxShow.gt-xs

@@ -178,8 +178,6 @@ export class EventDetailsComponent
       this.eventForm.controls.meetingCategorySelect.setValue('');
       this.eventForm.controls.placePoints.setValue('');
       this.eventForm.controls.progressedToFinalCombo.setValue('');
-      this.eventForm.controls.datePoints.setValue('');
-      this.eventForm.controls.datePicker.setValue('');
     }
 
     this.pointsAreCalculated = true;
@@ -291,7 +289,6 @@ export class EventDetailsComponent
       this.selectedMeeting = result;
       if (!isNullOrUndefined(this.selectedMeeting)) {
         this.eventForm.controls.meetingCategorySelect.setValue(this.selectedMeeting.MeetingCategory);
-        this.eventForm.controls.datePicker.setValue(this.selectedMeeting.Date);
       }
     });
   }
