@@ -266,8 +266,12 @@ export class EventDetailsComponent
     months = (d2.getFullYear() - d1.getFullYear()) * 12;
     months -= d1.getMonth() + 1;
     months += d2.getMonth() + 1;
-    if (d2.getDate() < d1.getDate()) {
-      months -= 1;
+    if (d1.getMonth() === d2.getMonth()) {
+      if (d2.getDate() < d1.getDate()) {
+        months -= 1;
+      } else if (d2.getDate() > d1.getDate()) {
+        months += 1;
+      }
     }
     return months <= 0 ? 0 : months;
   }
