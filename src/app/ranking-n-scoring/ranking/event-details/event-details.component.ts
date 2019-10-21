@@ -263,8 +263,8 @@ export class EventDetailsComponent
     let months: number;
     months = (d2.getFullYear() - (d1.getFullYear())) * 12;
     months += (d2.getMonth() - d1.getMonth());
-    if (d2.getDate() < d1.getDate()) {
-      months -= 1;
+    if (d2.getDate() >= d1.getDate()) {
+      months += 1;
     }
     return months <= 0 ? 0 : months;
   }
