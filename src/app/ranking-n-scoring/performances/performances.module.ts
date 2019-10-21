@@ -18,6 +18,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/loading-spinner.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PerformancesService } from './performances.service';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [PerformancesComponent],
@@ -37,7 +38,8 @@ import { PerformancesService } from './performances.service';
     MatTooltipModule,
     MatButtonModule,
     MatRippleModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    MatTableModule
   ],
   providers: [PerformancesService]
 })

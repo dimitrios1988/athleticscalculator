@@ -6,6 +6,7 @@ import { GetPerformancesCmd } from './cmd/get-performances.cmd';
 import { PerformancesService } from './performances.service';
 import { GetPerformancesDto } from './dto/get-performances.dto';
 import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-performances',
@@ -61,6 +62,8 @@ export class PerformancesComponent implements OnInit {
     '20km_rw',
     '50km_rw'
   ];
+  public displayedColumns: string[];
+  public dataSource: MatTableDataSource<{menEvent: string, event: string, womenEvent: string}>;
 
   private savedOptions: Option;
 
@@ -70,6 +73,8 @@ export class PerformancesComponent implements OnInit {
       m: {},
       w: {}
     };
+    this.displayedColumns = ['Men', 'Event', 'Women'];
+    this.dataSource = new MatTableDataSource();
     this.performanceForm = this.formBuilder.group({
       pointsInput: [
         '',
@@ -121,6 +126,19 @@ export class PerformancesComponent implements OnInit {
     })
       .add(() => {
         this.performancesAreCalculated = false;
+      }).add(() => {
+        this.dataSource = new MatTableDataSource(
+          this.eventTableRows.map(event => {
+            if (isNullOrUndefined(this.performancesDic.m[event]) && isNullOrUndefined(this.performancesDic.w[event])) {
+              return null;
+            } else {
+              return {
+                menEvent: this.performancesDic.m[event],
+                event: event,
+                womenEvent: this.performancesDic.w[event]
+              };
+            }
+        }).filter((el) => el != null ));
       });
   }
 
