@@ -5,16 +5,15 @@ export class Bookmark {
   name: string;
   event: EventEntity;
   eventForm: FormGroup;
+  points: {
+    totalPoints?: number;
+    totalPointsBeforeDeduction?: number;
+  };
 
-  constructor(data: {
-    name: string,
-    event: EventEntity,
-    eventForm: FormGroup
-  }) {
-    if (!!data) {
-      this.name = data.name;
-      this.event = data.event;
-      this.eventForm = data.eventForm;
-    }
+  constructor({ name, event, eventForm, points }) {
+    this.name = name;
+    this.event = event;
+    this.eventForm = eventForm;
+    this.points = points;
   }
 }

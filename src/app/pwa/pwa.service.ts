@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { AppUpdateComponent } from './app-update/app-update.component';
 import { MatSnackBar } from '@angular/material';
 
 @Injectable({
@@ -15,8 +14,8 @@ export class PwaService {
   }
 
   private openSnackBar() {
-    return this.snackBar.openFromComponent(AppUpdateComponent, {
-      duration: 4 * 1000,
+    return this.snackBar.open('App updated successfully! Restarting...', '', {
+      duration: 2500,
     });
   }
 }

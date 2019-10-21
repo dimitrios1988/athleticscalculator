@@ -18,9 +18,20 @@ export class BookmarksService {
     }
   }
 
-  saveBookmark(name: string, event: EventEntity, eventForm: FormGroup): void {
-    const bookmark = new Bookmark({name, event, eventForm });
+  saveBookmark(name: string, event: EventEntity, eventForm: FormGroup, { totalPoints, totalPointsBeforeDeduction }): void {
+    const bookmark = new Bookmark(
+      {
+        name,
+        event,
+        eventForm,
+        points: { totalPoints: Number(totalPoints), totalPointsBeforeDeduction: Number(totalPointsBeforeDeduction) }
+      });
     this.bookmarks.push(bookmark);
+    localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks, this.getCircularReplacer()));
+  }
+
+  saveBookmarks(bookmarks: Bookmark[]) {
+    this.bookmarks = bookmarks;
     localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks, this.getCircularReplacer()));
   }
 

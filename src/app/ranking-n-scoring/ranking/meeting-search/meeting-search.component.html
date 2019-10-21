@@ -37,7 +37,7 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-selection-list #meetingsList>
+  <mat-selection-list dense #meetingsList>
     <mat-list-option *ngFor="let meeting of filteredMeetings" [value]="meeting">
       <h3 mat-line><strong>{{meeting.Name}}</strong></h3>
       <p mat-line><strong>Date:</strong> {{meeting.Date | date :'mediumDate'}}</p>
