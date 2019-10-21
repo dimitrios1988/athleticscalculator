@@ -303,7 +303,7 @@ export class EventDetailsComponent
   public onSaveResults() {
     const dialogRef = this.dialog.open(SaveInfoComponent, {
       maxWidth: '100vw',
-      minWidth: '50vw',
+      minWidth: '60vw',
       maxHeight: '100vh',
       data: {
         meetingName: this.selectedMeeting ? this.selectedMeeting.Name : '',

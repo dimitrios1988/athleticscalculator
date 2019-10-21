@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BookmarksService } from './bookmarks.service';
 import { Bookmark } from './entities/bookmark.entity';
 import { MatTableDataSource } from '@angular/material';
+import { MediaObserver, MediaChange } from '@angular/flex-layout';
+import { filter } from 'minimatch';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-bookmarks',
@@ -12,12 +15,8 @@ export class BookmarksComponent implements OnInit {
 
   private bookmarks: Bookmark[];
   public dataSource: MatTableDataSource<Bookmark>;
-  public displayedColumns: string[];
 
-  constructor(private bookmarksService: BookmarksService) {
-    this.displayedColumns = [
-      'Icon', 'Name', 'Event', 'Date', 'TotalPoints', 'More'
-    ];
+  constructor(private bookmarksService: BookmarksService, mediaObserver: MediaObserver) {
     this.dataSource = new MatTableDataSource();
     this.bookmarks = bookmarksService.getBookmarks();
   }
@@ -35,4 +34,11 @@ export class BookmarksComponent implements OnInit {
     }
   }
 
+  getDisplayedColumns() {
+    const columns = { 'lt-md': ['Name', 'TotalPoints', 'More'] };
+    const allColumns = ['Icon', 'Name', 'Event', 'Date', 'TotalPoints', 'More'];
+
+
+    return allColumns;
+  }
 }
