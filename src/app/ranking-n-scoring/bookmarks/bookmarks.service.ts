@@ -30,6 +30,11 @@ export class BookmarksService {
     localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks, this.getCircularReplacer()));
   }
 
+  saveBookmarks(bookmarks: Bookmark[]) {
+    this.bookmarks = bookmarks;
+    localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks, this.getCircularReplacer()));
+  }
+
   getBookmarks(): Bookmark[] {
     this.bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
     return this.bookmarks;

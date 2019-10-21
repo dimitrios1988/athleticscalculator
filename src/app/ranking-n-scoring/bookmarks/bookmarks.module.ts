@@ -8,6 +8,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { MatIconModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [BookmarksComponent],
@@ -18,7 +20,9 @@ import { MatTableModule } from '@angular/material/table';
     MatIconModule,
     PipesModule,
     FlexLayoutModule,
-    MatTableModule
+    MatTableModule,
+    MatMenuModule,
+    MatButtonModule
   ],
 })
 export class BookmarksModule { }

@@ -16,7 +16,7 @@ export class BookmarksComponent implements OnInit {
 
   constructor(private bookmarksService: BookmarksService) {
     this.displayedColumns = [
-      'Icon', 'Name', 'Event', 'Date', 'TotalPoints'
+      'Icon', 'Name', 'Event', 'Date', 'TotalPoints', 'More'
     ];
     this.dataSource = new MatTableDataSource();
     this.bookmarks = bookmarksService.getBookmarks();
@@ -24,6 +24,15 @@ export class BookmarksComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.bookmarks);
+  }
+
+  onDelete(bookmark: Bookmark) {
+    const index = this.bookmarks.indexOf(bookmark);
+    if (index > -1) {
+      this.bookmarks.splice(index, 1);
+      this.dataSource = new MatTableDataSource(this.bookmarks);
+      this.bookmarksService.saveBookmarks(this.bookmarks);
+    }
   }
 
 }
