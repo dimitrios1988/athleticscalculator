@@ -6,7 +6,7 @@
   <mat-sidenav-content fxLayout="column">
     <mat-toolbar color="warn">
       <mat-toolbar-row>
-        <button mat-icon-button (click)="drawer.toggle()">
+        <button mat-icon-button (click)="drawer.toggle(); drawer.autoFocus=false">
           <mat-icon>menu</mat-icon>
         </button>
         <span class="toolbar-header">Athletics Calculator</span>
