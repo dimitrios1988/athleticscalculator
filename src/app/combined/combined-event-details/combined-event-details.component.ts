@@ -29,6 +29,7 @@ export class CombinedEventDetailsComponent implements OnInit {
   }
 
   public onCalculateAll() {
+    this.totalPoints = '';
     this.eventEmitter.next('calculate');
   }
 
