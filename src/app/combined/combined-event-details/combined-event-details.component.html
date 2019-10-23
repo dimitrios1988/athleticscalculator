@@ -2,7 +2,7 @@
   <mat-card-content>
     <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="2vw">
       <app-event-panel *ngFor="let event of selectedEvent.Events" (pointsEmitter)="setPoints($event)" [eventOfCombined]="event" [eventListener]="eventEmitter"
-        style="max-width: 35vw; padding-bottom: 2vh;"></app-event-panel>
+        style="padding-bottom: 2vh;" [ngStyle]="{'max-width': '35vw', 'min-width': '23vw' }" [ngStyle.lt-sm]="{'width': '100%' }"></app-event-panel>
     </div>
     <mat-divider [inset]="true"></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw" style="padding: 2vh 0px 0px 0px">

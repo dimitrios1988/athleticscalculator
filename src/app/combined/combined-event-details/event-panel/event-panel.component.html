@@ -1,26 +1,31 @@
 <mat-card class="mat-elevation-z4">
   <mat-card-header>
-    <img mat-card-avatar [src]="'assets/images/'+this.eventOfCombined.Icon" style="background: white; height: 30px; width: 30px; margin-bottom: 12px;">
+    <img mat-card-avatar [src]="'assets/images/'+this.eventOfCombined.Icon"
+      style="background: white; height: 30px; width: 30px; margin-bottom: 12px;">
     <mat-card-title>{{eventOfCombined.Event | eventName}}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <mat-divider [inset]="false"></mat-divider>
     <form [formGroup]="eventForm" style="padding: 2vh 0px 2vh 0px">
-    <mat-form-field>
-      <mat-label>Performance</mat-label>
-      <input matInput type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
-        formControlName="performanceInput" required
-        (keydown.enter)="(!eventForm.invalid)? onCalculate($event):null">
-      <mat-error *ngIf="this.eventForm.controls['performanceInput'].hasError('required') && this.eventForm.pristine">
-        This field cannot be empty</mat-error>
-      <mat-error *ngIf="this.eventForm.controls['performanceInput'].hasError('pattern')">
-        Invalid performance</mat-error>
-    </mat-form-field>
-    <button mat-icon-button matSuffix (click)="performanceTltp.toggle()">
-      <mat-icon #performanceTltp="matTooltip" color="primary" matTooltip="{{eventOfCombined.PerformanceValidation.Message}}">
-        info
-      </mat-icon>
-    </button>
+      <div fxLayout="row" >
+        <mat-form-field fxFlex="100%">
+          <mat-label>Performance</mat-label>
+          <input matInput type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
+            formControlName="performanceInput" required
+            (keydown.enter)="(!eventForm.invalid)? onCalculate($event):null">
+          <mat-error
+            *ngIf="this.eventForm.controls['performanceInput'].hasError('required') && this.eventForm.pristine">
+            This field cannot be empty</mat-error>
+          <mat-error *ngIf="this.eventForm.controls['performanceInput'].hasError('pattern')">
+            Invalid performance</mat-error>
+        </mat-form-field>
+        <button mat-icon-button matSuffix (click)="performanceTltp.toggle()">
+          <mat-icon #performanceTltp="matTooltip" color="primary"
+            matTooltip="{{eventOfCombined.PerformanceValidation.Message}}">
+            info
+          </mat-icon>
+        </button>
+      </div>
     </form>
     <mat-divider [inset]="true"></mat-divider>
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw" style="padding: 2vh 0px 0px 0px">
@@ -29,8 +34,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1vw">
-    <button mat-raised-button color="primary" (click)="onCalculate();"
-      [disabled]="eventForm.invalid">
+    <button mat-raised-button color="primary" (click)="onCalculate();" [disabled]="eventForm.invalid">
       <span>Calculate</span>
     </button>
     <button mat-flat-button color="accent" (click)="clearForm()">
