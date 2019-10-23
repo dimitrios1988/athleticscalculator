@@ -7,11 +7,12 @@
       "urls": [
         "/meetings/years",
         "/ranking/events",
-        "/ranking/meetingcategories"
+        "/ranking/meetingcategories",
+        "/combined"
       ],
       "cacheConfig": {
         "strategy": "performance",
-        "maxSize": 1000,
+        "maxSize": 1100,
         "maxAge": "3d"
       }
     },
