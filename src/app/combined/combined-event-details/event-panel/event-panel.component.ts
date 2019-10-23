@@ -24,6 +24,8 @@ export class EventPanelComponent implements OnInit {
   public eventForm: FormGroup;
   public points: string;
 
+  private runningEvents = ['60', '60h', '100', '400', '110h', '1500', '100h', '200', '1000', '800'];
+
 
   constructor(private formBuilder: FormBuilder) {
     this.eventForm = this.formBuilder.group({
@@ -52,9 +54,20 @@ export class EventPanelComponent implements OnInit {
     if (!isNullOrUndefined(event)) {
       event.preventDefault();
     }
-    const performance = Number(this.eventForm.controls.performanceInput.value) * Number(this.eventOfCombined.DParam);
+    const performance = this.transformPerformance(this.eventForm.controls.performanceInput.value) * Number(this.eventOfCombined.DParam);
     let points = Number(this.eventOfCombined.AParam) * Math.pow(Math.abs(performance - Number(this.eventOfCombined.BParam)), Number(this.eventOfCombined.CParam))
     this.points = Math.floor(points).toString();
+  }
+
+  private transformPerformance(performance: string): number {
+    const isRunningEvent = this.runningEvents.indexOf(this.eventOfCombined.Event) > 0;
+    if (isRunningEvent) {
+      const performanceArray = performance.split(':');
+      if (performanceArray.length > 1) {
+        performance = (Number(performanceArray[1]) + (Number(performanceArray[0]) * 60)).toString();
+      }
+    }
+    return Number(performance);
   }
 
   public clearForm() {
