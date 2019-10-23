@@ -15,7 +15,7 @@
             <mat-label>Performance</mat-label>
             <input matInput type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
               formControlName="performanceInput" required
-              (keyup.enter)="(!eventForm.invalid && !pointsAreCalculated)?onCalculate():null">
+              (keydown.enter)="(!eventForm.invalid && !pointsAreCalculated)?onCalculate($event):null">
             <mat-error *ngIf="this.eventForm.controls['performanceInput'].hasError('required')">
               This field cannot be empty</mat-error>
             <mat-error *ngIf="this.eventForm.controls['performanceInput'].hasError('pattern')">

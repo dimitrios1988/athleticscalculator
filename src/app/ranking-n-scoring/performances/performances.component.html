@@ -28,7 +28,7 @@
             <mat-label>Please type in your desired points</mat-label>
             <input matInput type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
               formControlName="pointsInput" (keyup)="onFilterSelection()"
-              (keyup.enter)="(!this.performanceForm.invalid && !performancesAreCalculated)?onGetPerformances():null"
+              (keydown.enter)="(!this.performanceForm.invalid && !performancesAreCalculated)?onGetPerformances($event):null"
               required>
             <mat-error *ngIf="this.performanceForm.controls['pointsInput'].hasError('required')">
               This field cannot be empty</mat-error>

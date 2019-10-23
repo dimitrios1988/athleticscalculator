@@ -9,4 +9,9 @@ export class EventOfCombinedEntity {
   public DParam: string;
   public Order: number;
   public CombinedEvent: CombinedEventEntity;
+  public Icon: string;
+  public PerformanceValidation: {
+    Pattern: string;
+    Message: string;
+  };
 }

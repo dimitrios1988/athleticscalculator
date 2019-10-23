@@ -13,9 +13,18 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { LoadingSpinnerModule } from '../shared/components/loading-spinner/loading-spinner.module';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CombinedEventDetailsComponent } from './combined-event-details/combined-event-details.component';
+import { EventPanelComponent } from './combined-event-details/event-panel/event-panel.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-  declarations: [CombinedComponent, CombinedEventFiltersComponent],
+  declarations: [CombinedComponent, CombinedEventFiltersComponent, CombinedEventDetailsComponent, EventPanelComponent],
   imports: [
     CommonModule,
     CombinedRoutingModule,
@@ -26,7 +35,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatExpansionModule,
     LoadingSpinnerModule,
     PipesModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatCardModule,
+    MatIconModule,
+    MatDividerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTooltipModule
   ],
   providers: [CombinedService]
 })
