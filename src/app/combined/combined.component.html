@@ -1,0 +1,10 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Calculate the points of each event of Combined Events</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5vh">
+  <app-combined-event-filters [events]="events$" (onEventSelected)="setCombinedEvent($event)"></app-combined-event-filters>
+  <!-- <app-event-details *ngIf="selectedEvent" [selectedEvent]="selectedEvent" ngStyle.xs="width: 100vw;"
+    style="width: 95vw;"></app-event-details> -->
+</div>

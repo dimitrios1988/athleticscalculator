@@ -22,6 +22,11 @@ export class MenuComponent {
         icon: 'dialpad'
       },
       {
+        title: 'Combined Events',
+        path: '/combined',
+        icon: 'dialpad'
+      },
+      {
         title: 'Info',
         path: '/info',
         icon: 'info'

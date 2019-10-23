@@ -10,7 +10,7 @@ import { EventEntity } from './entities/event.entity';
 })
 export class RankingComponent implements OnInit {
 
-  public events$: Observable<EventEntity[]>
+  public events$: Observable<EventEntity[]>;
   public selectedEvent: EventEntity;
 
   constructor(rankingService: RankingService) {
