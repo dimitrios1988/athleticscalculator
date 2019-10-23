@@ -19,7 +19,7 @@ export class MenuComponent {
       {
         title: 'Ranking & Scoring Points',
         path: '/rns',
-        icon: 'dialpad'
+        icon: 'star'
       },
       {
         title: 'Combined Events',
