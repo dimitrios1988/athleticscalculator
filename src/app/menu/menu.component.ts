@@ -16,7 +16,7 @@ export class MenuComponent {
   public isDarkTheme: boolean;
 
   constructor(private appService: AppService) {
-    this.isDarkTheme = appService.isDarkTheme;
+    this.isDarkTheme = appService.isDarkTheme();
     this.itemSelected = new EventEmitter<void>();
     this.menuItems = [
       {
@@ -43,7 +43,7 @@ export class MenuComponent {
 
   toggleTheme() {
     this.appService.toggleTheme();
-    this.isDarkTheme = this.appService.isDarkTheme;
+    this.isDarkTheme = this.appService.isDarkTheme();
     this.onItemSelected();
   }
 

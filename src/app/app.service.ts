@@ -8,7 +8,6 @@ import { isNullOrUndefined } from 'util';
 })
 export class AppService {
 
-  public isDarkTheme: boolean;
   private appOptions: Option;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
@@ -35,8 +34,12 @@ export class AppService {
     this.saveOptions();
   }
 
+  public isDarkTheme() {
+    return this.appOptions.DarkTheme;
+  }
+
   public toggleTheme() {
-    if (this.isDarkTheme) {
+    if (this.appOptions.DarkTheme) {
       this.setLightTheme();
       this.appOptions.DarkTheme = false;
       this.saveOptions();
