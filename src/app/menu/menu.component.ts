@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from './menu-item';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,8 +13,10 @@ export class MenuComponent {
   private itemSelected: EventEmitter<void>;
 
   public menuItems: MenuItem[];
+  public isDarkTheme: boolean;
 
-  constructor() {
+  constructor(private appService: AppService) {
+    this.isDarkTheme = appService.isDarkTheme;
     this.itemSelected = new EventEmitter<void>();
     this.menuItems = [
       {
@@ -36,6 +39,12 @@ export class MenuComponent {
 
   onItemSelected() {
     this.itemSelected.emit();
+  }
+
+  toggleTheme() {
+    this.appService.toggleTheme();
+    this.isDarkTheme = this.appService.isDarkTheme;
+    this.onItemSelected();
   }
 
 }

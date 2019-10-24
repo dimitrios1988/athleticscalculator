@@ -6,6 +6,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { AppService } from '../app.service';
 
 @NgModule({
   declarations: [MenuComponent],
@@ -15,8 +17,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatListModule,
     MatToolbarModule,
     MatIconModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatButtonModule
   ],
   exports: [MenuComponent],
+  providers: [AppService]
 })
 export class MenuModule { }

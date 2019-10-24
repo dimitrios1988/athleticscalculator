@@ -1,7 +1,7 @@
 <nav fxLayout="row" mat-tab-nav-bar color="primary">
-    <button mat-tab-link [ngStyle.gt-xs]="{'height': 'max-content'}" style="flex: 1 0 auto" mat-stroked-button *ngFor="let tab of tabs" [routerLink]="tab.path"
-        routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
-        <mat-icon>{{tab.icon}}</mat-icon>
-        <div fxHide fxShow.gt-xs="true">{{tab.title}}</div>
-    </button>
+  <a mat-tab-link fxFlex="grow" *ngFor="let tab of tabs"
+    [routerLink]="tab.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive" fxLayout="column">
+    <mat-icon>{{tab.icon}}</mat-icon>
+    <span fxHide fxShow.gt-xs="true">{{tab.title}}</span>
+  </a>
 </nav>

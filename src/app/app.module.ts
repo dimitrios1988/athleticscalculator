@@ -23,6 +23,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PwaModule } from './pwa/pwa.module';
 import { CombinedModule } from './combined/combined.module';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -50,5 +51,6 @@ import { CombinedModule } from './combined/combined.module';
     CombinedModule
   ],
   bootstrap: [AppComponent],
+  providers: [AppService]
 })
 export class AppModule { }

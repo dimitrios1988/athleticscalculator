@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PwaService } from './pwa/pwa.service';
 import { fromEvent, Subscription, Observable } from 'rxjs';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private onlineEvent: Observable<Event>;
   private offlineEvent: Observable<Event>;
 
-  constructor() {
+  constructor(private appService: AppService) {
     this.isOnline = window.navigator.onLine;
   }
 
@@ -35,4 +35,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
+
 }

@@ -1,6 +1,12 @@
 <mat-toolbar color="warn">
   <mat-toolbar-row>
     <span class="toolbar-header">Menu</span>
+    <button mat-icon-button fxFlexOffset="auto" (click)="toggleTheme()">
+      <mat-icon>
+        <span *ngIf="isDarkTheme">brightness_5</span>
+        <span *ngIf="!isDarkTheme">brightness_7</span>
+      </mat-icon>
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-nav-list>
