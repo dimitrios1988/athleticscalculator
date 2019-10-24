@@ -19,7 +19,6 @@ import { BookmarksService } from '../../bookmarks/bookmarks.service';
 import { MeetingEntity } from '../../meetings/entities/meeting.entity';
 import { isNullOrUndefined } from 'util';
 import { SaveInfoComponent } from '../save-info/save-info.component';
-import { timeout } from 'q';
 
 @Component({
   selector: 'app-event-details',
@@ -60,7 +59,8 @@ export class EventDetailsComponent
       calculatePlacePointsCheckbox: [''],
       placePoints: [{ value: '', disabled: true }],
       progressedToFinalCombo: [''],
-      datePicker: [''],
+      competitionDate: [''],
+      targetDate: [''],
       datePoints: [{ value: '', disabled: true }],
     });
   }
@@ -211,7 +211,7 @@ export class EventDetailsComponent
       .add(() => {
         this.pointsAreCalculated = false;
       }).add(() => {
-        if (this.eventForm.controls.datePicker.value) {
+        if (this.eventForm.controls.competitionDate.value) {
           this.calculateDeductionPoints();
           if (this.eventForm.controls.datePoints.value == 'All points') {
             this.totalPoints = 0;
@@ -239,7 +239,8 @@ export class EventDetailsComponent
       this.eventForm.controls.placePoints.setValue('');
       this.eventForm.controls.progressedToFinalCombo.setValue('');
       this.eventForm.controls.datePoints.setValue('');
-      this.eventForm.controls.datePicker.setValue('');
+      this.eventForm.controls.competitionDate.setValue('');
+      this.eventForm.controls.targetDate.setValue('');
       this.eventForm.markAsUntouched();
     }
     this.totalPointsBeforeDeduction = null;
@@ -247,7 +248,9 @@ export class EventDetailsComponent
   }
 
   private calculateDeductionPoints() {
-    const diff = this.monthDiff(this.eventForm.controls.datePicker.value, new Date());
+    const targetDate = this.eventForm.controls.targetDate.value ? this.eventForm.controls.targetDate.value : new Date();
+    this.eventForm.controls.targetDate.setValue(targetDate);
+    const diff = this.monthDiff(this.eventForm.controls.competitionDate.value, targetDate);
     if (this.selectedEvent.PointsDeductionStrategy.Max < diff) {
       this.eventForm.controls.datePoints.setValue('All points');
     } else {

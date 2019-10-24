@@ -63,14 +63,23 @@
             [ngStyle]="{color: eventForm.controls['windPoints'].value>0?'green':eventForm.controls['windPoints'].value<0?'red':'inherit'}">
         </mat-form-field>
       </div>
+      <div fxLayout="row">
+        <mat-form-field fxFlex.lt-sm="100%" fxFlex="50%">
+          <input matInput [matDatepicker]="picker" autocomplete="off" autocorrect="off" autocapitalize="off"
+            placeholder="Date of competition, if known" formControlName="competitionDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker fxHide fxShow.lt-sm></mat-datepicker>
+          <mat-datepicker #picker fxHide fxShow.gt-xs></mat-datepicker>
+        </mat-form-field>
+      </div>
       <div fxLayout="row wrap" fxLayoutGap="5vw">
         <div fxFlex="50%" fxFlex.lt-sm="100%">
           <mat-form-field style="width: 100%;">
-            <input matInput [matDatepicker]="picker" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Date of competition, if known"
-              formControlName="datePicker">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker fxHide fxShow.lt-sm></mat-datepicker>
-            <mat-datepicker #picker fxHide fxShow.gt-xs></mat-datepicker>
+            <input matInput [matDatepicker]="targetPicker" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Target Date"
+              formControlName="targetDate">
+            <mat-datepicker-toggle matSuffix [for]="targetPicker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #targetPicker fxHide fxShow.lt-sm></mat-datepicker>
+            <mat-datepicker #targetPicker fxHide fxShow.gt-xs></mat-datepicker>
           </mat-form-field>
         </div>
         <mat-form-field appearance="fill" fxFlex="calc(50% - 5vw)" fxFlex.lt-sm="100%">

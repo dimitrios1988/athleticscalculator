@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: '127.0.0.1:3000',
+  apiUrl: 'https://athleticsranking.dimitrios1988.now.sh',
 };
 
 /*
