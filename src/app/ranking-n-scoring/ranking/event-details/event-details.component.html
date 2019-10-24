@@ -9,7 +9,7 @@
   <mat-card-content>
     <mat-divider [inset]="false"></mat-divider>
     <form [formGroup]="eventForm" fxLayout="column" fxLayoutGap="1vh" style="padding: 2vh 0px 2vh 0px">
-      <div fxLayout="row wrap" fxLayoutGap="5vw">
+      <div fxLayout="row wrap" fxLayoutGap.gt-xs="5vw">
         <div fxLayout="row" fxLayoutGap="1vw" fxFlex="50%" fxFlex.lt-sm="100%">
           <mat-form-field fxFlex="100%">
             <mat-label>Performance</mat-label>
@@ -64,23 +64,35 @@
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <mat-form-field fxFlex.lt-sm="100%" fxFlex="50%">
-          <input matInput [matDatepicker]="picker" autocomplete="off" autocorrect="off" autocapitalize="off"
-            placeholder="Date of competition, if known" formControlName="competitionDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker touchUi #picker fxHide fxShow.lt-sm></mat-datepicker>
-          <mat-datepicker #picker fxHide fxShow.gt-xs></mat-datepicker>
-        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="1vw" fxFlex.lt-sm="100%" fxFlex="50%">
+          <mat-form-field fxFlex="auto">
+            <input matInput [matDatepicker]="picker" autocomplete="off" autocorrect="off" autocapitalize="off"
+              placeholder="Date of competition, if known" formControlName="competitionDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker fxHide fxShow.lt-sm></mat-datepicker>
+            <mat-datepicker #picker fxHide fxShow.gt-xs></mat-datepicker>
+          </mat-form-field>
+          <button mat-icon-button (click)="pickerTltp.toggle()">
+            <mat-icon #pickerTltp="matTooltip" color="primary" matTooltip="Select the date of the competition">
+              info
+            </mat-icon>
+          </button>
+        </div>
       </div>
-      <div fxLayout="row wrap" fxLayoutGap="5vw">
-        <div fxFlex="50%" fxFlex.lt-sm="100%">
-          <mat-form-field style="width: 100%;">
-            <input matInput [matDatepicker]="targetPicker" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Target Date"
-              formControlName="targetDate">
+      <div fxLayout="row wrap" fxLayoutGap.gt-xs="5vw">
+        <div fxLayout="row" fxLayoutGap="1vw" fxFlex="50%" fxFlex.lt-sm="100%">
+          <mat-form-field fxFlex="100%">
+            <input matInput [matDatepicker]="targetPicker" autocomplete="off" autocorrect="off" autocapitalize="off"
+              placeholder="Target Date" formControlName="targetDate">
             <mat-datepicker-toggle matSuffix [for]="targetPicker"></mat-datepicker-toggle>
             <mat-datepicker touchUi #targetPicker fxHide fxShow.lt-sm></mat-datepicker>
             <mat-datepicker #targetPicker fxHide fxShow.gt-xs></mat-datepicker>
           </mat-form-field>
+          <button mat-icon-button (click)="targetpickerTltp.toggle()">
+            <mat-icon #targetpickerTltp="matTooltip" color="primary" matTooltip="Select the target date ">
+              info
+            </mat-icon>
+          </button>
         </div>
         <mat-form-field appearance="fill" fxFlex="calc(50% - 5vw)" fxFlex.lt-sm="100%">
           <mat-label>Points removed from date</mat-label>
@@ -155,7 +167,8 @@
             <mat-form-field>
               <mat-label>Place</mat-label>
               <input matInput formControlName="placeInput" autocomplete="off" autocorrect="off" autocapitalize="off"
-                type="numeric" (keydown.enter)="(!eventForm.invalid && !pointsAreCalculated)?onCalculate($event):null" required>
+                type="numeric" (keydown.enter)="(!eventForm.invalid && !pointsAreCalculated)?onCalculate($event):null"
+                required>
               <mat-error *ngIf="this.eventForm.controls['placeInput'].hasError('required')">
                 This field cannot be empty</mat-error>
               <button matSuffix mat-icon-button (click)="placeTltp.toggle()"
