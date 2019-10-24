@@ -63,7 +63,7 @@ export class PerformancesComponent implements OnInit {
     '50km_rw'
   ];
   public displayedColumns: string[];
-  public dataSource: MatTableDataSource<{menEvent: string, event: string, womenEvent: string}>;
+  public dataSource: MatTableDataSource<{ menEvent: string, event: string, womenEvent: string }>;
 
   private savedOptions: Option;
 
@@ -109,7 +109,10 @@ export class PerformancesComponent implements OnInit {
     }
   }
 
-  public onGetPerformances() {
+  public onGetPerformances(event?) {
+    if (!isNullOrUndefined(event)) {
+      event.preventDefault();
+    }
     this.onFilterSelection();
     this.performancesDic = { m: {}, w: {} };
     const getPerformancesCmd = new GetPerformancesCmd({
@@ -138,7 +141,7 @@ export class PerformancesComponent implements OnInit {
                 womenEvent: this.performancesDic.w[event]
               };
             }
-        }).filter((el) => el != null ));
+          }).filter((el) => el != null));
       });
   }
 
@@ -150,8 +153,8 @@ export class PerformancesComponent implements OnInit {
 
   public tableIsEmpty() {
     return (
-      ( Object.entries(this.performancesDic.m).length +
-      Object.entries(this.performancesDic.w).length )
+      (Object.entries(this.performancesDic.m).length +
+        Object.entries(this.performancesDic.w).length)
       === 0
     );
   }

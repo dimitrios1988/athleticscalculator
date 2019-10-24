@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="2vw">
+      <app-event-panel *ngFor="let event of selectedEvent.Events" (pointsEmitter)="setPoints($event)" [eventOfCombined]="event" [eventListener]="eventEmitter"
+        style="padding-bottom: 2vh;" [ngStyle]="{'max-width': '35vw', 'min-width': '23vw' }" [ngStyle.lt-sm]="{'width': '100%' }"></app-event-panel>
+    </div>
+    <mat-divider [inset]="true"></mat-divider>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw" style="padding: 2vh 0px 0px 0px">
+      <span style="font-size: 24px; font-weight: 400;">Total Points:</span>
+      <span style="font-size: 24px; font-weight: 400;">{{totalPoints!=null?totalPoints:''}}</span>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1vw">
+      <button mat-raised-button color="primary" (click)="onCalculateAll();" [disabled]="invalidFormExists()">
+        <span>Calculate All</span>
+      </button>
+      <button mat-flat-button color="accent" (click)="clearAll()">
+        <span>Clear All</span>
+      </button>
+    </div>
+  </mat-card-actions>

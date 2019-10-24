@@ -3,6 +3,17 @@
   "index": "/index.html",
   "dataGroups": [
     {
+      "name": "api-longlive",
+      "urls": [
+        "/combined"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 50,
+        "maxAge": "7d"
+      }
+    },
+    {
       "name": "api-performance",
       "urls": [
         "/meetings/years",

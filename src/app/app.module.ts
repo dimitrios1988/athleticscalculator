@@ -22,6 +22,8 @@ import { environment } from '../environments/environment';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PwaModule } from './pwa/pwa.module';
+import { CombinedModule } from './combined/combined.module';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -45,8 +47,10 @@ import { PwaModule } from './pwa/pwa.module';
     MatTooltipModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     MatBottomSheetModule,
-    PwaModule
+    PwaModule,
+    CombinedModule
   ],
   bootstrap: [AppComponent],
+  providers: [AppService]
 })
 export class AppModule { }

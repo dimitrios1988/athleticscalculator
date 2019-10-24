@@ -148,7 +148,10 @@ export class EventDetailsComponent
     this.eventForm.controls.progressedToFinalCombo.updateValueAndValidity();
   }
 
-  onCalculate() {
+  onCalculate(event?) {
+    if(!isNullOrUndefined(event)) {
+      event.preventDefault();
+    }
     const getPointsCmd = new GetPointsCmd();
     getPointsCmd.eventId = this.selectedEvent.Id;
     getPointsCmd.performance = this.eventForm.controls.performanceInput.value;
@@ -237,6 +240,7 @@ export class EventDetailsComponent
       this.eventForm.controls.progressedToFinalCombo.setValue('');
       this.eventForm.controls.datePoints.setValue('');
       this.eventForm.controls.datePicker.setValue('');
+      this.eventForm.markAsUntouched();
     }
     this.totalPointsBeforeDeduction = null;
     this.totalPoints = null;
