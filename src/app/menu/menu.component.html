@@ -26,5 +26,9 @@
     <mat-icon mat-list-icon color="primary">bookmarks</mat-icon>
     <span>Saved Competitions (Beta)</span>
   </mat-list-item>
+  <mat-list-item *ngIf="installPrompt" (click)="onInstallApp()">
+    <mat-icon mat-list-icon color="primary">get_app</mat-icon>
+    <span>Install</span>
+  </mat-list-item>
 </mat-nav-list>
 <p class="mat-small accent-color" style="text-align: center;">Version v19.10.24.1</p>

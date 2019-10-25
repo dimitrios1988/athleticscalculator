@@ -1,21 +1,29 @@
-import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from './menu-item';
 import { AppService } from '../app.service';
+import { PwaService } from '../pwa/pwa.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent {
+export class MenuComponent  {
 
   @Output()
   private itemSelected: EventEmitter<void>;
 
   public menuItems: MenuItem[];
   public isDarkTheme: boolean;
+  public installPrompt;
 
-  constructor(private appService: AppService) {
+  constructor(private appService: AppService, private pwaService: PwaService) {
+    this.pwaService.installPrompt$.subscribe({
+      next: (e) => {
+        e.preventDefault();
+        this.installPrompt = e;
+      }
+    });
     this.isDarkTheme = appService.isDarkTheme();
     this.itemSelected = new EventEmitter<void>();
     this.menuItems = [
@@ -45,6 +53,19 @@ export class MenuComponent {
     this.appService.toggleTheme();
     this.isDarkTheme = this.appService.isDarkTheme();
     this.onItemSelected();
+  }
+
+  onInstallApp() {
+    if (this.installPrompt) {
+      this.installPrompt.prompt();
+      this.installPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('Your PWA has been installed');
+        } else {
+          console.log('User chose to not install your PWA');
+        }
+      });
+    }
   }
 
 }

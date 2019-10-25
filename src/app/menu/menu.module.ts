@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { AppService } from '../app.service';
+import { PwaModule } from '../pwa/pwa.module';
 
 @NgModule({
   declarations: [MenuComponent],
@@ -18,7 +19,8 @@ import { AppService } from '../app.service';
     MatToolbarModule,
     MatIconModule,
     FlexLayoutModule,
-    MatButtonModule
+    MatButtonModule,
+    PwaModule.forRoot()
   ],
   exports: [MenuComponent],
   providers: [AppService]

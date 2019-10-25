@@ -47,7 +47,7 @@ import { AppService } from './app.service';
     MatTooltipModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     MatBottomSheetModule,
-    PwaModule,
+    PwaModule.forRoot(),
     CombinedModule
   ],
   bootstrap: [AppComponent],

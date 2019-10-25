@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PwaService } from './pwa.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -10,8 +10,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatSnackBarModule,
     FlexLayoutModule
   ],
-  providers: [PwaService]
+  providers: [PwaService],
 })
 export class PwaModule {
-  constructor(pwaService: PwaService) { }
+  constructor() { }
+
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: PwaModule,
+      providers: [PwaService]
+    };
+  }
 }
