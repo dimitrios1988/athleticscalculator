@@ -9,6 +9,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { AppService } from '../app.service';
 import { PwaModule } from '../pwa/pwa.module';
+import { MatDividerModule } from '@angular/material/divider';
+import { UserModule } from '../user/user.module';
 
 @NgModule({
   declarations: [MenuComponent],
@@ -20,7 +22,9 @@ import { PwaModule } from '../pwa/pwa.module';
     MatIconModule,
     FlexLayoutModule,
     MatButtonModule,
-    PwaModule.forRoot()
+    PwaModule.forRoot(),
+    MatDividerModule,
+    UserModule
   ],
   exports: [MenuComponent],
   providers: [AppService]
