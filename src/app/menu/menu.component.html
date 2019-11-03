@@ -9,25 +9,38 @@
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
+<mat-list>
+  <mat-list-item *ngIf="isSignedIn == false">
+    <mat-icon mat-list-icon>face</mat-icon>
+    <h4 mat-line>Guest/Not Signed In</h4>
+  </mat-list-item>
+  <mat-list-item *ngIf="isSignedIn">
+    <mat-icon mat-list-icon>face</mat-icon>
+    <h4 mat-line>{{user.FirstName}} {{user.FirstName}}</h4>
+    <p mat-line>{{user.Email}}</p>
+  </mat-list-item>
+</mat-list>
 <mat-nav-list>
+  <mat-divider></mat-divider>
   <mat-list-item *ngFor="let menuItem of menuItems" [routerLink]="menuItem.path" (click)="onItemSelected()">
-    <mat-icon mat-list-icon color="primary">{{menuItem.icon}}</mat-icon>
+    <mat-icon mat-list-icon>{{menuItem.icon}}</mat-icon>
     <span>{{menuItem.title}}</span>
   </mat-list-item>
   <a href="mailto:dimi.chondrokoukis@gmail.com?Subject=Athletics%20Ranking%20Points%20Calculator">
     <mat-list-item>
-      <mat-icon mat-list-icon color="primary">email</mat-icon>
+      <mat-icon mat-list-icon>email</mat-icon>
       <span>Contact</span>
     </mat-list-item>
   </a>
 </mat-nav-list>
 <mat-nav-list fxFlexOffset="auto">
+  <mat-divider></mat-divider>
   <mat-list-item (click)="onItemSelected()" routerLink="/rns/bookmarks">
-    <mat-icon mat-list-icon color="primary">bookmarks</mat-icon>
+    <mat-icon mat-list-icon>bookmarks</mat-icon>
     <span>Saved Competitions (Beta)</span>
   </mat-list-item>
   <mat-list-item *ngIf="installPrompt" (click)="onInstallApp()">
-    <mat-icon mat-list-icon color="primary">get_app</mat-icon>
+    <mat-icon mat-list-icon>get_app</mat-icon>
     <span>Install</span>
   </mat-list-item>
 </mat-nav-list>

@@ -24,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PwaModule } from './pwa/pwa.module';
 import { CombinedModule } from './combined/combined.module';
 import { AppService } from './app.service';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AppService } from './app.service';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     MatBottomSheetModule,
     PwaModule.forRoot(),
-    CombinedModule
+    CombinedModule,
+    UserModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [AppService]

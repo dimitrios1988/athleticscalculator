@@ -2,13 +2,15 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from './menu-item';
 import { AppService } from '../app.service';
 import { PwaService } from '../pwa/pwa.service';
+import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent  {
+export class MenuComponent {
 
   @Output()
   private itemSelected: EventEmitter<void>;
@@ -16,8 +18,12 @@ export class MenuComponent  {
   public menuItems: MenuItem[];
   public isDarkTheme: boolean;
   public installPrompt;
+  public isSignedIn: boolean;
+  public user: User;
 
-  constructor(private appService: AppService, private pwaService: PwaService) {
+  constructor(private appService: AppService, private pwaService: PwaService, private userService: UserService) {
+    this.isSignedIn = userService.isLoggedIn;
+    this.user = this.userService.getProfile();
     this.pwaService.installPrompt$.subscribe({
       next: (e) => {
         e.preventDefault();
@@ -66,6 +72,7 @@ export class MenuComponent  {
         }
       });
     }
+    this.onItemSelected();
   }
 
 }

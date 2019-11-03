@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { UserModule } from 'src/app/user/user.module';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [BookmarksComponent],
@@ -22,7 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
     FlexLayoutModule,
     MatTableModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    UserModule,
+    MatRadioModule
   ],
 })
 export class BookmarksModule { }
