@@ -83,13 +83,14 @@
         <div fxLayout="row" fxLayoutGap="1vw" fxFlex="50%" fxFlex.lt-sm="100%">
           <mat-form-field fxFlex="100%">
             <input matInput [matDatepicker]="targetPicker" autocomplete="off" autocorrect="off" autocapitalize="off"
-              placeholder="Target Date" formControlName="targetDate">
+              placeholder="Calculate points for" formControlName="targetDate">
             <mat-datepicker-toggle matSuffix [for]="targetPicker"></mat-datepicker-toggle>
             <mat-datepicker touchUi #targetPicker fxHide fxShow.lt-sm></mat-datepicker>
             <mat-datepicker #targetPicker fxHide fxShow.gt-xs></mat-datepicker>
           </mat-form-field>
           <button mat-icon-button (click)="targetpickerTltp.toggle()">
-            <mat-icon #targetpickerTltp="matTooltip" color="primary" matTooltip="Select the target date ">
+            <mat-icon #targetpickerTltp="matTooltip" color="primary"
+              matTooltip="Select the date when you want the points to be calculated. Note, this field will not be saved.">
               info
             </mat-icon>
           </button>

@@ -63,6 +63,7 @@ export class EventDetailsComponent
       targetDate: [''],
       datePoints: [{ value: '', disabled: true }],
     });
+
   }
 
   ngOnChanges() {
@@ -70,7 +71,9 @@ export class EventDetailsComponent
     this.clearForm();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.eventForm.controls.targetDate.setValue(new Date());
+  }
 
   ngOnDestroy(): void {
     if (this.serviceSubscription) {
@@ -149,7 +152,7 @@ export class EventDetailsComponent
   }
 
   onCalculate(event?) {
-    if(!isNullOrUndefined(event)) {
+    if (!isNullOrUndefined(event)) {
       event.preventDefault();
     }
     const getPointsCmd = new GetPointsCmd();
@@ -240,7 +243,7 @@ export class EventDetailsComponent
       this.eventForm.controls.progressedToFinalCombo.setValue('');
       this.eventForm.controls.datePoints.setValue('');
       this.eventForm.controls.competitionDate.setValue('');
-      this.eventForm.controls.targetDate.setValue('');
+      this.eventForm.controls.targetDate.setValue(new Date());
       this.eventForm.markAsUntouched();
     }
     this.totalPointsBeforeDeduction = null;
