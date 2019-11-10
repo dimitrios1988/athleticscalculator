@@ -1,3 +1,5 @@
+import { IPointsDeductionStrategy } from '../../interfaces/points-deduction-strategy.interface';
+
 export class EventEntity {
   public Id: number;
   public Name: string;
@@ -8,7 +10,7 @@ export class EventEntity {
   public PerformanceValidation: { Pattern: string; Message: string };
   public SupportsWind: boolean;
   public Icon: string;
-  public PointsDeductionStrategy: { MonthPoints: {}, Max: number };
+  public PointsDeductionStrategy: IPointsDeductionStrategy;
 
   constructor(data: {
     Id: number;
@@ -20,6 +22,6 @@ export class EventEntity {
     PerformanceValidation: { Pattern: string; Message: string };
     SupportsWind: boolean;
     Icon: string;
-    PointsDeductionStrategy: { MonthPoints: {}, Max: number };
+    PointsDeductionStrategy: IPointsDeductionStrategy;
   }) { }
 }

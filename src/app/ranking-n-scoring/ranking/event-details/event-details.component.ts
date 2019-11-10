@@ -19,6 +19,7 @@ import { BookmarksService } from '../../bookmarks/bookmarks.service';
 import { MeetingEntity } from '../../meetings/entities/meeting.entity';
 import { isNullOrUndefined } from 'util';
 import { SaveInfoComponent } from '../save-info/save-info.component';
+import { PointsDeductor } from '../points-deductor';
 
 @Component({
   selector: 'app-event-details',
@@ -215,11 +216,15 @@ export class EventDetailsComponent
         this.pointsAreCalculated = false;
       }).add(() => {
         if (this.eventForm.controls.competitionDate.value) {
-          this.calculateDeductionPoints();
-          if (this.eventForm.controls.datePoints.value == 'All points') {
+          const targetDate = this.eventForm.controls.targetDate.value ? this.eventForm.controls.targetDate.value : new Date();
+          this.eventForm.controls.targetDate.setValue(targetDate);
+          const points = PointsDeductor.getDeductedPoints(this.selectedEvent.PointsDeductionStrategy, this.eventForm.controls.competitionDate.value, this.eventForm.controls.targetDate.value);
+          if (points == 'MAX') {
+            this.eventForm.controls.datePoints.setValue('All points');
             this.totalPoints = 0;
           } else {
-            this.totalPoints = this.totalPointsBeforeDeduction + Number(this.eventForm.controls.datePoints.value);
+            this.eventForm.controls.datePoints.setValue(points);
+            this.totalPoints = this.totalPointsBeforeDeduction + Number(points);
           }
         } else {
           this.totalPoints = this.totalPointsBeforeDeduction;
@@ -248,35 +253,6 @@ export class EventDetailsComponent
     }
     this.totalPointsBeforeDeduction = null;
     this.totalPoints = null;
-  }
-
-  private calculateDeductionPoints() {
-    const targetDate = this.eventForm.controls.targetDate.value ? this.eventForm.controls.targetDate.value : new Date();
-    this.eventForm.controls.targetDate.setValue(targetDate);
-    const diff = this.monthDiff(this.eventForm.controls.competitionDate.value, targetDate);
-    if (this.selectedEvent.PointsDeductionStrategy.Max < diff) {
-      this.eventForm.controls.datePoints.setValue('All points');
-    } else {
-      if (!isNullOrUndefined(this.selectedEvent.PointsDeductionStrategy.MonthPoints)) {
-        if (!isNullOrUndefined(this.selectedEvent.PointsDeductionStrategy.MonthPoints[diff])) {
-          this.eventForm.controls.datePoints.setValue(this.selectedEvent.PointsDeductionStrategy.MonthPoints[diff]);
-        } else {
-          this.eventForm.controls.datePoints.setValue('0');
-        }
-      } else {
-        this.eventForm.controls.datePoints.setValue('0');
-      }
-    }
-  }
-
-  private monthDiff(d1: Date, d2: Date) {
-    let months: number;
-    months = (d2.getFullYear() - (d1.getFullYear())) * 12;
-    months += (d2.getMonth() - d1.getMonth());
-    if (d2.getDate() >= d1.getDate()) {
-      months += 1;
-    }
-    return months <= 0 ? 0 : months;
   }
 
   comparePerformances() {
