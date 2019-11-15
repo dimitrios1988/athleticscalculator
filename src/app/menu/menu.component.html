@@ -10,14 +10,14 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-list>
-  <mat-list-item *ngIf="isSignedIn == false">
+  <mat-list-item *ngIf="!profile">
     <mat-icon mat-list-icon>face</mat-icon>
-    <h4 mat-line>Guest/Not Signed In</h4>
+    <h4 mat-line>Guest</h4>
   </mat-list-item>
-  <mat-list-item *ngIf="isSignedIn">
+  <mat-list-item *ngIf="profile">
     <mat-icon mat-list-icon>face</mat-icon>
-    <h4 mat-line>{{user.FirstName}} {{user.FirstName}}</h4>
-    <p mat-line>{{user.Email}}</p>
+    <h4 mat-line>{{profile.FirstName}} {{profile.LastName}}</h4>
+    <p mat-line>{{profile.Email}}</p>
   </mat-list-item>
 </mat-list>
 <mat-nav-list>
@@ -38,6 +38,14 @@
   <mat-list-item (click)="onItemSelected()" routerLink="/rns/bookmarks">
     <mat-icon mat-list-icon>bookmarks</mat-icon>
     <span>Saved Competitions (Beta)</span>
+  </mat-list-item>
+  <mat-list-item *ngIf="profile">
+    <mat-icon mat-list-icon>supervisor_account</mat-icon>
+    <span>Your Account</span>
+  </mat-list-item>
+  <mat-list-item *ngIf="!profile" (click)="onItemSelected();onOpenAuthenticationDialog()">
+    <mat-icon mat-list-icon>settings_applications</mat-icon>
+    <span>Sign In/Register</span>
   </mat-list-item>
   <mat-list-item *ngIf="installPrompt" (click)="onInstallApp()">
     <mat-icon mat-list-icon>get_app</mat-icon>

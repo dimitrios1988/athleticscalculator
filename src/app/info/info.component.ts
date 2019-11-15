@@ -13,11 +13,11 @@ export class InfoComponent implements OnInit {
   }
 
   onRankingTables() {
-    window.open('https://www.iaaf.org/world-ranking-rules/basics', '_blank');
+    window.open('https://www.worldathletics.org/world-ranking-rules/basics', '_blank');
   }
 
   onScoringTables() {
-    window.open('https://www.iaaf.org/news/iaaf-news/scoring-tables-2017', '_blank');
+    window.open('https://www.worldathletics.org/news/iaaf-news/scoring-tables-2017', '_blank');
   }
 
   onContact() {

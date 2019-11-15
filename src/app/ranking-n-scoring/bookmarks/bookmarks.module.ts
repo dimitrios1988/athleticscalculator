@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { UserModule } from 'src/app/user/user.module';
+import { ProfileModule } from 'src/app/profile/profile.module';
 import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
@@ -25,7 +25,6 @@ import { MatRadioModule } from '@angular/material/radio';
     MatTableModule,
     MatMenuModule,
     MatButtonModule,
-    UserModule,
     MatRadioModule
   ],
 })

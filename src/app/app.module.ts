@@ -24,7 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PwaModule } from './pwa/pwa.module';
 import { CombinedModule } from './combined/combined.module';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
+import { ProfileModule } from './profile/profile.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { UserModule } from './user/user.module';
     MatBottomSheetModule,
     PwaModule.forRoot(),
     CombinedModule,
-    UserModule.forRoot()
+    ProfileModule.forRoot(),
+    AuthModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [AppService]

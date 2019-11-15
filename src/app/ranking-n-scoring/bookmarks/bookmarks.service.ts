@@ -23,7 +23,22 @@ export class BookmarksService {
       {
         name,
         event,
-        eventForm,
+        eventFormData: {
+          performanceInput: eventForm.controls.performanceInput.value,
+          windInput: eventForm.controls.windInput.value,
+          windmeasuredSelect: eventForm.controls.windmeasuredSelect.value,
+          windPoints: eventForm.controls.windPoints.value,
+          performancePoints: eventForm.controls.performancePoints.value,
+          placeInput: eventForm.controls.placeInput.value,
+          competitionTypeSelect: eventForm.controls.competitionTypeSelect.value,
+          meetingCategorySelect: eventForm.controls.meetingCategorySelect.value,
+          calculatePlacePointsCheckbox: eventForm.controls.calculatePlacePointsCheckbox.value,
+          placePoints: eventForm.controls.placePoints.value,
+          progressedToFinalCombo: eventForm.controls.progressedToFinalCombo.value,
+          competitionDate: eventForm.controls.competitionDate.value,
+          targetDate: eventForm.controls.targetDate.value,
+          datePoints: eventForm.controls.datePoints.value
+        },
         points: { totalPoints: Number(totalPoints), totalPointsBeforeDeduction: Number(totalPointsBeforeDeduction) }
       });
     this.bookmarks.push(bookmark);

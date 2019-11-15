@@ -10,7 +10,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatSnackBarModule,
     FlexLayoutModule
   ],
-  providers: [PwaService],
 })
 export class PwaModule {
   constructor() { }

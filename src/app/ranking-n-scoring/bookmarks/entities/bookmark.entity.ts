@@ -1,19 +1,19 @@
 import { EventEntity } from '../../ranking/entities/event.entity';
-import { FormGroup } from '@angular/forms';
+import { IEventDetailsFormData } from '../../interfaces/event-details-form-data.interface';
 
 export class Bookmark {
   name: string;
   event: EventEntity;
-  eventForm: FormGroup;
+  eventFormData: IEventDetailsFormData;
   points: {
     totalPoints?: number;
     totalPointsBeforeDeduction?: number;
   };
 
-  constructor({ name, event, eventForm, points }) {
-    this.name = name;
-    this.event = event;
-    this.eventForm = eventForm;
-    this.points = points;
+  constructor(data: { name: string, event: EventEntity, eventFormData: IEventDetailsFormData, points: { totalPoints: number, totalPointsBeforeDeduction: number } }) {
+    this.name = data.name;
+    this.event = data.event;
+    this.eventFormData = data.eventFormData;
+    this.points = data.points;
   }
 }

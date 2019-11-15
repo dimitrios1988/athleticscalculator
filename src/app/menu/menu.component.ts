@@ -2,8 +2,9 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from './menu-item';
 import { AppService } from '../app.service';
 import { PwaService } from '../pwa/pwa.service';
-import { UserService } from '../user/user.service';
-import { User } from '../user/entities/user.entity';
+import { ProfileService } from '../profile/profile.service';
+import { ProfileEntity } from '../profile/entities/profile.entity';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -18,12 +19,10 @@ export class MenuComponent {
   public menuItems: MenuItem[];
   public isDarkTheme: boolean;
   public installPrompt;
-  public isSignedIn: boolean;
-  public user: User;
+  public profile: ProfileEntity;
 
-  constructor(private appService: AppService, private pwaService: PwaService, private userService: UserService) {
-    this.isSignedIn = userService.isLoggedIn;
-    this.user = this.userService.getProfile();
+  constructor(private appService: AppService, private pwaService: PwaService, private profileService: ProfileService, private authService: AuthService) {
+    this.profileService.getProfile().subscribe(prof => { this.profile = prof })
     this.pwaService.installPrompt$.subscribe({
       next: (e) => {
         e.preventDefault();
@@ -73,6 +72,11 @@ export class MenuComponent {
       });
     }
     this.onItemSelected();
+  }
+
+  onOpenAuthenticationDialog() {
+    this.authService.openAuthenticationDialog();
+
   }
 
 }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
-import { User } from '../entities/user.entity';
 
 @Component({
   selector: 'app-signout',
@@ -9,10 +7,7 @@ import { User } from '../entities/user.entity';
 })
 export class SignOutComponent implements OnInit {
 
-  public user: User;
-
-  constructor(userService: UserService) {
-    this.user = userService.getProfile();
+  constructor() {
   }
 
   ngOnInit() {

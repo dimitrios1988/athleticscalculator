@@ -1,14 +1,9 @@
-export class User {
+export class ProfileEntity {
 
     Id: number;
-
     FirstName: string;
-
     LastName: string;
-
     Email: string;
-
-    Status: string;
 
     constructor(firstName, lastName, email) {
         this.FirstName = firstName;

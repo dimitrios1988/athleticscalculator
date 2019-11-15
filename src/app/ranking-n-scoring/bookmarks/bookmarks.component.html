@@ -6,68 +6,68 @@
 <!-- <h4>***This is an experimental feature***</h4>
 <p>This section is under development, so you may lose your saved competitions. Use it on your own risk</p> -->
 <div fxLayout="column">
-  <app-signin *ngIf="isSignedIn == false"></app-signin>
-  <app-signout *ngIf="isSignedIn"></app-signout>
-  <table *ngIf="dataSource.filteredData && dataSource.filteredData.length>0" mat-table [dataSource]="dataSource"
-    class="mat-elevation-z4" fxFlexFill>
-    <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
-    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
-    <ng-container matColumnDef="Icon">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element"><img fxFlex="47px" style="max-height: 100%;"
-          [src]="'assets/images/'+element.event.Icon"></td>
-    </ng-container>
-    <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{element.name}}</td>
-    </ng-container>
-    <ng-container matColumnDef="Event">
-      <th mat-header-cell *matHeaderCellDef>Event</th>
-      <td mat-cell *matCellDef="let element">{{element.event.Name|eventName}}<span
-          *ngIf="element.event.Type == 'i'">(i)</span></td>
-    </ng-container>
-    <ng-container matColumnDef="Performance">
-      <th mat-header-cell *matHeaderCellDef>Perform.</th>
-      <td mat-cell *matCellDef="let element">{{element.eventForm.controls['performanceInput'].value}}</td>
-    </ng-container>
-    <ng-container matColumnDef="Date">
-      <th mat-header-cell *matHeaderCellDef>Date</th>
-      <td mat-cell *matCellDef="let element">
-        {{element.eventForm.controls['competitionDate'].value | date: 'shortDate'}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="TotalPoints">
-      <th mat-header-cell *matHeaderCellDef><strong>Total Points</strong></th>
-      <td mat-cell *matCellDef="let element"><strong>{{element.points.totalPoints}}</strong>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="More">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button [matMenuTriggerFor]="moreMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #moreMenu="matMenu">
-          <button mat-menu-item (click)="onDelete(element)">Delete</button>
-          <button mat-menu-item (click)="OnEdit(element)">Edit</button>
-        </mat-menu>
-      </td>
-    </ng-container>
-  </table>
-
-  <h4>Total Points are calculated based on</h4>
-  <mat-radio-group value="default" fxLayoutGap.gt-xs="3vw" fxLayout.lt-sm="column">
-    <mat-radio-button labelPosition="before" value="default">Date of each competition</mat-radio-button>
-    <mat-radio-button labelPosition="before" value="always">Today</mat-radio-button>
-    <mat-radio-button labelPosition="before" value="never">Specific Date
-    </mat-radio-button>
-  </mat-radio-group>
-  <p *ngIf="!dataSource.filteredData || dataSource.filteredData.length==0">
-    There are no saved competitions yet
-  </p>
-  <p>
-    To add a new competition, go to <a mat-stroked-button routerLink="/rns">
-      <mat-icon>star</mat-icon>Ranking & Scoring Points
-    </a>
-  </p>
+  <div *ngIf="dataSource.filteredData && dataSource.filteredData.length>0">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z4" fxFlexFill>
+      <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+      <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+      <ng-container matColumnDef="Icon">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"><img fxFlex="47px" style="max-height: 100%;"
+            [src]="'assets/images/'+element.event.Icon"></td>
+      </ng-container>
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Event">
+        <th mat-header-cell *matHeaderCellDef>Event</th>
+        <td mat-cell *matCellDef="let element">{{element.event.Name|eventName}}<span
+            *ngIf="element.event.Type == 'i'">(i)</span></td>
+      </ng-container>
+      <ng-container matColumnDef="Performance">
+        <th mat-header-cell *matHeaderCellDef>Perform.</th>
+        <td mat-cell *matCellDef="let element">{{element.eventFormData.performanceInput}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.eventFormData.competitionDate | date: 'shortDate'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="TotalPoints">
+        <th mat-header-cell *matHeaderCellDef><strong>Total Points</strong></th>
+        <td mat-cell *matCellDef="let element"><strong>{{element.points.totalPoints}}</strong>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="More">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="moreMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #moreMenu="matMenu">
+            <button mat-menu-item (click)="onDelete(element)">Delete</button>
+            <button mat-menu-item (click)="OnEdit(element)">Edit</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+    </table>
+    <h4>Total Points are calculated based on</h4>
+    <mat-radio-group value="default" fxLayoutGap.gt-xs="3vw" fxLayout.lt-sm="column">
+      <mat-radio-button labelPosition="before" value="default">Date of each competition</mat-radio-button>
+      <mat-radio-button labelPosition="before" value="always">Today</mat-radio-button>
+      <mat-radio-button labelPosition="before" value="never">Specific Date
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div *ngIf="!dataSource.filteredData || dataSource.filteredData.length==0">
+    <p>
+      There are no saved competitions yet
+    </p>
+    <p>
+      To add a new competition, go to <a mat-stroked-button routerLink="/rns">
+        <mat-icon>star</mat-icon>Ranking & Scoring Points
+      </a>
+    </p>
+  </div>
 </div>

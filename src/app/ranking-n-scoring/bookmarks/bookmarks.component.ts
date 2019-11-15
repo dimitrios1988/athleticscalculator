@@ -3,9 +3,6 @@ import { BookmarksService } from './bookmarks.service';
 import { Bookmark } from './entities/bookmark.entity';
 import { MatTableDataSource } from '@angular/material';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
-import { filter } from 'minimatch';
-import { Observable } from 'rxjs';
-import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -16,11 +13,8 @@ export class BookmarksComponent implements OnInit {
 
   private bookmarks: Bookmark[];
   public dataSource: MatTableDataSource<Bookmark>;
-  public isSignedIn: boolean;
 
-  constructor(private bookmarksService: BookmarksService, mediaObserver: MediaObserver, userService: UserService) {
-    this.isSignedIn = userService.isLoggedIn;
-
+  constructor(private bookmarksService: BookmarksService, mediaObserver: MediaObserver) {
     this.dataSource = new MatTableDataSource();
     this.bookmarks = bookmarksService.getBookmarks();
   }

@@ -1,0 +1,33 @@
+<form [formGroup]="loginForm">
+    <mat-card-content fxLayout="column" fxLayoutGap="1vh">
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="Username" maxlength="25" cdkFocusInitial>
+            <mat-icon matSuffix color="primary" *ngIf="!loginForm.controls['username'].errors">
+                sentiment_very_satisfied</mat-icon>
+            <mat-icon matSuffix color="warn" *ngIf="loginForm.controls['username'].errors">
+                sentiment_very_dissatisfied</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password" placeholder="Password" maxlength="25">
+            <mat-icon matSuffix color="primary" *ngIf="!loginForm.controls['password'].errors">
+                sentiment_very_satisfied</mat-icon>
+            <mat-icon matSuffix color="warn" *ngIf="loginForm.controls['password'].errors">
+                sentiment_very_dissatisfied</mat-icon>
+        </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions class="kt-card-actions" fxLayout="row" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" (click)="onLogin();" [disabled]="loginForm.invalid || isLoading">
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+            <mat-icon>account_circle</mat-icon>
+            <span>Login</span>
+        </button>
+    </mat-card-actions>
+</form>
+<div class="mat-small">
+    * Sign in, so you can have your competition history across all your devices, or in case you need to
+    reinstall
+    Athletics Calculator. When you sign in, every saved competition in the current device, will be added in your
+    account.
+</div>

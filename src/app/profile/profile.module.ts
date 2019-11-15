@@ -1,32 +1,31 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from './user.service';
-import { SignInComponent } from './signin/signin.component';
+import { ProfileService } from './profile.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { SignOutComponent } from './signout/signout.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ProfileComponent } from './profile.component';
+import { ProfileRoutingModule } from './profile-routing.module';
 
 @NgModule({
-  declarations: [SignInComponent, SignOutComponent],
+  declarations: [ProfileComponent],
   imports: [
     CommonModule,
+    ProfileRoutingModule,
     FlexLayoutModule,
     MatButtonModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
   ],
-  providers: [UserService],
-  exports: [SignInComponent, SignOutComponent]
 })
-export class UserModule {
+export class ProfileModule {
   constructor() { }
 
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: UserModule,
-      providers: [UserService]
+      ngModule: ProfileModule,
+      providers: [ProfileService],
     };
   }
 
