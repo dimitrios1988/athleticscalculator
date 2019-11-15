@@ -111,13 +111,7 @@ export class EventDetailsComponent
       this.eventForm.controls.windInput.disable();
     }
     if (this.eventForm.controls.calculatePlacePointsCheckbox.value) {
-      this.eventForm.controls.placeInput.setValidators(
-        Validators.compose([
-          Validators.required,
-          Validators.pattern('^\\d+$'),
-          Validators.min(1)
-        ])
-      );
+      this.changePlaceValidation();
       this.eventForm.controls.competitionTypeSelect.setValidators(
         Validators.required
       );
@@ -329,8 +323,37 @@ export class EventDetailsComponent
         setTimeout(() => {
           this.saveCompleted = null;
           this.eventForm.markAsDirty();
-        }, 2500);
+        }, 3000);
       }
     });
+  }
+
+  public changePlaceValidation() {
+    this.eventForm.controls.placeInput.clearValidators();
+    if (!isNullOrUndefined(this.eventForm.controls.progressedToFinalCombo.value)) {
+      if (this.eventForm.controls.progressedToFinalCombo.value == "true") {
+        this.eventForm.controls.placeInput.setValidators(Validators.compose([
+          Validators.pattern('^\\d+$'),
+          Validators.min(1)
+        ]));
+      }
+      else {
+        this.eventForm.controls.placeInput.setValidators(Validators.compose([
+          Validators.required,
+          Validators.pattern('^\\d+$'),
+          Validators.min(1)
+        ]))
+      }
+    }
+    else {
+      this.eventForm.controls.placeInput.setValidators(Validators.compose([
+        Validators.required,
+        Validators.pattern('^\\d+$'),
+        Validators.min(1)
+      ]))
+    }
+
+
+    this.eventForm.controls.placeInput.updateValueAndValidity();
   }
 }

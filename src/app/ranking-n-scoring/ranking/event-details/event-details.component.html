@@ -107,7 +107,7 @@
         <div fxLayout="row">
           <mat-form-field *ngIf="this.eventForm.controls['competitionTypeSelect'].value.HasProgressToFinal">
             <mat-label>Did you qualify?</mat-label>
-            <mat-select required formControlName="progressedToFinalCombo">
+            <mat-select required formControlName="progressedToFinalCombo" (selectionChange)="changePlaceValidation()">
               <mat-option value="true">Yes</mat-option>
               <mat-option value="false">No</mat-option>
             </mat-select>
@@ -146,7 +146,8 @@
             <mat-form-field>
               <mat-label>Place</mat-label>
               <input matInput formControlName="placeInput" autocomplete="off" autocorrect="off" autocapitalize="off"
-                type="numeric" (keydown.enter)="(!eventForm.invalid && !pointsAreCalculated)?onCalculate($event):null" required>
+                type="numeric" (keydown.enter)="(!eventForm.invalid && !pointsAreCalculated)?onCalculate($event):null"
+                [required]="eventForm.controls['progressedToFinalCombo'].value!='true'">
               <mat-error *ngIf="this.eventForm.controls['placeInput'].hasError('required')">
                 This field cannot be empty</mat-error>
               <button matSuffix mat-icon-button (click)="placeTltp.toggle()"
