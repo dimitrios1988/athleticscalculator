@@ -30,6 +30,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SaveInfoComponent } from './save-info/save-info.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatToolbarModule,
     MatExpansionModule,
     MatDatepickerModule,
-
+    AngularFittextModule
   ],
   providers: [RankingService, MeetingsService],
 })

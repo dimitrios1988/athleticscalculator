@@ -26,6 +26,7 @@ import { CombinedModule } from './combined/combined.module';
 import { AppService } from './app.service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter, MAT_NATIVE_DATE_FORMATS } from '@angular/material/core';
 import { Platform } from '@angular/cdk/platform';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { Platform } from '@angular/cdk/platform';
     MatBottomSheetModule,
     PwaModule,
     CombinedModule,
+    AngularFittextModule
   ],
   bootstrap: [AppComponent],
   providers: [

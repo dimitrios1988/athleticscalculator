@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [BookmarksComponent],
@@ -22,7 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
     FlexLayoutModule,
     MatTableModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    AngularFittextModule
   ],
 })
 export class BookmarksModule { }
