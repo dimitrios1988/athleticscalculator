@@ -24,6 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PwaModule } from './pwa/pwa.module';
 import { CombinedModule } from './combined/combined.module';
 import { AppService } from './app.service';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter, MAT_NATIVE_DATE_FORMATS } from '@angular/material/core';
+import { Platform } from '@angular/cdk/platform';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
 
@@ -55,6 +57,28 @@ import { AuthModule } from './auth/auth.module';
     AuthModule.forRoot()
   ],
   bootstrap: [AppComponent],
-  providers: [AppService]
+  providers: [
+    AppService,
+    {
+      provide: DateAdapter,
+      useClass: NativeDateAdapter,
+      deps: [MAT_DATE_LOCALE, Platform]
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },
+  ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private _adapter: DateAdapter<any>) {
+    this.setLocaleFromSystem();
+  }
+
+  private setLocaleFromSystem() {
+    var language;
+    if (window.navigator.languages) {
+      language = window.navigator.languages[0];
+    } else {
+      language = window.navigator.language;
+    }
+    this._adapter.setLocale(language);
+  }
+}
