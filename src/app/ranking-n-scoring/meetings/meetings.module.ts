@@ -18,6 +18,7 @@ import { LoadingSpinnerModule } from '../../shared/components/loading-spinner/lo
 import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatButtonModule,
     MatToolbarModule,
     MatSortModule,
-    MatExpansionModule
+    MatExpansionModule,
+    AngularFittextModule
   ],
   providers: [MeetingsService]
 })
