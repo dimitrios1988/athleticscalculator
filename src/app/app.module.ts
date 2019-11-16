@@ -54,7 +54,7 @@ import { AngularFittextModule } from 'angular-fittext';
     MatBottomSheetModule,
     PwaModule.forRoot(),
     CombinedModule,
-    AngularFittextModule
+    AngularFittextModule,
     ProfileModule.forRoot(),
     AuthModule.forRoot()
   ],

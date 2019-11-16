@@ -26,7 +26,7 @@ import { AngularFittextModule } from 'angular-fittext';
     MatTableModule,
     MatMenuModule,
     MatButtonModule,
-    MatRadioModule
+    MatRadioModule,
     AngularFittextModule
   ],
 })
