@@ -61,17 +61,18 @@ import { AngularFittextModule } from 'angular-fittext';
   bootstrap: [AppComponent],
   providers: [
     AppService,
-    {
+    /* {
       provide: DateAdapter,
       useClass: NativeDateAdapter,
       deps: [MAT_DATE_LOCALE, Platform]
     },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS }, */
   ]
 })
 export class AppModule {
-  constructor(private _adapter: DateAdapter<any>) {
-    this.setLocaleFromSystem();
+  //private _adapter: DateAdapter<any>
+  constructor() {
+    //this.setLocaleFromSystem();
   }
 
   private setLocaleFromSystem() {
@@ -81,6 +82,6 @@ export class AppModule {
     } else {
       language = window.navigator.language;
     }
-    this._adapter.setLocale(language);
+    //this._adapter.setLocale(language);
   }
 }
