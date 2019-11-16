@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { ProfileComponent } from './profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -17,6 +18,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    AngularFittextModule
   ],
 })
 export class ProfileModule {
