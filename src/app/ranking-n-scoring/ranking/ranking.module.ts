@@ -66,8 +66,8 @@ import { AngularFittextModule } from 'angular-fittext';
     MatToolbarModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-    AngularFittextModule
+    AngularFittextModule,
+    MatNativeDateModule
   ],
   providers: [RankingService, MeetingsService],
 })
