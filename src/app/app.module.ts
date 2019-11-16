@@ -28,6 +28,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter, MAT_
 import { Platform } from '@angular/cdk/platform';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { AuthModule } from './auth/auth.module';
     MatBottomSheetModule,
     PwaModule.forRoot(),
     CombinedModule,
+    AngularFittextModule
     ProfileModule.forRoot(),
     AuthModule.forRoot()
   ],

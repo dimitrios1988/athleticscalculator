@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileModule } from 'src/app/profile/profile.module';
 import { MatRadioModule } from '@angular/material/radio';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [BookmarksComponent],
@@ -26,6 +27,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatMenuModule,
     MatButtonModule,
     MatRadioModule
+    AngularFittextModule
   ],
 })
 export class BookmarksModule { }

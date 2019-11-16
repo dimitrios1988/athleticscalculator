@@ -19,6 +19,7 @@ import { LoadingSpinnerModule } from 'src/app/shared/components/loading-spinner/
 import { HttpClientModule } from '@angular/common/http';
 import { PerformancesService } from './performances.service';
 import { MatTableModule } from '@angular/material/table';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [PerformancesComponent],
@@ -39,7 +40,8 @@ import { MatTableModule } from '@angular/material/table';
     MatButtonModule,
     MatRippleModule,
     LoadingSpinnerModule,
-    MatTableModule
+    MatTableModule,
+    AngularFittextModule
   ],
   providers: [PerformancesService]
 })

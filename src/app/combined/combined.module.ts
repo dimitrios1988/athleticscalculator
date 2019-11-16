@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [CombinedComponent, CombinedEventFiltersComponent, CombinedEventDetailsComponent, EventPanelComponent],
@@ -43,7 +44,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    AngularFittextModule
   ],
   providers: [CombinedService]
 })

@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ProfileModule } from '../profile/profile.module';
 import { AuthModule } from '../auth/auth.module';
 import { AuthService } from '../auth/auth.service';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [MenuComponent],
@@ -26,6 +27,8 @@ import { AuthService } from '../auth/auth.service';
     MatButtonModule,
     //PwaModule.forRoot(),
     MatDividerModule,
+    MatButtonModule,
+    AngularFittextModule
   ],
   exports: [MenuComponent],
   providers: [AppService]

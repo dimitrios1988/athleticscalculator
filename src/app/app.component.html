@@ -9,9 +9,9 @@
         <button mat-icon-button (click)="drawer.toggle(); drawer.autoFocus=false">
           <mat-icon>menu</mat-icon>
         </button>
-        <span class="toolbar-header">Athletics Calculator</span>
-        <span style="flex: 1 1 auto;"></span>
-        <mat-icon matTooltip="You are offline" style="float: right;" *ngIf="!isOnline">wifi_off</mat-icon>
+        <span fittext [maxFontSize]='20'>Athletics Calculator</span>
+        <mat-icon fxFlexOffset="auto" matTooltip="You are offline" style="float: right;" *ngIf="!isOnline">wifi_off
+        </mat-icon>
       </mat-toolbar-row>
     </mat-toolbar>
     <div fxFlex>
