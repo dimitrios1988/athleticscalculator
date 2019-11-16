@@ -24,4 +24,9 @@ export class InfoComponent implements OnInit {
     window.open('mailto:dimi.chondrokoukis@gmail.com?Subject=Athletics%20Ranking%20Points%20Calculator', '_blank');
   }
 
+  onOpenWorldRankingCalendar() {
+    window.open('https://www.worldathletics.org/world-ranking-calendar', '_blank');
+
+  }
+
 }

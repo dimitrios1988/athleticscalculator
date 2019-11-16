@@ -8,7 +8,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AngularFittextModule } from 'angular-fittext'
+import { AngularFittextModule } from 'angular-fittext';
+import { MatListModule } from '@angular/material/list';
+
 
 @NgModule({
   declarations: [InfoComponent],
@@ -20,7 +22,8 @@ import { AngularFittextModule } from 'angular-fittext'
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    AngularFittextModule
+    AngularFittextModule,
+    MatListModule,
   ]
 })
 export class InfoModule { }
