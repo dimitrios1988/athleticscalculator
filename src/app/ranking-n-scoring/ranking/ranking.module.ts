@@ -65,7 +65,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatToolbarModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatNativeDateModule
+
   ],
   providers: [RankingService, MeetingsService],
 })
