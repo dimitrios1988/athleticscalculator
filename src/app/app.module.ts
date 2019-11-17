@@ -77,20 +77,11 @@ import { registerLocaleData } from '@angular/common';
 })
 export class AppModule {
   constructor() {
-    import(`@angular/common/locales/${getLocale().substring(0, getLocale().indexOf('-'))}.js`).then(lang => registerLocaleData(lang.default));
+    import(
+      /* webpackInclude: /(el|en|it|de|ru|es)\.js$/ */
+      `@angular/common/locales/${getLocale().substring(0, getLocale().indexOf('-'))}.js`).then(lang => registerLocaleData(lang.default));
   }
 }
-
-/* export function getLocale() {
-  
-  var language;
-  if (window.navigator.languages) {
-    language = window.navigator.languages[0];
-  } else {
-    language = window.navigator.language;
-  }
-  return language;
-} */
 
 export function getLocale(): string {
   const defaultValue = 'el-GR'
