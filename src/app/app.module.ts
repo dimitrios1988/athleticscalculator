@@ -74,8 +74,9 @@ import { registerLocaleData } from '@angular/common';
 })
 export class AppModule {
   constructor() {
-    /* webpackInclude: /(el|en|it|de|ru|es)\.js$/ */
-    import(`@angular/common/locales/${getLocale().substring(0, getLocale().indexOf('-'))}.js`).then(lang => registerLocaleData(lang.default));
+    import(
+     /* webpackInclude: /(el|en|it|de|ru|es)\.js$/ */
+     `@angular/common/locales/${getLocale().substring(0, getLocale().indexOf('-'))}.js`).then(lang => registerLocaleData(lang.default));
   }
 }
 
