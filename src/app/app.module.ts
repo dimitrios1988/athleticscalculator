@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,11 +24,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PwaModule } from './pwa/pwa.module';
 import { CombinedModule } from './combined/combined.module';
 import { AppService } from './app.service';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter, MAT_NATIVE_DATE_FORMATS } from '@angular/material/core';
-import { Platform } from '@angular/cdk/platform';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
 import { AngularFittextModule } from 'angular-fittext';
+import { registerLocaleData } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -61,27 +66,27 @@ import { AngularFittextModule } from 'angular-fittext';
   bootstrap: [AppComponent],
   providers: [
     AppService,
-    /* {
+    {
       provide: DateAdapter,
-      useClass: NativeDateAdapter,
-      deps: [MAT_DATE_LOCALE, Platform]
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS }, */
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    { provide: LOCALE_ID, useFactory: getLocale },
   ]
 })
 export class AppModule {
-  //private _adapter: DateAdapter<any>
   constructor() {
-    //this.setLocaleFromSystem();
+    import(`@angular/common/locales/${getLocale().substring(0, getLocale().indexOf('-'))}.js`).then(lang => registerLocaleData(lang.default));
   }
+}
 
-  private setLocaleFromSystem() {
-    var language;
-    if (window.navigator.languages) {
-      language = window.navigator.languages[0];
-    } else {
-      language = window.navigator.language;
-    }
-    //this._adapter.setLocale(language);
+export function getLocale() {
+  var language;
+  if (window.navigator.languages) {
+    language = window.navigator.languages[0];
+  } else {
+    language = window.navigator.language;
   }
+  return language;
 }
