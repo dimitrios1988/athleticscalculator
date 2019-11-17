@@ -143,7 +143,7 @@ export class EventDetailsComponent
   }
 
   onCalculate(event?) {
-    if(!isNullOrUndefined(event)) {
+    if (!isNullOrUndefined(event)) {
       event.preventDefault();
     }
     const getPointsCmd = new GetPointsCmd();
@@ -241,7 +241,7 @@ export class EventDetailsComponent
   }
 
   private calculateDeductionPoints() {
-    const diff = this.monthDiff(this.eventForm.controls.datePicker.value, new Date());
+    const diff = this.monthDiff(this.eventForm.controls.datePicker.value.toDate(), new Date());
     if (this.selectedEvent.PointsDeductionStrategy.Max < diff) {
       this.eventForm.controls.datePoints.setValue('All points');
     } else {
