@@ -212,7 +212,7 @@ export class EventDetailsComponent
         if (this.eventForm.controls.competitionDate.value) {
           const targetDate = this.eventForm.controls.targetDate.value ? this.eventForm.controls.targetDate.value : new Date();
           this.eventForm.controls.targetDate.setValue(targetDate);
-          const points = PointsDeductor.getDeductedPoints(this.selectedEvent.PointsDeductionStrategy, this.eventForm.controls.competitionDate.value, this.eventForm.controls.targetDate.value);
+          const points = PointsDeductor.getDeductedPoints(this.selectedEvent.PointsDeductionStrategy, this.eventForm.controls.competitionDate.value.toDate(), this.eventForm.controls.targetDate.value.toDate());
           if (points == 'MAX') {
             this.eventForm.controls.datePoints.setValue('All points');
             this.totalPoints = 0;
