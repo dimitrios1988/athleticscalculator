@@ -75,7 +75,7 @@ import { registerLocaleData } from '@angular/common';
 export class AppModule {
   constructor() {
     import(
-     /* webpackInclude: /(el|en|it|de|ru|es)\.js$/ */
+     /* webpackInclude: /(el|en)\.js$/ */
      `@angular/common/locales/${getLocale().substring(0, getLocale().indexOf('-'))}.js`).then(lang => registerLocaleData(lang.default));
   }
 }
