@@ -28,15 +28,13 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS
 } from '@angular/material-moment-adapter';
 import { AngularFittextModule } from 'angular-fittext';
 import { registerLocaleData } from '@angular/common';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -53,7 +51,10 @@ import { registerLocaleData } from '@angular/common';
     MatCardModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerImmediately'
+    }),
     MatBottomSheetModule,
     PwaModule,
     CombinedModule,
@@ -69,21 +70,25 @@ import { registerLocaleData } from '@angular/common';
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-    { provide: LOCALE_ID, useFactory: getLocale },
+    { provide: LOCALE_ID, useFactory: getSystemLocale }
   ]
 })
 export class AppModule {
   constructor() {
-    // import(
-    //  /* webpackInclude: /(el|en)\.js$/ */
-    //  `@angular/common/locales/${getLocale().substring(0, getLocale().indexOf('-'))}.js`).then(lang => registerLocaleData(lang.default));
-    import('@angular/common/locales/el').then(lang => registerLocaleData(lang.default));
+    const systemLocale = getSystemLocale();
+    this.localeInitializer(systemLocale).then(module => registerLocaleData(module.default));
+  }
+
+  localeInitializer(localeId: string): Promise<any> {
+    return import(
+      // /* webpackInclude: /(en|el)\.js$/ */
+      `@angular/common/locales/${localeId.substring(0, localeId.indexOf('-'))}.js`
+    );
   }
 }
 
-export function getLocale(): string {
-  const defaultValue = 'el-GR'
-  return defaultValue;
+export function getSystemLocale(): string {
+  const defaultValue = 'en-US';
   if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
     return defaultValue;
   }
