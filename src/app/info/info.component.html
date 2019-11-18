@@ -1,6 +1,6 @@
 <mat-toolbar>
   <mat-toolbar-row>
-    <span fittext [maxFontSize]='20' [delay]='0'>Info</span>
+    <span fittext [maxFontSize]="20" [delay]="0">Info</span>
   </mat-toolbar-row>
 </mat-toolbar>
 <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0.5vh">
@@ -13,8 +13,10 @@
     </mat-card-header>
     <mat-card-content>
       <p>
-        Performances are typed using the official format of the IAAF. But don't worry! There is always an example in the
-        info button <mat-icon color="primary">info</mat-icon> next to the "Performance" field.
+        Performances are typed using the official format of the IAAF. But don't
+        worry! There is always an example in the info button
+        <mat-icon color="primary">info</mat-icon> next to the "Performance"
+        field.
       </p>
     </mat-card-content>
   </mat-card>
@@ -27,8 +29,9 @@
     </mat-card-header>
     <mat-card-content>
       <p>
-        The points are calculated based on the latest Scoring tables of 2017 and the latest Ranking tables of 2019 that,
-        the international athletics federation has published.
+        The points are calculated based on the latest Scoring tables of 2017 and
+        the latest Ranking tables of 2019 that, the international athletics
+        federation has published.
       </p>
     </mat-card-content>
   </mat-card>
@@ -41,14 +44,17 @@
     </mat-card-header>
     <mat-card-content>
       <p>
-        Sure! You can read about and use the Scoring and Ranking tables that you will find below.
+        Sure! You can read about and use the Scoring and Ranking tables that you
+        will find below.
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onScoringTables()"><span>Scoring
-          Tables</span></button>
-      <button mat-raised-button color="primary" (click)="onRankingTables()"><span>Ranking
-          Tables</span></button>
+      <button mat-raised-button color="primary" (click)="onScoringTables()">
+        <span>Scoring Tables</span>
+      </button>
+      <button mat-raised-button color="primary" (click)="onRankingTables()">
+        <span>Ranking Tables</span>
+      </button>
     </mat-card-actions>
   </mat-card>
   <mat-card>
@@ -60,14 +66,15 @@
     </mat-card-header>
     <mat-card-content>
       <p>
-        The meetings along with their respective categories, are taken from the IAAF's official calendar. However, feel
-        free
-        to contact us to add any meeting missing.
+        The meetings along with their respective categories, are taken from the
+        IAAF's official calendar. However, feel free to contact us to add any
+        meeting missing.
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onOpenWorldRankingCalendar()"><span>Open
-          Calendar</span></button>
+      <button mat-raised-button color="primary" (click)="onOpenWorldRankingCalendar()">
+        <span>Open Calendar</span>
+      </button>
     </mat-card-actions>
   </mat-card>
   <mat-card>
@@ -78,24 +85,33 @@
       <mat-card-title>What meetings are in each category?</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      The IAAF determines to which Category a given competition should be assigned. There are 4 high ranked categories
-      followed by 6 more categories.
-      <mat-list role="list">
-        <mat-list-item role="listitem">• OW - Olympic Games, World Outdoor Championships</mat-list-item>
-        <mat-list-item role="listitem">• DF - Diamond League Finals</mat-list-item>
-        <mat-list-item role="listitem">• GW - World Indoor Championships, World Cross Country / half-marathon / Race
-          Walking Championships, Continental Cup,
-          Diamond League Meetings</mat-list-item>
-        <mat-list-item role="listitem">
-          • GL - Senior Area Championships, Hammer Throw / Combined / Race Walking Challenge, Gold Label Marathons
-        </mat-list-item>
-      </mat-list>
+      The IAAF determines to which Category a given competition should be
+      assigned. There are 4 high ranked categories followed by 6 more
+      categories.
+      <p>
+        <mat-list role="list">
+          <mat-list-item role="listitem">• OW - Olympic Games, World Outdoor Championships</mat-list-item>
+          <mat-list-item role="listitem">• DF - Diamond League Finals</mat-list-item>
+          <mat-list-item role="listitem">• GW - World Indoor Championships, World Cross Country /
+            half-marathon / Race Walking Championships, Continental Cup, Diamond
+            League Meetings</mat-list-item>
+          <mat-list-item role="listitem">
+            • GL - Senior Area Championships, Hammer Throw / Combined / Race
+            Walking Challenge, Gold Label Marathons
+          </mat-list-item>
+        </mat-list>
+      </p>
       <p>
         There are 6 more categories, named from A'-F', in which
         <mat-list role="list">
           <mat-list-item role="listitem">
-            <p matLine>• Meeting category B' are considered to be the Senior National Outdoor Championships.</p>
-            <p matLine>Note: Foreign athletes do not receive any points from place</p>
+            <p matLine>
+              • Meeting category B' are considered to be the Senior National
+              Outdoor Championships.
+            </p>
+            <p matLine>
+              Note: Foreign athletes do not receive any points from place
+            </p>
           </mat-list-item>
         </mat-list>
       </p>
@@ -109,26 +125,32 @@
       <mat-card-title>Which events are similar?</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      An <strong>indoor</strong> event that also exists in the outdoors, it is considered to be its similar. In
-      addition, the
-      following events are considered to have them as similars.
-      <mat-list role="list">
-        <mat-list-item role="listitem">• 100m - 50m, 55m, 60m</mat-list-item>
-        <mat-list-item role="listitem">• 400m - 300m, 300m indoor, 500m, 500m indoor</mat-list-item>
-        <mat-list-item role="listitem">• 800m - 600m, 600m indoor, 1000m, 1000m indoor</mat-list-item>
-        <mat-list-item role="listitem">• 1500m - Mile, Mile indoor, 2000m, 2000m indoor</mat-list-item>
-        <mat-list-item role="listitem">• 5000m - 3000m, 3000m indoor, 2 Miles, 2 Miles indoor, 5000m indoor
-        </mat-list-item>
-        <mat-list-item role="listitem">• 10,000m - 5000m, Cross Country (WXC only)</mat-list-item>
-        <mat-list-item role="listitem">• 110mH - 50mH, 55mH, 60mH</mat-list-item>
-        <mat-list-item role="listitem">• 3000mSC - 2000mSC</mat-list-item>
-        <mat-list-item role="listitem">• Road Running (Half Marathon and/or 10 km) - 5 km, 10 km, 15 km, 10 Miles, 20km
-        </mat-list-item>
-        <mat-list-item role="listitem">• Marathon - Half Marathon, 25 km, 30 km</mat-list-item>
-        <mat-list-item role="listitem">• 20km Race Walking - 5km women only, 10km, 15km, 10,000m, 15,000m, 20,000m
-        </mat-list-item>
-        <mat-list-item role="listitem">• 50km Race Walking - 20km, 30km, 35km, 20,000m, 30,000m, 50,000m</mat-list-item>
-      </mat-list>
+      <p>
+        An <strong>indoor</strong> event that also exists in the outdoors, it is
+        considered to be its similar. In addition, the following events are
+        considered to have them as similars.
+        <mat-list role="list">
+          <mat-list-item role="listitem">• 100m - 50m, 55m, 60m</mat-list-item>
+          <mat-list-item role="listitem">• 400m - 300m, 300m indoor, 500m, 500m indoor</mat-list-item>
+          <mat-list-item role="listitem">• 800m - 600m, 600m indoor, 1000m, 1000m indoor</mat-list-item>
+          <mat-list-item role="listitem">• 1500m - Mile, Mile indoor, 2000m, 2000m indoor</mat-list-item>
+          <mat-list-item role="listitem">• 5000m - 3000m, 3000m indoor, 2 Miles, 2 Miles indoor, 5000m
+            indoor
+          </mat-list-item>
+          <mat-list-item role="listitem">• 10,000m - 5000m, Cross Country (WXC only)</mat-list-item>
+          <mat-list-item role="listitem">• 110mH - 50mH, 55mH, 60mH</mat-list-item>
+          <mat-list-item role="listitem">• 3000mSC - 2000mSC</mat-list-item>
+          <mat-list-item role="listitem">• Road Running (Half Marathon and/or 10 km) - 5 km, 10 km, 15 km,
+            10 Miles, 20km
+          </mat-list-item>
+          <mat-list-item role="listitem">• Marathon - Half Marathon, 25 km, 30 km</mat-list-item>
+          <mat-list-item role="listitem">• 20km Race Walking - 5km women only, 10km, 15km, 10,000m, 15,000m,
+            20,000m
+          </mat-list-item>
+          <mat-list-item role="listitem">• 50km Race Walking - 20km, 30km, 35km, 20,000m, 30,000m,
+            50,000m</mat-list-item>
+        </mat-list>
+      </p>
     </mat-card-content>
   </mat-card>
   <mat-card>
@@ -136,33 +158,37 @@
       <div mat-card-avatar>
         <mat-icon color="primary">question_answer</mat-icon>
       </div>
-      <mat-card-title>How many competitions do I need in order to be in IAAF's ranking?</mat-card-title>
+      <mat-card-title>How many competitions do I need in order to be in IAAF's
+        ranking?</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      You will need to have at least 5 competitions in total, with 3 of them being on the main event (which means that
-      you can have up to 2 similar events out of 5 that will be counted) with a few exceptions:
-      <mat-list role="list">
-        <mat-list-item role="listitem">
-          • For the 3000m steeple and the 5000m, you will need 3 competitions in total, with
-          at least 2 of them being on the main event.</mat-list-item>
-        <mat-list-item role="listitem">
-          • For the 10.000m., you will need 2 competitions in total, with
-          at least 1 of them being on the main event.
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          • For the combined events, you will need 2 competitions in total, with
-          at least 1 of them being on the main event.
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          • For the road running group (10km and half-marathon), as well as for the 20km race walking, you will need 3
-          competitions in total, with
-          at least 2 of them being on the main event.
-        </mat-list-item>
-        <mat-list-item role="listitem">• For the Marathon, as well as for the 50km race walking, you will need 2
-          competitions in total, with
-          at least 1 of them being on the main event.
-        </mat-list-item>
-      </mat-list>
+      <p>
+        You will need to have at least 5 competitions in total, with 3 of them
+        being on the main event (which means that you can have up to 2 similar
+        events out of 5 that will be counted) with a few exceptions:
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            • For the 3000m steeple and the 5000m, you will need 3 competitions in
+            total, with at least 2 of them being on the main event.</mat-list-item>
+          <mat-list-item role="listitem">
+            • For the 10.000m., you will need 2 competitions in total, with at
+            least 1 of them being on the main event.
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            • For the combined events, you will need 2 competitions in total, with
+            at least 1 of them being on the main event.
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            • For the road running group (10km and half-marathon), as well as for
+            the 20km race walking, you will need 3 competitions in total, with at
+            least 2 of them being on the main event.
+          </mat-list-item>
+          <mat-list-item role="listitem">• For the Marathon, as well as for the 50km race walking, you will
+            need 2 competitions in total, with at least 1 of them being on the
+            main event.
+          </mat-list-item>
+        </mat-list>
+      </p>
     </mat-card-content>
   </mat-card>
   <mat-card>
@@ -173,26 +199,30 @@
       <mat-card-title>For how long are my competition's points in effect?</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-list role="list">
-        <mat-list-item role="listitem">
-          • Ranking points are considered to be in effect for a 12-month period. Note that after the 9th month, there is
-          a
-          deduction of 20 points per month and for every month until the full 12-month period is passed
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          • For the combined events, 10.000m and all road running events, ranking points are considered to be in effect
-          for a 18-month period, without any deduction.
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          • The points that have been earned from OW & DF meeting categories, are considered to be in effect up until
-          the next meeting of the same category.
-        </mat-list-item>
-        <mat-list-item role="listitem">
-          •The points that have been earned from an outdoor's area
-          championship, are considered to be in effect up until the next one, despite the fact that the 12-month (or
-          18-month) period might have been completed.
-        </mat-list-item>  
-      </mat-list>
+      <p>
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            • Ranking points are considered to be in effect for a 12-month period.
+            Note that after the 9th month, there is a deduction of 20 points per
+            month and for every month until the full 12-month period is passed
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            • For the combined events, 10.000m and all road running events,
+            ranking points are considered to be in effect for a 18-month period,
+            without any deduction.
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            • The points that have been earned from OW & DF meeting categories,
+            are considered to be in effect up until the next meeting of the same
+            category.
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            •The points that have been earned from an outdoor's area championship,
+            are considered to be in effect up until the next one, despite the fact
+            that the 12-month (or 18-month) period might have been completed.
+          </mat-list-item>
+        </mat-list>
+      </p>
     </mat-card-content>
   </mat-card>
   <mat-card>
@@ -204,12 +234,15 @@
     </mat-card-header>
     <mat-card-content>
       <p>
-        We want the app to be as reliable as possible, so contact us immediately. Use the Contact button and report your
-        problem, even if you are not sure about it.
+        We want the app to be as reliable as possible, so contact us
+        immediately. Use the Contact button and report your problem, even if you
+        are not sure about it.
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onContact()"><span>Contact</span></button>
+      <button mat-raised-button color="primary" (click)="onContact()">
+        <span>Contact</span>
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
