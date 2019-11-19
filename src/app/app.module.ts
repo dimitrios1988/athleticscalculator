@@ -81,8 +81,8 @@ export class AppModule {
 
   localeInitializer(localeId: string): Promise<any> {
     return import(
-      /* webpackInclude: /(en|el)\.js$/ */
-      `@angular/common/locales/${localeId.substring(0, localeId.indexOf('-'))}.js`
+      /* webpackInclude: /(el|en)\.js$/ */
+      `@angular/common/locales/${localeId.match(/^([a-zA-Z]{2})([-].+)?$/)[1]}.js`
     );
   }
 }
