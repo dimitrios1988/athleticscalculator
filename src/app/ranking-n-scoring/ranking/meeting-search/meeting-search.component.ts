@@ -5,6 +5,7 @@ import { GetMeetingsDateRangeDto } from 'src/app/ranking-n-scoring/meetings/dto/
 import { GetMeetingsDto } from 'src/app/ranking-n-scoring/meetings/dto/get-meetings.dto';
 import { MeetingEntity } from 'src/app/ranking-n-scoring/meetings/entities/meeting.entity';
 import { SelectionModel } from '@angular/cdk/collections';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-meeting-search',
@@ -13,9 +14,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class MeetingSearchComponent implements OnInit {
 
-  @ViewChild('meetingsList', {static: true})
+  @ViewChild('meetingsList', { static: true })
   private meetingsList: MatSelectionList;
-  public currentDate: {month: number, year: number};
+  public currentDate: { month: number, year: number };
   public years: number[];
   public filteredMeetings: MeetingEntity[];
   public objectKeys = Object.keys;
@@ -45,7 +46,7 @@ export class MeetingSearchComponent implements OnInit {
   ) {
     this.filteredMeetings = [];
     const currentDate = new Date();
-    this.currentDate = { month: currentDate.getMonth(), year: currentDate.getFullYear()};
+    this.currentDate = { month: currentDate.getMonth(), year: currentDate.getFullYear() };
     this.years = [this.currentDate.year];
     this.meetingsLoading = false;
   }
@@ -83,16 +84,20 @@ export class MeetingSearchComponent implements OnInit {
   filterMeetings(month: number, searchInput: string) {
     const searchTerms = searchInput.toLowerCase().split(' ').filter(s => s != '');
     this.filteredMeetings = this.meetings
-    .filter(m => {
-      return m.Date.getUTCMonth() === month;
-    })
-    .filter(m => {
-      let meetingFound = true;
-      searchTerms.forEach(searchTerm => {
-        meetingFound = meetingFound && (m.Name.toLowerCase() + ' ' + m.City.toLowerCase() + m.Country.toLowerCase()).includes(searchTerm);
+      .filter(m => {
+        if (!isNullOrUndefined(month)) {
+          return m.Date.getUTCMonth() === month;
+        } else {
+          return m;
+        }
+      })
+      .filter(m => {
+        let meetingFound = true;
+        searchTerms.forEach(searchTerm => {
+          meetingFound = meetingFound && (m.Name.toLowerCase() + ' ' + m.City.toLowerCase() + m.Country.toLowerCase()).includes(searchTerm);
+        });
+        return meetingFound;
       });
-      return meetingFound;
-    });
   }
 
   onCancel(): void {
