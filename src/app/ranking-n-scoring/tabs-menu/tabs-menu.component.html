@@ -1,4 +1,4 @@
-<nav fxLayout="row" mat-tab-nav-bar color="primary">
+<nav fxLayout="row" mat-tab-nav-bar>
   <a mat-tab-link fxFlex="grow" *ngFor="let tab of tabs"
     [routerLink]="tab.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive" fxLayout="column">
     <mat-icon>{{tab.icon}}</mat-icon>

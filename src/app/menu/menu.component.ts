@@ -1,10 +1,11 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { MenuItem } from './menu-item';
 import { AppService } from '../app.service';
 import { PwaService } from '../pwa/pwa.service';
 import { ProfileService } from '../profile/profile.service';
 import { ProfileEntity } from '../profile/entities/profile.entity';
 import { AuthService } from '../auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -21,8 +22,10 @@ export class MenuComponent {
   public installPrompt;
   public profile: ProfileEntity;
 
-  constructor(private appService: AppService, private pwaService: PwaService, private profileService: ProfileService, private authService: AuthService) {
-    this.profileService.getProfile().subscribe(prof => { this.profile = prof })
+  constructor(private appService: AppService, private pwaService: PwaService, private profileService: ProfileService,
+    private authService: AuthService) {
+    this.profileService.getProfile().subscribe({ next: (profile: ProfileEntity) => this.profile = profile });
+
     this.pwaService.installPrompt$.subscribe({
       next: (e) => {
         e.preventDefault();
@@ -34,7 +37,7 @@ export class MenuComponent {
     this.menuItems = [
       {
         title: 'Ranking & Scoring Points',
-        path: '/rns',
+        path: '/rns/ranking',
         icon: 'star'
       },
       {
@@ -74,9 +77,7 @@ export class MenuComponent {
     this.onItemSelected();
   }
 
-  onOpenAuthenticationDialog() {
-    this.authService.openAuthenticationDialog();
-
+  onLogOut() {
+    this.authService.logout().subscribe();
   }
-
 }

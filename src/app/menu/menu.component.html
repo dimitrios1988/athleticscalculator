@@ -22,7 +22,8 @@
 </mat-list>
 <mat-nav-list>
   <mat-divider></mat-divider>
-  <mat-list-item *ngFor="let menuItem of menuItems" [routerLink]="menuItem.path" (click)="onItemSelected()">
+  <mat-list-item *ngFor="let menuItem of menuItems" [routerLink]="menuItem.path" routerLinkActive="active"
+    (click)="onItemSelected()">
     <mat-icon mat-list-icon>{{menuItem.icon}}</mat-icon>
     <span>{{menuItem.title}}</span>
   </mat-list-item>
@@ -35,7 +36,7 @@
 </mat-nav-list>
 <mat-nav-list fxFlexOffset="auto">
   <mat-divider></mat-divider>
-  <mat-list-item (click)="onItemSelected()" routerLink="/rns/bookmarks">
+  <mat-list-item (click)="onItemSelected()" [routerLink]="['/rns/bookmarks']" routerLinkActive="active">
     <mat-icon mat-list-icon>bookmarks</mat-icon>
     <span>Saved Competitions (Beta)</span>
   </mat-list-item>
@@ -43,7 +44,12 @@
     <mat-icon mat-list-icon>supervisor_account</mat-icon>
     <span>Your Account</span>
   </mat-list-item>
-  <mat-list-item *ngIf="!profile" (click)="onItemSelected();onOpenAuthenticationDialog()">
+  <mat-list-item *ngIf="profile" (click)="onLogOut(); onItemSelected();">
+    <mat-icon mat-list-icon>exit_to_app</mat-icon>
+    <span>Log Out</span>
+  </mat-list-item>
+  <mat-list-item *ngIf="!profile" (click)="onItemSelected()" [routerLink]="['/auth/login']"
+    routerLinkActive="active">
     <mat-icon mat-list-icon>settings_applications</mat-icon>
     <span>Sign In/Register</span>
   </mat-list-item>

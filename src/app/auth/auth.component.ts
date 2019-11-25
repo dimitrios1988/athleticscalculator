@@ -8,9 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AuthComponent implements OnInit {
 
-  constructor(router: Router) {
-    console.log(router);
-  }
+  constructor(router: Router) { }
 
   ngOnInit() {
   }

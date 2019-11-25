@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProfileComponent } from './profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { AngularFittextModule } from 'angular-fittext';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -18,7 +19,8 @@ import { AngularFittextModule } from 'angular-fittext';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    AngularFittextModule
+    AngularFittextModule,
+    HttpClientModule
   ],
 })
 export class ProfileModule {

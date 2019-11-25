@@ -1,24 +1,35 @@
 import { Injectable } from '@angular/core';
 import { ProfileEntity } from './entities/profile.entity';
-import { AuthService } from '../auth/auth.service';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { AuthService, UserStatus } from '../auth/auth.service';
+import { Observable, of, merge } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  constructor(private authService: AuthService) { }
+  private baseUrl = '/user';
+
+  constructor(private authService: AuthService, private httpClient: HttpClient) { }
 
   public getProfile(): Observable<ProfileEntity> {
-    return this.authService.AuthenticationEvent.pipe(
-      map(p => {
-        if (p) {
-          return new ProfileEntity('Fivos', 'Karvelas', 'fivosk@yahoo.de');
+    const getProfileRequest$ = this.httpClient.get<ProfileEntity>(environment.apiUrl + this.baseUrl + '/profile');
+    const authEventRequest$ = this.authService.AuthenticationEvent.pipe(
+      mergeMap(authenticated => {
+        if (authenticated) {
+          return getProfileRequest$;
+        } else {
+          return of(null);
         }
-        else return null;
       })
-    )
+    );
+    if (this.authService.getUserStatus() === UserStatus.CONFIRMED) {
+      return merge(getProfileRequest$, authEventRequest$);
+    } else {
+      return authEventRequest$;
+    }
   }
 }

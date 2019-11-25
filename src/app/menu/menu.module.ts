@@ -8,11 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { AppService } from '../app.service';
-import { PwaModule } from '../pwa/pwa.module';
 import { MatDividerModule } from '@angular/material/divider';
-import { ProfileModule } from '../profile/profile.module';
-import { AuthModule } from '../auth/auth.module';
-import { AuthService } from '../auth/auth.service';
 import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
