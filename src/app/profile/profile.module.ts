@@ -9,6 +9,10 @@ import { ProfileComponent } from './profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { AngularFittextModule } from 'angular-fittext';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -20,18 +24,47 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatIconModule,
     AngularFittextModule,
-    HttpClientModule
-  ],
+    HttpClientModule,
+    MatSnackBarModule
+  ]
 })
 export class ProfileModule {
-  constructor() { }
+  private authenticationEvent: Observable<boolean>;
+  constructor(
+    authService: AuthService,
+    private snackBar: MatSnackBar,
+    private profileService: ProfileService
+  ) {
+    this.authenticationEvent = authService.AuthenticationEvent;
+    const profile$ = this.authenticationEvent.pipe(
+      mergeMap(authEvent => {
+        if (authEvent) {
+          return this.profileService.getProfile();
+        }
+        return of(null);
+      })
+    );
+    profile$.subscribe({
+      next: p => {
+        if (p) {
+          this.openSnackBar(`Oh yeaahh!! Welcome ${p.FirstName}!`, 'Close');
+        } else {
+          this.openSnackBar(`You have logged out`, 'Close');
+        }
+      }
+    });
+  }
+
+  private openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
 
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: ProfileModule,
-      providers: [ProfileService],
+      providers: [ProfileService]
     };
   }
-
 }
-
