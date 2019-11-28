@@ -13,9 +13,17 @@ import { AuthService } from '../auth/auth.service';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { ProfileInfoComponent } from './profile-info/profile-info.component';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { ActiveConnectionsComponent } from './active-connections/active-connections.component';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { LoadingSpinnerModule } from '../shared/components/loading-spinner/loading-spinner.module';
 
 @NgModule({
-  declarations: [ProfileComponent],
+  declarations: [ProfileComponent, ProfileInfoComponent, ActiveConnectionsComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,
@@ -25,7 +33,15 @@ import { mergeMap } from 'rxjs/operators';
     MatIconModule,
     AngularFittextModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatCardModule,
+    MatListModule,
+    MatDividerModule,
+    LoadingSpinnerModule
   ]
 })
 export class ProfileModule {

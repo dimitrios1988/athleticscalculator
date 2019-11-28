@@ -13,8 +13,11 @@ const routes: Routes = [
     component: AuthComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-    ], canActivate: [NoAuthGuardService]
+      { path: 'register', component: RegisterComponent }
+    ],
+    canActivate: [NoAuthGuardService],
+    canActivateChild: [NoAuthGuardService],
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'confirm',
@@ -30,4 +33,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}

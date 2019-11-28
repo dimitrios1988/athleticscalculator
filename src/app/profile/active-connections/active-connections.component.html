@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-header>
+    <mat-icon mat-card-avatar>perm_device_information</mat-icon>
+
+    <mat-card-title>Active Connections</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <mat-list fxLayout="column" fxLayoutAlign="space-between stretch">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        *ngFor="let activeConnection of activeConnections"
+      >
+        <div>
+          <mat-list-item style="padding-top: 1vh; padding-bottom: 1vh; height: 100%;">
+            <h4 mat-line style="font-size: larger; white-space: normal;">
+              IP address: {{ activeConnection.IP }}
+            </h4>
+            <mat-icon mat-list-icon>computer</mat-icon>
+            <p mat-line style="white-space: normal;">Device: {{ activeConnection.UA }}</p>
+            <h4 mat-line style="font-size: large; white-space: normal;">
+              Date: {{ activeConnection.CreatedAt | date: 'medium' }}
+            </h4>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </div>
+        <h3 style="min-width: auto;" fxFlexOffset="auto" *ngIf="activeConnection.IsCurrent">
+          Current Connection
+        </h3>
+        <button
+          *ngIf="activeConnection.IsCurrent == false"
+          style="min-width: auto;"
+          fxFlexOffset="auto"
+          mat-flat-button
+          color="warn"
+          #revokeButton
+          (click)="onRevokeAccess(revokeButton, activeConnection)"
+        >
+          <app-loading-spinner *ngIf="revokeButton.disabled"></app-loading-spinner>
+          <span>Revoke Access</span>
+        </button>
+      </div>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

@@ -11,14 +11,17 @@ import { AuthHelpersService } from '../helpers/auth-helpers.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
   public loginIsLoading: boolean;
   public resendConfimrationIsLoading: boolean;
   public loginForm: FormGroup;
   public errorMessage: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router,
-    private authHelpersService: AuthHelpersService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private authHelpersService: AuthHelpersService
+  ) {
     this.loginIsLoading = false;
     this.resendConfimrationIsLoading = false;
     this.errorMessage = '';
@@ -32,47 +35,54 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onLogin() {
     this.loginIsLoading = true;
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (token: TokenDTO) => {
-        this.authService.setToken(token);
-        if (this.authService.getUserStatus() === UserStatus.CONFIRMED) {
-          this.router.navigate(['/rns/ranking']);
-        } else {
-          this.errorMessage = this.authService.getUserStatus();
+    this.authService
+      .login(this.loginForm.value)
+      .subscribe({
+        next: (token: TokenDTO) => {
+          this.authService.setToken(token);
+          if (this.authService.getUserStatus() !== UserStatus.CONFIRMED) {
+            this.errorMessage = this.authService.getUserStatus();
+          }
+        },
+        error: err => {
+          this.errorMessage = err.error;
         }
-      },
-      error: (err) => {
-        this.errorMessage = err.error;
-      }
-    }).add(() => {
-      this.loginIsLoading = false;
-    });
+      })
+      .add(() => {
+        this.loginIsLoading = false;
+      });
   }
 
   public onResendEmail() {
     this.resendConfimrationIsLoading = true;
-    this.authService.resendConfirmationEmail().subscribe({ next: () => this.errorMessage = '' }).add(() => {
-      this.resendConfimrationIsLoading = false;
-      this.authHelpersService.getRegistrationCompleteDialog();
-    });
+    this.authService
+      .resendConfirmationEmail()
+      .subscribe({ next: () => (this.errorMessage = '') })
+      .add(() => {
+        this.resendConfimrationIsLoading = false;
+        this.authHelpersService.getRegistrationCompleteDialog();
+      });
   }
 
   public onForgotPassword() {
-    this.authHelpersService.getForgotPasswordDialog(this.loginForm.controls.username.value).afterClosed().subscribe(res => {
-      if (res) {
-        this.authService.requestNewPassword(res.email).subscribe({
-          next: () => {
-            this.authHelpersService.getForgotPasswordCompleteDialog();
-          }, error: (err) => {
-            this.errorMessage = err.error;
-          }
-        });
-      }
-    });
+    this.authHelpersService
+      .getForgotPasswordDialog(this.loginForm.controls.username.value)
+      .afterClosed()
+      .subscribe(res => {
+        if (res) {
+          this.authService.requestNewPassword(res.email).subscribe({
+            next: () => {
+              this.authHelpersService.getForgotPasswordCompleteDialog();
+            },
+            error: err => {
+              this.errorMessage = err.error;
+            }
+          });
+        }
+      });
   }
 }

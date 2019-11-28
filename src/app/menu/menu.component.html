@@ -1,6 +1,6 @@
 <mat-toolbar color="warn">
   <mat-toolbar-row>
-    <span fittext [maxFontSize]='20' [delay]='0'>Menu</span>
+    <span fittext [maxFontSize]="20" [delay]="0">Menu</span>
     <button mat-icon-button fxFlexOffset="auto" (click)="toggleTheme()">
       <mat-icon>
         <span *ngIf="isDarkTheme">brightness_5</span>
@@ -16,16 +16,20 @@
   </mat-list-item>
   <mat-list-item *ngIf="profile">
     <mat-icon mat-list-icon>face</mat-icon>
-    <h4 mat-line>{{profile.FirstName}} {{profile.LastName}}</h4>
-    <p mat-line>{{profile.Email}}</p>
+    <h4 mat-line>{{ profile.FirstName }} {{ profile.LastName }}</h4>
+    <p mat-line>{{ profile.Email }}</p>
   </mat-list-item>
 </mat-list>
 <mat-nav-list>
   <mat-divider></mat-divider>
-  <mat-list-item *ngFor="let menuItem of menuItems" [routerLink]="menuItem.path" routerLinkActive="active"
-    (click)="onItemSelected()">
-    <mat-icon mat-list-icon>{{menuItem.icon}}</mat-icon>
-    <span>{{menuItem.title}}</span>
+  <mat-list-item
+    *ngFor="let menuItem of menuItems"
+    [routerLink]="menuItem.path"
+    routerLinkActive="active"
+    (click)="onItemSelected()"
+  >
+    <mat-icon mat-list-icon>{{ menuItem.icon }}</mat-icon>
+    <span>{{ menuItem.title }}</span>
   </mat-list-item>
   <a href="mailto:dimi.chondrokoukis@gmail.com?Subject=Athletics%20Ranking%20Points%20Calculator">
     <mat-list-item>
@@ -36,20 +40,33 @@
 </mat-nav-list>
 <mat-nav-list fxFlexOffset="auto">
   <mat-divider></mat-divider>
-  <mat-list-item (click)="onItemSelected()" [routerLink]="['/rns/bookmarks']" routerLinkActive="active">
+  <mat-list-item
+    (click)="onItemSelected()"
+    [routerLink]="['/rns/bookmarks']"
+    routerLinkActive="active"
+  >
     <mat-icon mat-list-icon>bookmarks</mat-icon>
     <span>Saved Competitions (Beta)</span>
   </mat-list-item>
-  <mat-list-item *ngIf="profile">
+  <mat-list-item
+    *ngIf="profile"
+    (click)="onItemSelected()"
+    [routerLink]="['/profile']"
+    routerLinkActive="active"
+  >
     <mat-icon mat-list-icon>supervisor_account</mat-icon>
-    <span>Your Account</span>
+    <span>My Account</span>
   </mat-list-item>
-  <mat-list-item *ngIf="profile" (click)="onLogOut(); onItemSelected();">
+  <mat-list-item *ngIf="profile" (click)="onLogOut(); onItemSelected()">
     <mat-icon mat-list-icon>exit_to_app</mat-icon>
     <span>Log Out</span>
   </mat-list-item>
-  <mat-list-item *ngIf="!profile" (click)="onItemSelected()" [routerLink]="['/auth/login']"
-    routerLinkActive="active">
+  <mat-list-item
+    *ngIf="!profile"
+    (click)="onItemSelected()"
+    [routerLink]="['/auth/login']"
+    routerLinkActive="active"
+  >
     <mat-icon mat-list-icon>settings_applications</mat-icon>
     <span>Sign In/Register</span>
   </mat-list-item>
@@ -58,4 +75,4 @@
     <span>Install</span>
   </mat-list-item>
 </mat-nav-list>
-<p class="mat-small accent-color" style="text-align: center;">Version v19.10.24.1</p>
+<p class="mat-small accent-color" style="text-align: center;">Version v19.11.28</p>
