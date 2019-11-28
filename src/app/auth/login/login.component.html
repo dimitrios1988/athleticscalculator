@@ -2,42 +2,65 @@
   <mat-card-content fxLayout="column" fxLayoutGap="1vh">
     <mat-form-field appearance="outline">
       <mat-label>Username/Email</mat-label>
-      <input matInput formControlName="username" placeholder="Username/Email" maxlength="25" cdkFocusInitial>
+      <input
+        matInput
+        formControlName="username"
+        placeholder="Username/Email"
+        maxlength="25"
+        autocorrect="off"
+        autocapitalize="off"
+        cdkFocusInitial
+      />
       <mat-icon matSuffix color="primary" *ngIf="!loginForm.controls['username'].errors">
-        sentiment_very_satisfied</mat-icon>
+        sentiment_very_satisfied</mat-icon
+      >
       <mat-icon matSuffix color="warn" *ngIf="loginForm.controls['username'].errors">
-        sentiment_very_dissatisfied</mat-icon>
+        sentiment_very_dissatisfied</mat-icon
+      >
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
-      <input type="password" matInput formControlName="password" placeholder="Password" maxlength="25">
+      <input
+        type="password"
+        matInput
+        formControlName="password"
+        placeholder="Password"
+        maxlength="25"
+      />
       <mat-icon matSuffix color="primary" *ngIf="!loginForm.controls['password'].errors">
-        sentiment_very_satisfied</mat-icon>
+        sentiment_very_satisfied</mat-icon
+      >
       <mat-icon matSuffix color="warn" *ngIf="loginForm.controls['password'].errors">
-        sentiment_very_dissatisfied</mat-icon>
+        sentiment_very_dissatisfied</mat-icon
+      >
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions class="kt-card-actions" fxLayout="row" fxLayoutAlign="center center">
-    <button mat-raised-button color="primary" (click)="onLogin();" [disabled]="loginForm.invalid || loginIsLoading">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onLogin()"
+      [disabled]="loginForm.invalid || loginIsLoading"
+    >
       <app-loading-spinner *ngIf="loginIsLoading"></app-loading-spinner>
       <mat-icon>account_circle</mat-icon>
       <span>Login</span>
     </button>
-    <button mat-stroked-button color="primary" (click)="onForgotPassword();">
+    <button mat-stroked-button color="primary" (click)="onForgotPassword()">
       <span>Forgot Password</span>
     </button>
   </mat-card-actions>
 </form>
 <div class="mat-small">
-  * Sign in, so you can have your competition history across all your devices, or in case you need to
-  reinstall
-  Athletics Calculator. When you sign in, every saved competition in the current device, will be added in your
-  account.
+  * Sign in, so you can have your competition history across all your devices, or in case you need
+  to reinstall Athletics Calculator. When you sign in, every saved competition in the current
+  device, will be added in your account.
 </div>
 <div fxLayout="column" fxLayoutAlign="start start" *ngIf="errorMessage == 'pending'">
-  <span style="color: var(--warn-color)">Your account is pending confirmation. Please check your inbox and spam
-    folder.</span>
-  <button mat-stroked-button color="primary" (click)="onResendEmail();">
+  <span style="color: var(--warn-color)"
+    >Your account is pending confirmation. Please check your inbox and spam folder.</span
+  >
+  <button mat-stroked-button color="primary" (click)="onResendEmail()">
     <app-loading-spinner *ngIf="resendConfimrationIsLoading"></app-loading-spinner>
     <mat-icon>email</mat-icon>
     <span>Resend Email</span>

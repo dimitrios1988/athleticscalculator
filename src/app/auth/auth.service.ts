@@ -1,5 +1,4 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { HttpClient, HttpParams } from '@angular/common/http/';
 import { environment } from 'src/environments/environment';
 import { RegisterUserCmd } from './cmd/register.user.cmd';
@@ -7,17 +6,17 @@ import { Observable } from 'rxjs';
 import { TokenDTO } from './dto/token.dto';
 import * as JWTDecode from 'jwt-decode';
 import { isNullOrUndefined } from 'util';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
   private baseUrl = '/auth';
   public AuthenticationEvent: EventEmitter<boolean>;
 
-  constructor(private authDialog: MatDialog, private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: Router) {
     this.AuthenticationEvent = new EventEmitter<boolean>();
   }
 
@@ -29,12 +28,16 @@ export class AuthService {
     localStorage.setItem('token', tokenDto.token);
     if (this.isAuthenticated()) {
       this.AuthenticationEvent.emit(true);
+      this.router.navigate([this.router.url]);
     }
   }
 
   public isAuthenticated(): boolean {
     const token = this.getToken();
-    if (!isNullOrUndefined(token) /* && !this.tokenExpired(token) */ && this.getUserStatus() === UserStatus.CONFIRMED) {
+    if (
+      !isNullOrUndefined(token) /* && !this.tokenExpired(token) */ &&
+      this.getUserStatus() === UserStatus.CONFIRMED
+    ) {
       return true;
     } else {
       return false;
@@ -42,17 +45,25 @@ export class AuthService {
   }
 
   private tokenExpired(token?: string): boolean {
-    if (!token) { token = this.getToken(); }
-    if (!token) { return true; }
+    if (!token) {
+      token = this.getToken();
+    }
+    if (!token) {
+      return true;
+    }
 
     const date = this.getTokenExpirationDate(token);
-    if (date === undefined) { return false; }
+    if (date === undefined) {
+      return false;
+    }
     return !(date.valueOf() > new Date().valueOf());
   }
 
   private getTokenExpirationDate(token: string): Date {
     const decoded = JWTDecode(token);
-    if (decoded.exp === undefined) { return null; }
+    if (decoded.exp === undefined) {
+      return null;
+    }
     const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date;
@@ -67,19 +78,23 @@ export class AuthService {
   }
 
   public registerUser(data: {
-    email: string
-    firstName: string,
-    lastName: string,
-    password: string,
-    username: string,
+    email: string;
+    firstName: string;
+    lastName: string;
+    password: string;
+    username: string;
   }) {
     const registerUserCmd = new RegisterUserCmd({
-      Email: data.email, FirstName: data.firstName, LastName: data.lastName, Password: data.password, Username: data.username
+      Email: data.email,
+      FirstName: data.firstName,
+      LastName: data.lastName,
+      Password: data.password,
+      Username: data.username
     });
     return this.httpClient.put(environment.apiUrl + this.baseUrl + '/register', registerUserCmd);
   }
 
-  public login(data: { username: string, password: string }): Observable<TokenDTO> {
+  public login(data: { username: string; password: string }): Observable<TokenDTO> {
     return this.httpClient.post<TokenDTO>(environment.apiUrl + this.baseUrl + '/login', data);
   }
 
@@ -98,13 +113,16 @@ export class AuthService {
   public removeToken() {
     localStorage.removeItem('token');
     this.AuthenticationEvent.emit(false);
+    this.router.navigate([this.router.url]);
   }
 
   public confirmUserAccount(email: string, token: string): Observable<TokenDTO> {
     let params = new HttpParams();
     params = params.append('email', email);
     params = params.append('token', token);
-    return this.httpClient.get<TokenDTO>(environment.apiUrl + this.baseUrl + '/confirm', { params });
+    return this.httpClient.get<TokenDTO>(environment.apiUrl + this.baseUrl + '/confirm', {
+      params
+    });
   }
 
   public requestNewPassword(email: string) {

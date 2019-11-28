@@ -1,5 +1,9 @@
 <mat-toolbar>
-    <mat-toolbar-row>
-        <span fittext [maxFontSize]='20' [delay]='0'>Profile</span>
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+    <span fittext [maxFontSize]="20" [delay]="0">My account</span>
+  </mat-toolbar-row>
 </mat-toolbar>
+<div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="0.5vh">
+  <app-profile-info></app-profile-info>
+  <app-active-connections></app-active-connections>
+</div>

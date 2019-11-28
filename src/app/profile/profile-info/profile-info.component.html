@@ -1,0 +1,141 @@
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar><mat-icon>info</mat-icon></div>
+    <mat-card-title>Personal Information</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <form [formGroup]="profileInfoForm" fxLayout="column" fxLayoutAlign="space-between start">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          formControlName="firstName"
+          placeholder="First Name"
+          maxlength="25"
+          cdkFocusInitial
+        />
+        <mat-icon matSuffix color="primary" *ngIf="!profileInfoForm.controls['firstName'].errors">
+          sentiment_very_satisfied</mat-icon
+        >
+        <mat-icon matSuffix color="warn" *ngIf="profileInfoForm.controls['firstName'].errors">
+          sentiment_very_dissatisfied</mat-icon
+        >
+        <mat-error color="warn" *ngIf="profileInfoForm.controls['firstName'].hasError('required')"
+          >This field cannot be empty
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" placeholder="Last Name" maxlength="25" />
+        <mat-icon matSuffix color="primary" *ngIf="!profileInfoForm.controls['lastName'].errors">
+          sentiment_very_satisfied</mat-icon
+        >
+        <mat-icon matSuffix color="warn" *ngIf="profileInfoForm.controls['lastName'].errors">
+          sentiment_very_dissatisfied</mat-icon
+        >
+        <mat-error color="warn" *ngIf="profileInfoForm.controls['lastName'].hasError('required')"
+          >This field cannot be empty
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          placeholder="Username"
+          maxlength="25"
+          autocorrect="off"
+          autocapitalize="off"
+        />
+        <mat-icon matSuffix color="primary" *ngIf="!profileInfoForm.controls['username'].errors">
+          sentiment_very_satisfied</mat-icon
+        >
+        <mat-icon matSuffix color="warn" *ngIf="profileInfoForm.controls['username'].errors">
+          sentiment_very_dissatisfied</mat-icon
+        >
+        <mat-error color="warn" *ngIf="profileInfoForm.controls['username'].hasError('required')"
+          >This field cannot be empty
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          autocorrect="off"
+          autocapitalize="off"
+          matInput
+          formControlName="email"
+          placeholder="Email"
+        />
+        <mat-icon matSuffix color="primary" *ngIf="!profileInfoForm.controls['email'].errors">
+          sentiment_very_satisfied</mat-icon
+        >
+        <mat-icon matSuffix color="warn" *ngIf="profileInfoForm.controls['email'].errors">
+          sentiment_very_dissatisfied</mat-icon
+        >
+        <mat-error color="warn" *ngIf="profileInfoForm.controls['email'].hasError('required')"
+          >This field cannot be empty
+        </mat-error>
+        <mat-error color="warn" *ngIf="profileInfoForm.controls['email'].hasError('email')"
+          >This field must be an email
+        </mat-error>
+      </mat-form-field>
+      <div
+        *ngIf="!passwordIsEditable"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="1vw"
+      >
+        <span>Password</span>
+        <button mat-flat-button color="accent" (click)="onNewPassword()">New Password</button>
+      </div>
+      <div
+        *ngIf="passwordIsEditable"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="1vw"
+      >
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            placeholder="Password"
+            maxlength="25"
+            autocorrect="off"
+            autocapitalize="off"
+          />
+          <mat-icon matSuffix color="primary" *ngIf="!profileInfoForm.controls['password'].errors">
+            sentiment_very_satisfied</mat-icon
+          >
+          <mat-icon matSuffix color="warn" *ngIf="profileInfoForm.controls['password'].errors">
+            sentiment_very_dissatisfied</mat-icon
+          >
+          <mat-error color="warn" *ngIf="profileInfoForm.controls['password'].hasError('required')"
+            >This field cannot be empty
+          </mat-error>
+        </mat-form-field>
+        <button mat-flat-button color="accent" (click)="onGenerateRandomPass()">
+          Generate Random
+        </button>
+        <button mat-flat-button (click)="onCancelNewPassword()">Cancel</button>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="profileInfoForm.invalid"
+      (click)="onSave()"
+    >
+      <app-loading-spinner *ngIf="isSaveLoading"></app-loading-spinner>
+      <mat-icon>save</mat-icon>
+      <span>Save</span>
+    </button>
+  </mat-card-actions>
+</mat-card>
