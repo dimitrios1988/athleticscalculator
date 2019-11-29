@@ -4,9 +4,7 @@
   "dataGroups": [
     {
       "name": "api-longlive",
-      "urls": [
-        "/combined"
-      ],
+      "urls": ["/combined"],
       "cacheConfig": {
         "strategy": "performance",
         "maxSize": 50,
@@ -18,7 +16,9 @@
       "urls": [
         "/meetings/years",
         "/ranking/events",
-        "/ranking/meetingcategories"
+        "/ranking/meetingcategories",
+        "/user/profile",
+        "/user/connections"
       ],
       "cacheConfig": {
         "strategy": "performance",
@@ -28,10 +28,7 @@
     },
     {
       "name": "api-freshness",
-      "urls": [
-        "/meetings",
-        "/meetings/countries"
-      ],
+      "urls": ["/meetings", "/meetings/countries", "/auth"],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 1500,
