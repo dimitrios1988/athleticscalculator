@@ -30,7 +30,16 @@ import { ForgotPasswordComponent } from './helpers/forgot-password/forgot-passwo
 import { ForgotPasswordCompleteComponent } from './helpers/forgot-password-complete/forgot-password-complete.component';
 
 @NgModule({
-  declarations: [LoginComponent, LogoutComponent, AuthComponent, RegisterComponent, ConfirmationComponent, RegistrationCompleteComponent, ForgotPasswordComponent, ForgotPasswordCompleteComponent],
+  declarations: [
+    LoginComponent,
+    LogoutComponent,
+    AuthComponent,
+    RegisterComponent,
+    ConfirmationComponent,
+    RegistrationCompleteComponent,
+    ForgotPasswordComponent,
+    ForgotPasswordCompleteComponent
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -49,10 +58,15 @@ import { ForgotPasswordCompleteComponent } from './helpers/forgot-password-compl
     RouterModule
   ],
   exports: [AuthComponent],
-  entryComponents: [AuthComponent, RegistrationCompleteComponent, ForgotPasswordComponent, ForgotPasswordCompleteComponent]
+  entryComponents: [
+    AuthComponent,
+    RegistrationCompleteComponent,
+    ForgotPasswordComponent,
+    ForgotPasswordCompleteComponent
+  ]
 })
 export class AuthModule {
-  constructor() { }
+  constructor(authGuardService: AuthGuardService, noAuthGuardService: NoAuthGuardService) {}
 
   static forRoot(): ModuleWithProviders {
     return {
@@ -63,7 +77,8 @@ export class AuthModule {
         AuthGuardService,
         NoAuthGuardService,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },],
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+      ]
     };
   }
 }

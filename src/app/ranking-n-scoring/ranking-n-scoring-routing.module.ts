@@ -7,7 +7,6 @@ import { MeetingsComponent } from './meetings/meetings.component';
 import { PerformancesComponent } from './performances/performances.component';
 
 const routes: Routes = [
-  { path: 'bookmarks', loadChildren: () => import('./bookmarks/bookmarks.module').then(m => m.BookmarksModule) },
   {
     path: '',
     component: RankingNScoringComponent,
@@ -25,15 +24,20 @@ const routes: Routes = [
         component: PerformancesComponent
       },
       {
-        path: '**',
-        redirectTo: 'ranking'
+        path: 'bookmarks',
+        loadChildren: () => import('./bookmarks/bookmarks.module').then(m => m.BookmarksModule)
       },
+      {
+        path: '**',
+        redirectTo: 'ranking',
+        pathMatch: 'full'
+      }
     ]
-  },
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RankingNScoringRoutingModule { }
+export class RankingNScoringRoutingModule {}

@@ -6,12 +6,11 @@ import { AuthGuardService } from '../auth/guards/auth-guard.service';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuardService],
     runGuardsAndResolvers: 'always'
-  },
-  { path: '**', redirectTo: '' }
+  }
 ];
 
 @NgModule({

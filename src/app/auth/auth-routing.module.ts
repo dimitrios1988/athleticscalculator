@@ -9,11 +9,12 @@ import { NoAuthGuardService } from './guards/no-auth-guard.service';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'auth',
     component: AuthComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { path: 'register', component: RegisterComponent },
+      {path: '**', redirectTo: 'auth/login', pathMatch: 'full'}
     ],
     canActivate: [NoAuthGuardService],
     canActivateChild: [NoAuthGuardService],
@@ -22,10 +23,6 @@ const routes: Routes = [
   {
     path: 'confirm',
     component: ConfirmationComponent
-  },
-  {
-    path: '**',
-    redirectTo: 'login'
   }
 ];
 

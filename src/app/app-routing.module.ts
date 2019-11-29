@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -13,20 +13,15 @@ const routes: Routes = [
     loadChildren: () => import('./combined/combined.module').then(m => m.CombinedModule)
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
-  },
-  { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-  {
     path: '**',
-    redirectTo: 'rns'
+    redirectTo: 'rns',
+    pathMatch: 'full'
   }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules,
       onSameUrlNavigation: 'reload'
     })
   ],
