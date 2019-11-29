@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from './profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,11 +6,7 @@ import { ProfileService } from './profile.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  constructor() {}
 
-  constructor(private readonly profileService: ProfileService) { }
-
-  ngOnInit() {
-
-  }
-
+  ngOnInit() {}
 }
