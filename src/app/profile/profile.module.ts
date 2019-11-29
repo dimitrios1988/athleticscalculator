@@ -21,6 +21,7 @@ import { ActiveConnectionsComponent } from './active-connections/active-connecti
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { LoadingSpinnerModule } from '../shared/components/loading-spinner/loading-spinner.module';
+import { isNullOrUndefined } from 'util';
 
 @NgModule({
   declarations: [ProfileComponent, ProfileInfoComponent, ActiveConnectionsComponent],
@@ -62,9 +63,7 @@ export class ProfileModule {
     );
     profile$.subscribe({
       next: p => {
-        if (p) {
-          this.openSnackBar(`Oh yeaahh!! Welcome ${p.FirstName}!`, 'Close');
-        } else {
+        if (isNullOrUndefined(p)) {
           this.openSnackBar(`You have logged out`, 'Close');
         }
       }
