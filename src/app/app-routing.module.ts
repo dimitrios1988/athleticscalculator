@@ -12,11 +12,7 @@ const routes: Routes = [
     path: 'combined',
     loadChildren: () => import('./combined/combined.module').then(m => m.CombinedModule)
   },
-  {
-    path: '**',
-    redirectTo: 'rns',
-    pathMatch: 'full'
-  }
+  { path: '', redirectTo: 'rns', pathMatch: 'full' }
 ];
 
 @NgModule({
