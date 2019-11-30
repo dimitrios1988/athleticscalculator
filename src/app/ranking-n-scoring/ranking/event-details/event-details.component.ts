@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  AfterContentChecked,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnInit, Input, OnChanges, AfterContentChecked, OnDestroy } from '@angular/core';
 import { EventEntity } from '../entities/event.entity';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { RankingService } from '../ranking.service';
@@ -26,15 +19,12 @@ import { PointsDeductor } from '../points-deductor';
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.scss']
 })
-export class EventDetailsComponent
-  implements OnChanges, OnInit, AfterContentChecked, OnDestroy {
+export class EventDetailsComponent implements OnChanges, OnInit, AfterContentChecked, OnDestroy {
   @Input()
   selectedEvent: EventEntity;
 
   public eventForm: FormGroup;
   public meetingCategories: string[];
-  public totalPointsBeforeDeduction: number;
-  public totalPoints: number;
   public pointsAreCalculated: boolean;
   public saveCompleted: number;
   private serviceSubscription: Subscription;
@@ -63,8 +53,9 @@ export class EventDetailsComponent
       competitionDate: [''],
       targetDate: [''],
       datePoints: [{ value: '', disabled: true }],
+      totalPoints: ['', { value: 0 }],
+      totalPointsBeforeDeduction: ['', { value: 0 }]
     });
-
   }
 
   ngOnChanges() {
@@ -87,11 +78,11 @@ export class EventDetailsComponent
   }
 
   getMeetingCategories(event) {
-    this.rankingService.getMeetingCategories(
-      event.value.Id
-    ).subscribe((meetingCategories: string[]) => {
-      this.meetingCategories = meetingCategories;
-    });
+    this.rankingService
+      .getMeetingCategories(event.value.Id)
+      .subscribe((meetingCategories: string[]) => {
+        this.meetingCategories = meetingCategories;
+      });
   }
 
   updateFormValidation() {
@@ -102,9 +93,7 @@ export class EventDetailsComponent
       ])
     );
     if (this.selectedEvent.SupportsWind) {
-      this.eventForm.controls.windmeasuredSelect.setValidators(
-        Validators.required
-      );
+      this.eventForm.controls.windmeasuredSelect.setValidators(Validators.required);
     } else {
       this.eventForm.controls.windmeasuredSelect.clearValidators();
     }
@@ -116,22 +105,13 @@ export class EventDetailsComponent
     }
     if (this.eventForm.controls.calculatePlacePointsCheckbox.value) {
       this.changePlaceValidation();
-      this.eventForm.controls.competitionTypeSelect.setValidators(
-        Validators.required
-      );
-      if (
-        this.eventForm.controls.competitionTypeSelect.value
-          .HasProgressToFinal
-      ) {
-        this.eventForm.controls.progressedToFinalCombo.setValidators(
-          Validators.required
-        );
+      this.eventForm.controls.competitionTypeSelect.setValidators(Validators.required);
+      if (this.eventForm.controls.competitionTypeSelect.value.HasProgressToFinal) {
+        this.eventForm.controls.progressedToFinalCombo.setValidators(Validators.required);
       } else {
         this.eventForm.controls.progressedToFinalCombo.clearValidators();
       }
-      this.eventForm.controls.meetingCategorySelect.setValidators(
-        Validators.required
-      );
+      this.eventForm.controls.meetingCategorySelect.setValidators(Validators.required);
     } else {
       this.eventForm.controls.placeInput.clearValidators();
       this.eventForm.controls.competitionTypeSelect.clearValidators();
@@ -150,29 +130,12 @@ export class EventDetailsComponent
     if (!isNullOrUndefined(event)) {
       event.preventDefault();
     }
-    const getPointsCmd = new GetPointsCmd();
-    getPointsCmd.eventId = this.selectedEvent.Id;
-    getPointsCmd.performance = this.eventForm.controls.performanceInput.value;
-    if (this.selectedEvent.SupportsWind) {
-      getPointsCmd.wind = { wasMeasured: false, value: null };
-      if (this.eventForm.controls.windmeasuredSelect.value == 'true') {
-        getPointsCmd.wind.wasMeasured = true;
-        if (this.eventForm.controls.windInput.value) {
-          getPointsCmd.wind.value = Number(
-            this.eventForm.controls.windInput.value
-          );
-        }
-      }
-    }
+    const getPointsCmd: GetPointsCmd = this.eventFormToGetPointsCmd(
+      this.eventForm,
+      this.selectedEvent
+    );
 
-    if (this.eventForm.controls.calculatePlacePointsCheckbox.value) {
-      getPointsCmd.groupId = this.eventForm.controls.competitionTypeSelect.value.Id;
-      getPointsCmd.meetingCategory = this.eventForm.controls.meetingCategorySelect.value;
-      getPointsCmd.place = Number(this.eventForm.controls.placeInput.value);
-      getPointsCmd.progressToFinal = this.eventForm.controls.competitionTypeSelect.value.HasProgressToFinal
-        ? this.eventForm.controls.progressedToFinalCombo.value == 'true'
-        : null;
-    } else {
+    if (!this.eventForm.controls.calculatePlacePointsCheckbox.value) {
       this.eventForm.controls.placeInput.setValue('');
       this.eventForm.controls.placePoints.setValue('');
       this.eventForm.controls.competitionTypeSelect.setValue('');
@@ -185,46 +148,90 @@ export class EventDetailsComponent
     const getPointsSubscription = this.rankingService
       .getPoints(getPointsCmd)
       .subscribe((res: GetPointsDto) => {
-        this.eventForm.controls.performancePoints.setValue(
-          res.performancePoints
-        );
+        this.eventForm.controls.performancePoints.setValue(res.performancePoints);
         res.windPoints != null
           ? this.eventForm.controls.windPoints.setValue(res.windPoints)
           : this.eventForm.controls.windPoints.setValue('');
         if (this.eventForm.controls.calculatePlacePointsCheckbox.value) {
-          this.eventForm.controls.placePoints.setValue(
-            res.categoryPlacePoints
-          );
+          this.eventForm.controls.placePoints.setValue(res.categoryPlacePoints);
         } else {
           this.eventForm.controls.placePoints.setValue('');
         }
-        this.totalPointsBeforeDeduction = 0;
-        this.totalPointsBeforeDeduction += res.categoryPlacePoints
-          ? res.categoryPlacePoints
-          : 0;
-        this.totalPointsBeforeDeduction += res.windPoints ? res.windPoints : 0;
-        this.totalPointsBeforeDeduction += res.performancePoints ? res.performancePoints : 0;
+        this.eventForm.controls.totalPointsBeforeDeduction.setValue(0);
+        if (res.categoryPlacePoints) {
+          this.eventForm.controls.totalPointsBeforeDeduction.setValue(
+            this.eventForm.controls.totalPointsBeforeDeduction.value +
+              Number(res.categoryPlacePoints)
+          );
+        }
+        if (res.windPoints) {
+          this.eventForm.controls.totalPointsBeforeDeduction.setValue(
+            this.eventForm.controls.totalPointsBeforeDeduction.value + Number(res.windPoints)
+          );
+        }
+        if (res.performancePoints) {
+          this.eventForm.controls.totalPointsBeforeDeduction.setValue(
+            this.eventForm.controls.totalPointsBeforeDeduction.value + Number(res.performancePoints)
+          );
+        }
         this.eventForm.markAsPristine();
       })
       .add(() => {
         this.pointsAreCalculated = false;
-      }).add(() => {
+      })
+      .add(() => {
         if (this.eventForm.controls.competitionDate.value) {
-          const targetDate = this.eventForm.controls.targetDate.value ? this.eventForm.controls.targetDate.value : new Date();
+          const targetDate = this.eventForm.controls.targetDate.value
+            ? this.eventForm.controls.targetDate.value
+            : new Date();
           this.eventForm.controls.targetDate.setValue(targetDate);
-          const points = PointsDeductor.getDeductedPoints(this.selectedEvent.PointsDeductionStrategy, this.eventForm.controls.competitionDate.value.toDate(), this.eventForm.controls.targetDate.value.toDate());
+          const points = PointsDeductor.getDeductedPoints(
+            this.selectedEvent.PointsDeductionStrategy,
+            this.eventForm.controls.competitionDate.value.toDate(),
+            this.eventForm.controls.targetDate.value.toDate()
+          );
           if (points == 'MAX') {
             this.eventForm.controls.datePoints.setValue('All points');
-            this.totalPoints = 0;
+            this.eventForm.controls.totalPoints.setValue(0);
           } else {
             this.eventForm.controls.datePoints.setValue(points);
-            this.totalPoints = this.totalPointsBeforeDeduction + Number(points);
+            this.eventForm.controls.totalPoints.setValue(
+              Number(this.eventForm.controls.totalPointsBeforeDeduction.value) + Number(points)
+            );
           }
         } else {
-          this.totalPoints = this.totalPointsBeforeDeduction;
+          this.eventForm.controls.totalPoints.setValue(
+            this.eventForm.controls.totalPointsBeforeDeduction.value
+          );
         }
       });
     this.serviceSubscription.add(getPointsSubscription);
+  }
+
+  private eventFormToGetPointsCmd(eventForm: FormGroup, selectedEvent: EventEntity): GetPointsCmd {
+    const getPointsCmd = new GetPointsCmd();
+    getPointsCmd.eventId = selectedEvent.Id;
+    getPointsCmd.performance = eventForm.controls.performanceInput.value;
+    if (selectedEvent.SupportsWind) {
+      getPointsCmd.wind = { wasMeasured: false, value: null };
+      if (eventForm.controls.windmeasuredSelect.value == 'true') {
+        getPointsCmd.wind.wasMeasured = true;
+        if (eventForm.controls.windInput.value) {
+          getPointsCmd.wind.value = Number(eventForm.controls.windInput.value);
+        }
+      }
+    }
+    if (eventForm.controls.calculatePlacePointsCheckbox.value) {
+      getPointsCmd.groupId = eventForm.controls.competitionTypeSelect.value.Id;
+      getPointsCmd.meetingCategory = eventForm.controls.meetingCategorySelect.value;
+      getPointsCmd.place = Number(eventForm.controls.placeInput.value);
+      getPointsCmd.progressToFinal = eventForm.controls.competitionTypeSelect.value
+        .HasProgressToFinal
+        ? eventForm.controls.progressedToFinalCombo.value == 'true'
+        : null;
+    }
+
+    return getPointsCmd;
   }
 
   clearForm() {
@@ -244,9 +251,9 @@ export class EventDetailsComponent
       this.eventForm.controls.competitionDate.setValue('');
       this.eventForm.controls.targetDate.setValue(new Date());
       this.eventForm.markAsUntouched();
+      this.eventForm.controls.totalPoints.setValue('');
+      this.eventForm.controls.totalPointsBeforeDeduction.setValue('');
     }
-    this.totalPointsBeforeDeduction = null;
-    this.totalPoints = null;
   }
 
   comparePerformances() {
@@ -263,21 +270,26 @@ export class EventDetailsComponent
     const dialogRef = this.dialog.open(MeetingSearchComponent, {
       maxWidth: '100vw',
       maxHeight: '100vh',
-      data: { meetingCategories: this.meetingCategories },
+      data: { meetingCategories: this.meetingCategories }
     });
     dialogRef.afterClosed().subscribe((result: MeetingEntity) => {
       this.selectedMeeting = result;
       if (!isNullOrUndefined(this.selectedMeeting)) {
-        this.eventForm.controls.meetingCategorySelect.setValue(this.selectedMeeting.MeetingCategory);
+        this.eventForm.controls.meetingCategorySelect.setValue(
+          this.selectedMeeting.MeetingCategory
+        );
       }
     });
   }
 
   public canSave(): boolean {
-    return this.eventForm.valid === true
-      && this.eventForm.pristine
-      && this.eventForm.controls.performancePoints.value !== ''
-      || (this.eventForm.controls.performancePoints.value !== '' && this.eventForm.controls.placePoints.value !== '');
+    return (
+      (this.eventForm.valid === true &&
+        this.eventForm.pristine &&
+        this.eventForm.controls.performancePoints.value !== '') ||
+      (this.eventForm.controls.performancePoints.value !== '' &&
+        this.eventForm.controls.placePoints.value !== '')
+    );
   }
 
   public onSaveResults() {
@@ -286,18 +298,16 @@ export class EventDetailsComponent
       minWidth: '60vw',
       maxHeight: '100vh',
       data: {
-        meetingName: this.selectedMeeting ? this.selectedMeeting.Name : '',
-      },
+        meetingName: this.selectedMeeting ? this.selectedMeeting.Name : ''
+      }
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(result => {
       if (!isNullOrUndefined(result)) {
         try {
-          this.bookmarksService.saveBookmark(
-            result.name,
-            this.selectedEvent,
-            this.eventForm,
-            { totalPoints: this.totalPoints, totalPointsBeforeDeduction: this.totalPointsBeforeDeduction }
-          );
+          this.bookmarksService.saveBookmark(result.name, this.selectedEvent, this.eventForm, {
+            totalPoints: this.eventForm.controls.totalPoints.value,
+            totalPointsBeforeDeduction: this.eventForm.controls.totalPointsBeforeDeduction.value
+          });
           this.saveCompleted = 1;
         } catch (e) {
           this.saveCompleted = 0;
@@ -313,29 +323,20 @@ export class EventDetailsComponent
   public changePlaceValidation() {
     this.eventForm.controls.placeInput.clearValidators();
     if (!isNullOrUndefined(this.eventForm.controls.progressedToFinalCombo.value)) {
-      if (this.eventForm.controls.progressedToFinalCombo.value == "true") {
-        this.eventForm.controls.placeInput.setValidators(Validators.compose([
-          Validators.pattern('^\\d+$'),
-          Validators.min(1)
-        ]));
+      if (this.eventForm.controls.progressedToFinalCombo.value == 'true') {
+        this.eventForm.controls.placeInput.setValidators(
+          Validators.compose([Validators.pattern('^\\d+$'), Validators.min(1)])
+        );
+      } else {
+        this.eventForm.controls.placeInput.setValidators(
+          Validators.compose([Validators.required, Validators.pattern('^\\d+$'), Validators.min(1)])
+        );
       }
-      else {
-        this.eventForm.controls.placeInput.setValidators(Validators.compose([
-          Validators.required,
-          Validators.pattern('^\\d+$'),
-          Validators.min(1)
-        ]))
-      }
+    } else {
+      this.eventForm.controls.placeInput.setValidators(
+        Validators.compose([Validators.required, Validators.pattern('^\\d+$'), Validators.min(1)])
+      );
     }
-    else {
-      this.eventForm.controls.placeInput.setValidators(Validators.compose([
-        Validators.required,
-        Validators.pattern('^\\d+$'),
-        Validators.min(1)
-      ]))
-    }
-
-
     this.eventForm.controls.placeInput.updateValueAndValidity();
   }
 }
