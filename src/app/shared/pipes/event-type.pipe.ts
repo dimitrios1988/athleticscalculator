@@ -4,15 +4,13 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'eventType'
 })
 export class EventTypePipe implements PipeTransform {
-
   private eventTypes = {
-    'i': 'indoor',
-    'o': 'outdoor',
-    'r': 'road race',
+    i: 'Indoor',
+    o: 'Outdoor',
+    r: 'Road Race / XC'
   };
 
   transform(value: any, args?: any): any {
     return this.eventTypes[value];
   }
-
 }

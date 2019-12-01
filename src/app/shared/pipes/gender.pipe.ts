@@ -4,14 +4,12 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'gender'
 })
 export class GenderPipe implements PipeTransform {
-
   private values = {
-    'm': 'men',
-    'w': 'women'
+    m: 'Men',
+    w: 'Women'
   };
 
   transform(value: any, args?: any): any {
-    return this.values[value]; 
+    return this.values[value];
   }
-
 }

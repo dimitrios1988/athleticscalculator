@@ -1,4 +1,5 @@
-export interface IEventDetailsFormData {
+export interface IBookmarkData {
+  formData: {
     performanceInput: string;
     windInput: string;
     windmeasuredSelect: string;
@@ -13,4 +14,6 @@ export interface IEventDetailsFormData {
     competitionDate: Date;
     targetDate: Date;
     datePoints: string;
+  };
+  isMain: boolean;
 }

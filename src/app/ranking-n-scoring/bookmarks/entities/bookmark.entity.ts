@@ -1,19 +1,14 @@
 import { EventEntity } from '../../ranking/entities/event.entity';
-import { IEventDetailsFormData } from '../../interfaces/event-details-form-data.interface';
+import { IBookmarkData } from '../../interfaces/event-details-form-data.interface';
 
 export class Bookmark {
   name: string;
   event: EventEntity;
-  eventFormData: IEventDetailsFormData;
-  points: {
-    totalPoints?: number;
-    totalPointsBeforeDeduction?: number;
-  };
+  bookmarkData: IBookmarkData[];
 
-  constructor(data: { name: string, event: EventEntity, eventFormData: IEventDetailsFormData, points: { totalPoints: number, totalPointsBeforeDeduction: number } }) {
+  constructor(data: { name: string; event: EventEntity; bookmarkData: IBookmarkData[] }) {
     this.name = data.name;
     this.event = data.event;
-    this.eventFormData = data.eventFormData;
-    this.points = data.points;
+    this.bookmarkData = data.bookmarkData;
   }
 }

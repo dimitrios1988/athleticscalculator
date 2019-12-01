@@ -6,11 +6,15 @@ export class EventEntity {
   public Type: string;
   public Gender: string;
   public Order: number;
-  public Groups: { Id: number; Name: string; IsExtra: boolean; HasProgressToFinal: boolean }[];
+  public Groups: { Id: number; Name: string; HasProgressToFinal: boolean }[];
   public PerformanceValidation: { Pattern: string; Message: string };
   public SupportsWind: boolean;
   public Icon: string;
   public PointsDeductionStrategy: IPointsDeductionStrategy;
+  public SupportedPoints: {
+    PerformancePoints: boolean;
+    RankingPoints: boolean;
+  };
 
   constructor(data: {
     Id: number;
@@ -18,10 +22,11 @@ export class EventEntity {
     Type: string;
     Gender: string;
     Order: number;
-    Groups: { Id: number; Name: string; IsExtra: boolean; HasProgressToFinal: boolean }[];
+    Groups: { Id: number; Name: string; HasProgressToFinal: boolean }[];
     PerformanceValidation: { Pattern: string; Message: string };
     SupportsWind: boolean;
     Icon: string;
     PointsDeductionStrategy: IPointsDeductionStrategy;
-  }) { }
+    SupportedPoints: { PerformancePoints: boolean; RankingPoints: boolean };
+  }) {}
 }

@@ -6,7 +6,7 @@ export class GetPointsCmd {
     };
     meetingCategory?: string;
     place?: number;
-    performance: string;
+    performance?: string;
     groupId?: number;
     progressToFinal?: boolean;
 }
