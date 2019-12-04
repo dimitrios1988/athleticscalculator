@@ -16,9 +16,7 @@
       "urls": [
         "/meetings/years",
         "/ranking/events",
-        "/ranking/meetingcategories",
-        "/user/profile",
-        "/user/connections"
+        "/ranking/meetingcategories"
       ],
       "cacheConfig": {
         "strategy": "performance",
@@ -28,7 +26,13 @@
     },
     {
       "name": "api-freshness",
-      "urls": ["/meetings", "/meetings/countries", "/auth"],
+      "urls": [
+        "/meetings",
+        "/meetings/countries",
+        "/auth",
+        "/user/connections",
+        "/user/profile"
+      ],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 1500,
