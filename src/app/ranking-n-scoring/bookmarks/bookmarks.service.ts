@@ -3,7 +3,7 @@ import { EventEntity } from '../ranking/entities/event.entity';
 import { FormGroup } from '@angular/forms';
 import { Bookmark } from './entities/bookmark.entity';
 import { isNullOrUndefined } from 'util';
-import { IBookmarkData } from '../interfaces/event-details-form-data.interface';
+import { IBookmarkData } from '../interfaces/bookmark-data.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -42,19 +42,21 @@ export class BookmarksService {
             progressedToFinalCombo: eventForm.controls.progressedToFinalCombo.value,
             competitionDate: eventForm.controls.competitionDate.value,
             targetDate: eventForm.controls.targetDate.value,
-            datePoints: eventForm.controls.datePoints.value
+            datePoints: eventForm.controls.datePoints.value,
+            totalPoints: eventForm.controls.totalPoints.value,
+            totalPointsBeforeDeduction: eventForm.controls.totalPointsBeforeDeduction.value
           },
           isMain: isMain
         };
       })
     });
     this.bookmarks.push(bookmark);
-    localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks, this.getCircularReplacer()));
+    localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
   }
 
   saveBookmarks(bookmarks: Bookmark[]) {
     this.bookmarks = bookmarks;
-    localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks, this.getCircularReplacer()));
+    localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
   }
 
   getBookmarks(): Bookmark[] {

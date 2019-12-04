@@ -1,5 +1,5 @@
 import { EventEntity } from '../../ranking/entities/event.entity';
-import { IBookmarkData } from '../../interfaces/event-details-form-data.interface';
+import { IBookmarkData } from '../../interfaces/bookmark-data.interface';
 
 export class Bookmark {
   name: string;

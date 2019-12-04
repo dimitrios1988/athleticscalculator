@@ -235,6 +235,7 @@
               <mat-select
                 formControlName="competitionTypeSelect"
                 (selectionChange)="getMeetingCategories($event)"
+                [compareWith]="compareGroupsFn"
                 required
               >
                 <mat-option
@@ -470,7 +471,7 @@
     >
       <span>Compare Performances</span>
     </button>
-    <button mat-flat-button color="accent" (click)="clearForm()">
+    <button mat-flat-button color="accent" (click)="eventForm = createCleanForm()">
       <span>Clear</span>
     </button>
   </mat-card-actions>

@@ -3,6 +3,7 @@ import { BookmarksService } from './bookmarks.service';
 import { Bookmark } from './entities/bookmark.entity';
 import { MatTableDataSource } from '@angular/material';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-bookmarks',
@@ -10,7 +11,6 @@ import { MediaObserver, MediaChange } from '@angular/flex-layout';
   styleUrls: ['./bookmarks.component.scss']
 })
 export class BookmarksComponent implements OnInit {
-
   private bookmarks: Bookmark[];
   public dataSource: MatTableDataSource<Bookmark>;
 
@@ -32,15 +32,22 @@ export class BookmarksComponent implements OnInit {
     }
   }
 
-  OnEdit(bookmark: Bookmark) {
-
-  }
+  OnEdit(bookmark: Bookmark) {}
 
   getDisplayedColumns() {
     const columns = { 'lt-md': ['Name', 'TotalPoints', 'More'] };
     const allColumns = ['Icon', 'Name', 'Event', 'Performance', 'Date', 'TotalPoints', 'More'];
 
-
     return allColumns;
+  }
+
+  getBookmarkData(bookmark: Bookmark, competitionTypeName?: string) {
+    if (isNullOrUndefined(competitionTypeName)) {
+      return bookmark.bookmarkData.find(bd => bd.isMain);
+    } else {
+      return bookmark.bookmarkData.find(bd => {
+        return bd.formData.competitionTypeSelect.find(cts => cts.Name == competitionTypeName);
+      });
+    }
   }
 }

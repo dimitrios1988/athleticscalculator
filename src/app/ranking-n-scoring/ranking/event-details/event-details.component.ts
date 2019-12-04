@@ -1,14 +1,13 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  AfterContentChecked,
-  OnDestroy,
-  SimpleChanges
-} from '@angular/core';
+import { Component, Input, OnChanges, AfterContentChecked } from '@angular/core';
 import { EventEntity } from '../entities/event.entity';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormControl,
+  FormArray,
+  AbstractControl
+} from '@angular/forms';
 import { RankingService } from '../ranking.service';
 import { GetPointsCmd } from '../cmd/get-points.cmd';
 import { GetPointsDto } from '../dto/get-points.dto';
@@ -20,6 +19,7 @@ import { MeetingEntity } from '../../meetings/entities/meeting.entity';
 import { isNullOrUndefined } from 'util';
 import { SaveInfoComponent } from '../save-info/save-info.component';
 import { PointsDeductor } from '../points-deductor';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-event-details',
@@ -191,7 +191,6 @@ export class EventDetailsComponent implements OnChanges, AfterContentChecked {
         eventForm.controls.totalPointsBeforeDeduction.value + Number(res.performancePoints)
       );
     }
-    eventForm.markAsPristine();
     if (eventForm.controls.competitionDate.value) {
       const targetDate = eventForm.controls.targetDate.value
         ? eventForm.controls.targetDate.value.toDate()
@@ -249,7 +248,7 @@ export class EventDetailsComponent implements OnChanges, AfterContentChecked {
     return getPointsCmd;
   }
 
-  private createCleanForm(): FormGroup {
+  public createCleanForm(): FormGroup {
     const eventForm = this.formBuilder.group({
       performanceInput: [''],
       windInput: ['', Validators.pattern('^([-]|[+])?\\d+([.][0-9])?$')],
@@ -313,7 +312,7 @@ export class EventDetailsComponent implements OnChanges, AfterContentChecked {
     });
     dialogRef.afterClosed().subscribe(async data => {
       if (!isNullOrUndefined(data)) {
-        const eventForms: { eventForm: FormGroup; isMain: boolean }[] = [];
+        let eventForms: { eventForm: FormGroup; isMain: boolean }[] = [];
         eventForms.push({ eventForm: this.eventForm, isMain: true });
         if (this.eventForm.controls.calculatePlacePointsCheckbox.value) {
           const secondaryForms = await this.getSecondaryForms();
@@ -347,14 +346,46 @@ export class EventDetailsComponent implements OnChanges, AfterContentChecked {
       const groupsToGet = this.selectedEvent.Groups.filter(g => {
         return g.Id != this.eventForm.controls.competitionTypeSelect.value.Id;
       });
-      for (let index = 0; index < groupsToGet.length; ++index) {
-        let form = this.eventForm;
+      for (let index = 0; index < groupsToGet.length; index++) {
+        let form = this.cloneAbstractControl(this.eventForm);
         form.controls.competitionTypeSelect.setValue(groupsToGet[index]);
         const getPointsCmd = this.eventFormToGetPointsCmd(form, this.selectedEvent);
         form = await this.getFormWithPoints(getPointsCmd, form);
         formDatas.push({ eventForm: form, isMain: false });
       }
       return formDatas;
+    }
+  }
+
+  private cloneAbstractControl<T extends AbstractControl>(control: T): T {
+    let newControl: T;
+    if (control instanceof FormGroup) {
+      const formGroup = new FormGroup({}, control.validator, control.asyncValidator);
+      const controls = control.controls;
+      Object.keys(controls).forEach(key => {
+        formGroup.addControl(key, this.cloneAbstractControl(controls[key]));
+      });
+      newControl = formGroup as any;
+    } else if (control instanceof FormArray) {
+      const formArray = new FormArray([], control.validator, control.asyncValidator);
+      control.controls.forEach(formControl =>
+        formArray.push(this.cloneAbstractControl(formControl))
+      );
+      newControl = formArray as any;
+    } else if (control instanceof FormControl) {
+      newControl = new FormControl(control.value, control.validator, control.asyncValidator) as any;
+    } else {
+      throw new Error('Error: unexpected control value');
+    }
+    if (control.disabled) {
+      newControl.disable({ emitEvent: false });
+    }
+    return newControl;
+  }
+
+  public compareGroupsFn(g1, g2) {
+    if (g1 && g1) {
+      return g1.Id == g2.Id;
     }
   }
 }
