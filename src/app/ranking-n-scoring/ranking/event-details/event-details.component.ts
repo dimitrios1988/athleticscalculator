@@ -336,7 +336,11 @@ export class EventDetailsComponent implements OnChanges, AfterContentChecked {
   private async getSecondaryForms(): Promise<{ eventForm: FormGroup; isMain: boolean }[]> {
     const isMarathonEvent =
       this.selectedEvent.Groups.filter(group => {
-        if (group.Name == 'half_sim_to_marathon_25_30') {
+        if (
+          group.Name == 'half_sim_to_marathon_25_30' ||
+          group.Name == '20km_rw_sim_to_50' ||
+          group.Name == '5000_sim_to_10000'
+        ) {
           return group;
         }
       }).length > 0;
