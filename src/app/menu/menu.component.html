@@ -1,6 +1,6 @@
 <mat-toolbar color="warn">
   <mat-toolbar-row>
-    <span fittext [maxFontSize]='20' [delay]='0'>Menu</span>
+    <span fittext [maxFontSize]="20" [delay]="0">Menu</span>
     <button mat-icon-button fxFlexOffset="auto" (click)="toggleTheme()">
       <mat-icon>
         <span *ngIf="isDarkTheme">brightness_5</span>
@@ -10,11 +10,17 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-nav-list>
-  <mat-list-item *ngFor="let menuItem of menuItems" [routerLink]="menuItem.path" (click)="onItemSelected()">
-    <mat-icon mat-list-icon color="primary">{{menuItem.icon}}</mat-icon>
-    <span>{{menuItem.title}}</span>
+  <mat-list-item
+    *ngFor="let menuItem of menuItems"
+    [routerLink]="menuItem.path"
+    (click)="onItemSelected()"
+  >
+    <mat-icon mat-list-icon color="primary">{{ menuItem.icon }}</mat-icon>
+    <span>{{ menuItem.title }}</span>
   </mat-list-item>
-  <a href="mailto:dimi.chondrokoukis@gmail.com?Subject=Athletics%20Ranking%20Points%20Calculator">
+  <a
+    href="mailto:dimi.chondrokoukis@gmail.com?Subject=Athletics%20Ranking%20Points%20Calculator"
+  >
     <mat-list-item>
       <mat-icon mat-list-icon color="primary">email</mat-icon>
       <span>Contact</span>
@@ -27,4 +33,6 @@
     <span>Saved Competitions (Beta)</span>
   </mat-list-item>
 </mat-nav-list>
-<p class="mat-small accent-color" style="text-align: center;">Version v19.11.19</p>
+<p class="mat-small accent-color" style="text-align: center">
+  Version v22.04.16
+</p>
