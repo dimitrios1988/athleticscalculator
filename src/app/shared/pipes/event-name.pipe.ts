@@ -50,6 +50,7 @@ export class EventNamePipe implements PipeTransform {
     "35km_rw": "35km Race Walking",
     "3000_rw": "3000m Race Walking",
     "5000_rw": "5000m Race Walking",
+    cross_country: "Cross Country",
   };
 
   transform(value: any, args?: any): any {

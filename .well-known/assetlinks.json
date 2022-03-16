@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dchondrokoukis.athleticspointscalculator",
+      "sha256_cert_fingerprints": [
+        "1F:47:0C:EC:07:95:3D:59:BF:0B:80:D6:E7:A1:32:1B:19:57:BE:13:8C:5D:3D:DA:D6:B6:9B:98:2D:C7:84:CD"
+      ]
+    }
+  }
+]
