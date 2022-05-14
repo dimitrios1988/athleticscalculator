@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "NODE_OPTIONS=--openssl-legacy-provider; ng serve --host=127.0.0.1",
-    "now-build": "NODE_OPTIONS=--openssl-legacy-provider; ng build --prod",
+    "now-build": "ng build --prod",
     "build": "NODE_OPTIONS=--openssl-legacy-provider; ng build",
     "test": "ng test",
     "lint": "ng lint",
