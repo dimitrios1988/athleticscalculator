@@ -52,8 +52,11 @@ export class EventDetailsComponent
     this.eventForm = this.formBuilder.group({
       performanceInput: [""],
       windInput: ["", Validators.pattern("^([-]|[+])?\\d+([.][0-9])?$")],
+      downhillInput: ["", Validators.pattern("^[-]\\d+([.][0-9])?$")],
       windmeasuredSelect: [""],
+      downhillmeasuredSelect: [""],
       windPoints: [{ value: "", disabled: true }],
+      downhillPoints: [{ value: "", disabled: true }],
       performancePoints: [{ value: "", disabled: true }],
       placeInput: [""],
       competitionTypeSelect: [""],
@@ -115,6 +118,27 @@ export class EventDetailsComponent
       this.eventForm.controls.windInput.setValue("");
       this.eventForm.controls.windInput.disable();
     }
+    if (
+      this.selectedEvent.SupportsDownhill &&
+      this.selectedEvent.SupportedPoints.PerformancePoints
+    ) {
+      this.eventForm.controls.downhillmeasuredSelect.setValidators(
+        Validators.required
+      );
+      this.eventForm.controls.downhillInput.setValidators(Validators.compose([
+        Validators.required,
+        Validators.pattern("^[-]\\d+([.][0-9])?$"),
+      ]))
+    } else {
+      this.eventForm.controls.downhillmeasuredSelect.clearValidators();
+      this.eventForm.controls.downhillInput.clearValidators();
+    }
+    if (this.eventForm.controls.downhillmeasuredSelect.value == "false") {
+      this.eventForm.controls.downhillInput.enable();
+    } else {
+      this.eventForm.controls.downhillInput.setValue("");
+      this.eventForm.controls.downhillInput.disable();
+    }
     if (this.selectedEvent.SupportedPoints.PerformancePoints == false) {
       this.eventForm.controls.calculatePlacePointsCheckbox.setValue(true);
       this.eventForm.controls.calculatePlacePointsCheckbox.disable();
@@ -169,6 +193,12 @@ export class EventDetailsComponent
       }
     }
 
+    if (this.selectedEvent.SupportsDownhill) {
+      getPointsCmd.downhill = Number(
+        this.eventForm.controls.downhillInput.value
+      );
+    }
+
     if (this.eventForm.controls.calculatePlacePointsCheckbox.value) {
       getPointsCmd.groupId =
         this.eventForm.controls.competitionTypeSelect.value.Id;
@@ -198,6 +228,9 @@ export class EventDetailsComponent
         res.windPoints != null
           ? this.eventForm.controls.windPoints.setValue(res.windPoints)
           : this.eventForm.controls.windPoints.setValue("");
+        res.downhillPoints != null
+          ? this.eventForm.controls.downhillPoints.setValue(res.downhillPoints)
+          : this.eventForm.controls.downhillPoints.setValue("");
         if (this.eventForm.controls.calculatePlacePointsCheckbox.value) {
           this.eventForm.controls.placePoints.setValue(res.categoryPlacePoints);
         } else {
@@ -208,9 +241,11 @@ export class EventDetailsComponent
           ? res.categoryPlacePoints
           : 0;
         this.totalPointsBeforeDeduction += res.windPoints ? res.windPoints : 0;
+        this.totalPointsBeforeDeduction += res.downhillPoints ? res.downhillPoints : 0;
         this.totalPointsBeforeDeduction += res.performancePoints
           ? res.performancePoints
           : 0;
+
         this.eventForm.markAsPristine();
       })
       .add(() => {
@@ -237,8 +272,11 @@ export class EventDetailsComponent
     if (this.eventForm) {
       this.eventForm.controls.performanceInput.setValue("");
       this.eventForm.controls.windInput.setValue("");
+      this.eventForm.controls.downhillInput.setValue("");
       this.eventForm.controls.windmeasuredSelect.setValue("");
+      this.eventForm.controls.downhillmeasuredSelect.setValue("true");
       this.eventForm.controls.windPoints.setValue("");
+      this.eventForm.controls.downhillPoints.setValue("");
       this.eventForm.controls.performancePoints.setValue("");
       this.eventForm.controls.placeInput.setValue("");
       this.eventForm.controls.competitionTypeSelect.setValue("");

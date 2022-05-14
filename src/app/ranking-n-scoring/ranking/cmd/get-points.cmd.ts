@@ -4,6 +4,7 @@ export class GetPointsCmd {
       wasMeasured: boolean;
       value?: number;
     };
+    downhill?: number;
     meetingCategory?: string;
     place?: number;
     performance: string;

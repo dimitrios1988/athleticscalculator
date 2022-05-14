@@ -30,8 +30,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SaveInfoComponent } from './save-info/save-info.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { AngularFittextModule } from 'angular-fittext';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [
@@ -68,7 +68,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatExpansionModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    AngularFittextModule,
+    AngularFittextModule
   ],
   providers: [RankingService, MeetingsService],
 })

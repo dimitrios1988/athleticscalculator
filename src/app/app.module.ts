@@ -30,8 +30,8 @@ import {
   MomentDateAdapter,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS
 } from '@angular/material-moment-adapter';
-import { AngularFittextModule } from 'angular-fittext';
 import { registerLocaleData } from '@angular/common';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
   declarations: [AppComponent],
@@ -58,7 +58,6 @@ import { registerLocaleData } from '@angular/common';
     MatBottomSheetModule,
     PwaModule,
     CombinedModule,
-
     AngularFittextModule
   ],
   bootstrap: [AppComponent],

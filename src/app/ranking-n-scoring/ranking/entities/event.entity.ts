@@ -12,6 +12,7 @@ export class EventEntity {
   }[];
   public PerformanceValidation: { Pattern: string; Message: string };
   public SupportsWind: boolean;
+  public SupportsDownhill: boolean;
   public Icon: string;
   public PointsDeductionStrategy: { MonthPoints: {}; Max: number };
   SupportedPoints: {

@@ -160,6 +160,84 @@
           />
         </mat-form-field>
       </div>
+      <div
+        *ngIf="
+          selectedEvent.SupportsDownhill &&
+          selectedEvent.SupportedPoints.PerformancePoints
+        "
+        fxLayoutGap="5vw"
+      >
+        <mat-form-field fxFlex.lt-sm="100%" fxFlex="50%">
+          <mat-label>Was the downhill drop within normal ranges (<1m/km)?</mat-label>
+          <mat-select formControlName="downhillmeasuredSelect" required>
+            <mat-option value="true"> Yes </mat-option>
+            <mat-option value="false"> No </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              this.eventForm.controls['downhillmeasuredSelect'].hasError('required')
+            "
+          >
+            Please select an answer</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div
+        *ngIf="
+          selectedEvent.SupportsDownhill &&
+          selectedEvent.SupportedPoints.PerformancePoints
+        "
+        fxLayout="row wrap"
+        fxLayoutGap="5vw"
+      >
+        <mat-form-field
+          *ngIf="this.eventForm.controls['downhillmeasuredSelect'].value == 'false'"
+          fxFlex.lt-sm="100%"
+          fxFlex="50%"
+        >
+          <input
+            matInput
+            type="text"
+            autocomplete="off"
+            formControlName="downhillInput"
+            placeholder="Please type in the downhill (use only negative numbers)"
+            required
+            (keydown.enter)="
+                !eventForm.invalid && !pointsAreCalculated
+                  ? onCalculate($event)
+                  : null
+              "
+          />
+          <span matSuffix>m/km</span>
+        </mat-form-field>
+        <mat-form-field
+          appearance="fill"
+          fxFlex="calc(50% - 5vw)"
+          *ngIf="this.eventForm.controls['downhillmeasuredSelect'].value == 'false'"
+          [fxFlexOffset.gt-xs]="
+            this.eventForm.controls['downhillmeasuredSelect'].value != 'false'
+              ? 'calc(50% + 5vw)'
+              : null
+          "
+        >
+          <mat-label>Downhill Points</mat-label>
+          <input
+            matInput
+            type="text"
+            autocomplete="off"
+            formControlName="downhillPoints"
+            placeholder="Downhill Points"
+            [ngStyle]="{
+              color:
+                eventForm.controls['downhillPoints'].value > 0
+                  ? 'green'
+                  : eventForm.controls['downhillPoints'].value < 0
+                  ? 'red'
+                  : 'inherit'
+            }"
+          />
+        </mat-form-field>
+      </div>
       <div fxLayout="row wrap" fxLayoutGap="5vw">
         <div fxFlex="50%" fxFlex.lt-sm="100%">
           <mat-form-field style="width: 100%">

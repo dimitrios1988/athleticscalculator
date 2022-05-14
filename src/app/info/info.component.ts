@@ -13,11 +13,11 @@ export class InfoComponent implements OnInit {
   }
 
   onRankingTables() {
-    window.open('https://www.iaaf.org/world-ranking-rules/basics', '_blank');
+    window.open('https://www.worldathletics.org/world-ranking-rules/basics', '_blank');
   }
 
   onScoringTables() {
-    window.open('https://www.iaaf.org/news/iaaf-news/scoring-tables-2017', '_blank');
+    window.open('https://worldathletics.org/news/news/scoring-tables-2022', '_blank');
   }
 
   onContact() {
@@ -25,7 +25,7 @@ export class InfoComponent implements OnInit {
   }
 
   onOpenWorldRankingCalendar() {
-    window.open('https://www.worldathletics.org/world-ranking-calendar', '_blank');
+    window.open('https://www.worldathletics.org/competition/calendar-results', '_blank');
 
   }
 
