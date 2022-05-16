@@ -1,5 +1,4 @@
 <div fxLayout="column">
-  <div fxLayout="row">
     <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z4" fxFlexFill>
       <ng-container matColumnDef="Date">
@@ -31,6 +30,5 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <p *ngIf="dataSource.filteredData.length === 0 && !isLoading">No Meetings Found</p>
-  </div>
+    <p *ngIf="dataSource.filteredData.length === 0 && !isLoading" style="margin-left: 24px;">No Meetings Found</p>
 </div>
